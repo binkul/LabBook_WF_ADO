@@ -55,13 +55,13 @@ namespace LabBook.Forms.LabBook
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabPageMain = new System.Windows.Forms.TabPage();
+            this.DgvLabBook = new System.Windows.Forms.DataGridView();
             this.TabPageRemarks = new System.Windows.Forms.TabPage();
             this.TabPageObservation = new System.Windows.Forms.TabPage();
             this.TabPageViscosity = new System.Windows.Forms.TabPage();
             this.TabPageContrast = new System.Windows.Forms.TabPage();
             this.TabPageGloss = new System.Windows.Forms.TabPage();
             this.TabPageClass = new System.Windows.Forms.TabPage();
-            this.DgvLabBook = new System.Windows.Forms.DataGridView();
             this.ToolStripMenu.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigatorMain)).BeginInit();
@@ -166,7 +166,7 @@ namespace LabBook.Forms.LabBook
             this.LblDate.AutoSize = true;
             this.LblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.LblDate.ForeColor = System.Drawing.Color.Blue;
-            this.LblDate.Location = new System.Drawing.Point(1022, 80);
+            this.LblDate.Location = new System.Drawing.Point(1020, 80);
             this.LblDate.Name = "LblDate";
             this.LblDate.Size = new System.Drawing.Size(131, 20);
             this.LblDate.TabIndex = 4;
@@ -308,6 +308,22 @@ namespace LabBook.Forms.LabBook
             this.TabPageMain.TabIndex = 0;
             this.TabPageMain.Text = "Strona główna";
             // 
+            // DgvLabBook
+            // 
+            this.DgvLabBook.AllowUserToAddRows = false;
+            this.DgvLabBook.AllowUserToDeleteRows = false;
+            this.DgvLabBook.AllowUserToResizeRows = false;
+            this.DgvLabBook.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DgvLabBook.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvLabBook.Location = new System.Drawing.Point(3, 49);
+            this.DgvLabBook.Name = "DgvLabBook";
+            this.DgvLabBook.RowHeadersWidth = 51;
+            this.DgvLabBook.RowTemplate.Height = 24;
+            this.DgvLabBook.Size = new System.Drawing.Size(1144, 380);
+            this.DgvLabBook.TabIndex = 0;
+            // 
             // TabPageRemarks
             // 
             this.TabPageRemarks.BackColor = System.Drawing.SystemColors.Control;
@@ -363,22 +379,6 @@ namespace LabBook.Forms.LabBook
             this.TabPageClass.TabIndex = 6;
             this.TabPageClass.Text = "Klasyfikacja";
             // 
-            // DgvLabBook
-            // 
-            this.DgvLabBook.AllowUserToAddRows = false;
-            this.DgvLabBook.AllowUserToDeleteRows = false;
-            this.DgvLabBook.AllowUserToResizeRows = false;
-            this.DgvLabBook.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.DgvLabBook.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvLabBook.Location = new System.Drawing.Point(3, 49);
-            this.DgvLabBook.Name = "DgvLabBook";
-            this.DgvLabBook.RowHeadersWidth = 51;
-            this.DgvLabBook.RowTemplate.Height = 24;
-            this.DgvLabBook.Size = new System.Drawing.Size(1144, 380);
-            this.DgvLabBook.TabIndex = 0;
-            // 
             // LabBookForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -395,6 +395,8 @@ namespace LabBook.Forms.LabBook
             this.MainMenuStrip = this.MenuStrip;
             this.Name = "LabBookForm";
             this.Text = "LabBook";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LabBookForm_FormClosing);
+            this.Load += new System.EventHandler(this.LabBookForm_Load);
             this.ToolStripMenu.ResumeLayout(false);
             this.ToolStripMenu.PerformLayout();
             this.MenuStrip.ResumeLayout(false);

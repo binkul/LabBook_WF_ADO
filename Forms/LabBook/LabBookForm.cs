@@ -19,13 +19,16 @@ namespace LabBook.Forms.LabBook
             _service = new LabBookService(this, _connection, _user);
         }
 
+        public bool isAdmin => _user.Permission.ToLower().Equals("admin");
         public DataGridView GetDgvLabBook => DgvLabBook;
+        public BindingNavigator GetBindingNavigator => BindingNavigatorMain;
 
         #region Form Open/Load/Closing
 
         private void LabBookForm_Load(object sender, System.EventArgs e)
         {
             _service.LoadFormData(this);
+            _service.PreapreAllData();
         }
 
         private void LabBookForm_FormClosing(object sender, FormClosingEventArgs e)

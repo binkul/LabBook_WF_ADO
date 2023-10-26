@@ -70,7 +70,6 @@ namespace LabBook.Service
 
         }
 
-
         private void PrepareDataGridViewLabBook()
         {
             DataGridView view = _labBookForm.GetDgvLabBook;
@@ -108,20 +107,20 @@ namespace LabBook.Service
             view.Columns["title"].SortMode = DataGridViewColumnSortMode.NotSortable;
             view.Columns["title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
-            view.Columns["density"].HeaderText = "Gęstość";
-            view.Columns["density"].DisplayIndex = 2;
-            view.Columns["density"].Width = 95;
-            view.Columns["density"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            view.Columns["density"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            view.Columns["density"].Resizable = DataGridViewTriState.False;
-
             view.Columns["identifier"].HeaderText = "User";
-            view.Columns["identifier"].DisplayIndex = 3;
+            view.Columns["identifier"].DisplayIndex = 2;
             view.Columns["identifier"].ReadOnly = true;
             view.Columns["identifier"].Width = 75;
             view.Columns["identifier"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             view.Columns["identifier"].SortMode = DataGridViewColumnSortMode.NotSortable;
             view.Columns["identifier"].Resizable = DataGridViewTriState.False;
+
+            view.Columns["density"].HeaderText = "Gęstość";
+            view.Columns["density"].DisplayIndex = 3;
+            view.Columns["density"].Width = 95;
+            view.Columns["density"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            view.Columns["density"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            view.Columns["density"].Resizable = DataGridViewTriState.False;
 
             view.Columns["modified"].HeaderText = "Modyfikacja";
             view.Columns["modified"].DisplayIndex = 4;
@@ -130,8 +129,27 @@ namespace LabBook.Service
             view.Columns["modified"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             view.Columns["modified"].SortMode = DataGridViewColumnSortMode.NotSortable;
             view.Columns["modified"].Resizable = DataGridViewTriState.False;
+
+            ResizeFilters();
         }
 
+        public void ResizeFilters()
+        {
+            int left = _labBookForm.GetDgvLabBook.Left + _labBookForm.GetDgvLabBook.RowHeadersWidth;
+            int top = _labBookForm.GetDgvLabBook.Top - _labBookForm.GetTitleFilter.Height - 5;
+
+            _labBookForm.GetNrDFilter.Left = left;
+            _labBookForm.GetNrDFilter.Width = _labBookForm.GetDgvLabBook.Columns["id"].Width - 1;
+            _labBookForm.GetNrDFilter.Top = top;
+
+            _labBookForm.GetTitleFilter.Left = _labBookForm.GetNrDFilter.Left + _labBookForm.GetDgvLabBook.Columns["id"].Width;
+            _labBookForm.GetTitleFilter.Width = _labBookForm.GetDgvLabBook.Columns["title"].Width - 1;
+            _labBookForm.GetTitleFilter.Top = top;
+
+            _labBookForm.GetIdentifierFilter.Left = _labBookForm.GetTitleFilter.Left + _labBookForm.GetDgvLabBook.Columns["title"].Width;
+            _labBookForm.GetIdentifierFilter.Width = _labBookForm.GetDgvLabBook.Columns["identifier"].Width - 1;
+            _labBookForm.GetIdentifierFilter.Top = top;
+        }
 
         #endregion
 

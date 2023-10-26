@@ -22,6 +22,9 @@ namespace LabBook.Forms.LabBook
         public bool isAdmin => _user.Permission.ToLower().Equals("admin");
         public DataGridView GetDgvLabBook => DgvLabBook;
         public BindingNavigator GetBindingNavigator => BindingNavigatorMain;
+        public TextBox GetNrDFilter => TxtNrDFilter;
+        public TextBox GetTitleFilter => TxtTitleFilter;
+        public TextBox GetIdentifierFilter => TxtIdentifierFilter;
 
         #region Form Open/Load/Closing
 
@@ -29,6 +32,7 @@ namespace LabBook.Forms.LabBook
         {
             _service.LoadFormData(this);
             _service.PreapreAllData();
+            Resize += LabBookForm_Resize;
         }
 
         private void LabBookForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -43,5 +47,13 @@ namespace LabBook.Forms.LabBook
 
         #endregion
 
+        #region Resize and change Filter boxes
+
+        private void LabBookForm_Resize(object sender, System.EventArgs e)
+        {
+            _service.ResizeFilters();
+        }
+
+        #endregion
     }
 }

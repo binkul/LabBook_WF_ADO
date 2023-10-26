@@ -55,6 +55,9 @@ namespace LabBook.Forms.LabBook
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabPageMain = new System.Windows.Forms.TabPage();
+            this.TxtIdentifierFilter = new System.Windows.Forms.TextBox();
+            this.TxtTitleFilter = new System.Windows.Forms.TextBox();
+            this.TxtNrDFilter = new System.Windows.Forms.TextBox();
             this.DgvLabBook = new System.Windows.Forms.DataGridView();
             this.TabPageRemarks = new System.Windows.Forms.TabPage();
             this.TabPageObservation = new System.Windows.Forms.TabPage();
@@ -300,6 +303,9 @@ namespace LabBook.Forms.LabBook
             // TabPageMain
             // 
             this.TabPageMain.BackColor = System.Drawing.SystemColors.Control;
+            this.TabPageMain.Controls.Add(this.TxtIdentifierFilter);
+            this.TabPageMain.Controls.Add(this.TxtTitleFilter);
+            this.TabPageMain.Controls.Add(this.TxtNrDFilter);
             this.TabPageMain.Controls.Add(this.DgvLabBook);
             this.TabPageMain.Location = new System.Drawing.Point(4, 29);
             this.TabPageMain.Name = "TabPageMain";
@@ -307,6 +313,27 @@ namespace LabBook.Forms.LabBook
             this.TabPageMain.Size = new System.Drawing.Size(1155, 435);
             this.TabPageMain.TabIndex = 0;
             this.TabPageMain.Text = "Strona główna";
+            // 
+            // TxtIdentifierFilter
+            // 
+            this.TxtIdentifierFilter.Location = new System.Drawing.Point(239, 16);
+            this.TxtIdentifierFilter.Name = "TxtIdentifierFilter";
+            this.TxtIdentifierFilter.Size = new System.Drawing.Size(94, 27);
+            this.TxtIdentifierFilter.TabIndex = 3;
+            // 
+            // TxtTitleFilter
+            // 
+            this.TxtTitleFilter.Location = new System.Drawing.Point(111, 16);
+            this.TxtTitleFilter.Name = "TxtTitleFilter";
+            this.TxtTitleFilter.Size = new System.Drawing.Size(122, 27);
+            this.TxtTitleFilter.TabIndex = 2;
+            // 
+            // TxtNrDFilter
+            // 
+            this.TxtNrDFilter.Location = new System.Drawing.Point(8, 16);
+            this.TxtNrDFilter.Name = "TxtNrDFilter";
+            this.TxtNrDFilter.Size = new System.Drawing.Size(97, 27);
+            this.TxtNrDFilter.TabIndex = 1;
             // 
             // DgvLabBook
             // 
@@ -406,6 +433,7 @@ namespace LabBook.Forms.LabBook
             this.BindingNavigatorMain.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.TabPageMain.ResumeLayout(false);
+            this.TabPageMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvLabBook)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -445,5 +473,8 @@ namespace LabBook.Forms.LabBook
         private System.Windows.Forms.TabPage TabPageGloss;
         private System.Windows.Forms.TabPage TabPageClass;
         private System.Windows.Forms.DataGridView DgvLabBook;
+        private System.Windows.Forms.TextBox TxtNrDFilter;
+        private System.Windows.Forms.TextBox TxtTitleFilter;
+        private System.Windows.Forms.TextBox TxtIdentifierFilter;
     }
 }

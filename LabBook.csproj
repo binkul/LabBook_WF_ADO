@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +51,7 @@
     <Compile Include="ADO\ProgramData.cs" />
     <Compile Include="ADO\User.cs" />
     <Compile Include="Commons\CommonFunction.cs" />
+    <Compile Include="Commons\SerializeClass.cs" />
     <Compile Include="Forms\LabBook\LabBookForm.cs">
       <SubType>Form</SubType>
     </Compile>

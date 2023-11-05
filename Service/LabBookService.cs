@@ -35,26 +35,26 @@ namespace LabBook.Service
 
         public void SaveFormData(LabBookForm labBookForm)
         {
-            List<double> list = new List<double>
+            IDictionary<string, double> list = new Dictionary<string, double>
             {
-                labBookForm.Left,
-                labBookForm.Top,
-                labBookForm.Width,
-                labBookForm.Height,
+                { "Left", labBookForm.Left },
+                { "Top", labBookForm.Top },
+                { "Width", labBookForm.Width },
+                { "Height", labBookForm.Height }
             };
             CommonFunction.WriteWindowsData(list, dataFormFileName);
         }
 
         internal void LoadFormData(LabBookForm labBookForm)
         {
-            List<double> list = CommonFunction.LoadWindowsData(dataFormFileName);
-
-            if (list.Count == 4)
+            IDictionary<string, double> list = CommonFunction.LoadWindowsDataAsDictionary(dataFormFileName);
+            
+            if (list.Count > 0)
             {
-                labBookForm.Left = (int)list[0];
-                labBookForm.Top = (int)list[1];
-                labBookForm.Width = (int)list[2];
-                labBookForm.Height = (int)list[3];
+                labBookForm.Left = list.ContainsKey("Left") ? (int)list["Left"] : labBookForm.Left;
+                labBookForm.Top = list.ContainsKey("Top") ? (int)list["Top"] : labBookForm.Top;
+                labBookForm.Width = list.ContainsKey("Width") ? (int)list["Width"] : labBookForm.Width;
+                labBookForm.Height = list.ContainsKey("Height") ? (int)list["Height"] : labBookForm.Height;
             }
         }
 

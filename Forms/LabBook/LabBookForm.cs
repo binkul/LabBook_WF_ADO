@@ -25,6 +25,7 @@ namespace LabBook.Forms.LabBook
         public TextBox GetNrDFilter => TxtNrDFilter;
         public TextBox GetTitleFilter => TxtTitleFilter;
         public TextBox GetIdentifierFilter => TxtIdentifierFilter;
+        public ComboBox GetComboCycleFilter => CmbCycleFilter;
 
         #region Form Open/Load/Closing
 
@@ -54,6 +55,12 @@ namespace LabBook.Forms.LabBook
             _service.ResizeFilters();
         }
 
+        private void DgvLabBook_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            _service.ResizeFilters();
+        }
+
         #endregion
+
     }
 }

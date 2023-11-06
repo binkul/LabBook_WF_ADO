@@ -92,7 +92,7 @@ namespace LabBook.Service
             view.Columns.Remove("observation");
             view.Columns.Remove("remarks");
             view.Columns.Remove("created");
-            view.Columns.Remove("name");
+            view.Columns.Remove("modified");
 
             view.Columns["id"].HeaderText = "Nr D";
             view.Columns["id"].ReadOnly = true;
@@ -107,28 +107,28 @@ namespace LabBook.Service
             view.Columns["title"].SortMode = DataGridViewColumnSortMode.NotSortable;
             view.Columns["title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
-            view.Columns["identifier"].HeaderText = "User";
-            view.Columns["identifier"].DisplayIndex = 2;
-            view.Columns["identifier"].ReadOnly = true;
-            view.Columns["identifier"].Width = 75;
-            view.Columns["identifier"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            view.Columns["identifier"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            view.Columns["identifier"].Resizable = DataGridViewTriState.False;
+            view.Columns["cyc_name"].HeaderText = "Cykl";
+            view.Columns["cyc_name"].DisplayIndex = 2;
+            view.Columns["cyc_name"].ReadOnly = true;
+            view.Columns["cyc_name"].Width = 180;
+            view.Columns["cyc_name"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            view.Columns["cyc_name"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            view.Columns["cyc_name"].Resizable = DataGridViewTriState.False;
 
             view.Columns["density"].HeaderText = "Gęstość";
             view.Columns["density"].DisplayIndex = 3;
-            view.Columns["density"].Width = 95;
+            view.Columns["density"].Width = 90;
             view.Columns["density"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             view.Columns["density"].SortMode = DataGridViewColumnSortMode.NotSortable;
             view.Columns["density"].Resizable = DataGridViewTriState.False;
 
-            view.Columns["modified"].HeaderText = "Modyfikacja";
-            view.Columns["modified"].DisplayIndex = 4;
-            view.Columns["modified"].ReadOnly = true;
-            view.Columns["modified"].Width = 120;
-            view.Columns["modified"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            view.Columns["modified"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            view.Columns["modified"].Resizable = DataGridViewTriState.False;
+            view.Columns["identifier"].HeaderText = "User";
+            view.Columns["identifier"].DisplayIndex = 4;
+            view.Columns["identifier"].ReadOnly = true;
+            view.Columns["identifier"].Width = 70;
+            view.Columns["identifier"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            view.Columns["identifier"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            view.Columns["identifier"].Resizable = DataGridViewTriState.False;
 
             ResizeFilters();
         }
@@ -146,7 +146,11 @@ namespace LabBook.Service
             _labBookForm.GetTitleFilter.Width = _labBookForm.GetDgvLabBook.Columns["title"].Width - 1;
             _labBookForm.GetTitleFilter.Top = top;
 
-            _labBookForm.GetIdentifierFilter.Left = _labBookForm.GetTitleFilter.Left + _labBookForm.GetDgvLabBook.Columns["title"].Width;
+            _labBookForm.GetComboCycleFilter.Left = _labBookForm.GetTitleFilter.Left + _labBookForm.GetDgvLabBook.Columns["title"].Width;
+            _labBookForm.GetComboCycleFilter.Width = _labBookForm.GetDgvLabBook.Columns["cyc_name"].Width - 1;
+            _labBookForm.GetComboCycleFilter.Top = top - 2;
+
+            _labBookForm.GetIdentifierFilter.Left = _labBookForm.GetComboCycleFilter.Left + _labBookForm.GetDgvLabBook.Columns["cyc_name"].Width + _labBookForm.GetDgvLabBook.Columns["density"].Width;
             _labBookForm.GetIdentifierFilter.Width = _labBookForm.GetDgvLabBook.Columns["identifier"].Width - 1;
             _labBookForm.GetIdentifierFilter.Top = top;
         }

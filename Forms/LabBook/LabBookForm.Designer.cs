@@ -65,6 +65,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageContrast = new System.Windows.Forms.TabPage();
             this.TabPageGloss = new System.Windows.Forms.TabPage();
             this.TabPageClass = new System.Windows.Forms.TabPage();
+            this.CmbCycleFilter = new System.Windows.Forms.ComboBox();
             this.ToolStripMenu.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigatorMain)).BeginInit();
@@ -303,6 +304,7 @@ namespace LabBook.Forms.LabBook
             // TabPageMain
             // 
             this.TabPageMain.BackColor = System.Drawing.SystemColors.Control;
+            this.TabPageMain.Controls.Add(this.CmbCycleFilter);
             this.TabPageMain.Controls.Add(this.TxtIdentifierFilter);
             this.TabPageMain.Controls.Add(this.TxtTitleFilter);
             this.TabPageMain.Controls.Add(this.TxtNrDFilter);
@@ -316,7 +318,7 @@ namespace LabBook.Forms.LabBook
             // 
             // TxtIdentifierFilter
             // 
-            this.TxtIdentifierFilter.Location = new System.Drawing.Point(239, 16);
+            this.TxtIdentifierFilter.Location = new System.Drawing.Point(507, 16);
             this.TxtIdentifierFilter.Name = "TxtIdentifierFilter";
             this.TxtIdentifierFilter.Size = new System.Drawing.Size(94, 27);
             this.TxtIdentifierFilter.TabIndex = 3;
@@ -350,6 +352,7 @@ namespace LabBook.Forms.LabBook
             this.DgvLabBook.RowTemplate.Height = 24;
             this.DgvLabBook.Size = new System.Drawing.Size(1144, 380);
             this.DgvLabBook.TabIndex = 0;
+            this.DgvLabBook.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.DgvLabBook_ColumnWidthChanged);
             // 
             // TabPageRemarks
             // 
@@ -405,6 +408,14 @@ namespace LabBook.Forms.LabBook
             this.TabPageClass.Size = new System.Drawing.Size(1155, 435);
             this.TabPageClass.TabIndex = 6;
             this.TabPageClass.Text = "Klasyfikacja";
+            // 
+            // CmbCycleFilter
+            // 
+            this.CmbCycleFilter.FormattingEnabled = true;
+            this.CmbCycleFilter.Location = new System.Drawing.Point(255, 16);
+            this.CmbCycleFilter.Name = "CmbCycleFilter";
+            this.CmbCycleFilter.Size = new System.Drawing.Size(177, 28);
+            this.CmbCycleFilter.TabIndex = 4;
             // 
             // LabBookForm
             // 
@@ -476,5 +487,6 @@ namespace LabBook.Forms.LabBook
         private System.Windows.Forms.TextBox TxtNrDFilter;
         private System.Windows.Forms.TextBox TxtTitleFilter;
         private System.Windows.Forms.TextBox TxtIdentifierFilter;
+        private System.Windows.Forms.ComboBox CmbCycleFilter;
     }
 }

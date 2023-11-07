@@ -23,6 +23,8 @@ namespace LabBook.Service
         private DataView _labBookView;
         private BindingSource _labBookBindingSource;
 
+        private IDictionary<string, double> _formData = CommonFunction.LoadWindowsDataAsDictionary(dataFormFileName);
+
         public LabBookService(LabBookForm labBookForm, SqlConnection connection, User user)
         {
             _user = user;
@@ -42,19 +44,26 @@ namespace LabBook.Service
                 { "Width", labBookForm.Width },
                 { "Height", labBookForm.Height }
             };
+
+            foreach(DataGridViewColumn column in _labBookForm.GetDgvLabBook.Columns)
+            {
+                if (column.Visible)
+                {
+                    list.Add(column.Name, column.Width);
+                }
+            }
+
             CommonFunction.WriteWindowsData(list, dataFormFileName);
         }
 
         internal void LoadFormData(LabBookForm labBookForm)
-        {
-            IDictionary<string, double> list = CommonFunction.LoadWindowsDataAsDictionary(dataFormFileName);
-            
-            if (list.Count > 0)
+        {            
+            if (_formData.Count > 0)
             {
-                labBookForm.Left = list.ContainsKey("Left") ? (int)list["Left"] : labBookForm.Left;
-                labBookForm.Top = list.ContainsKey("Top") ? (int)list["Top"] : labBookForm.Top;
-                labBookForm.Width = list.ContainsKey("Width") ? (int)list["Width"] : labBookForm.Width;
-                labBookForm.Height = list.ContainsKey("Height") ? (int)list["Height"] : labBookForm.Height;
+                labBookForm.Left = _formData.ContainsKey("Left") ? (int)_formData["Left"] : labBookForm.Left;
+                labBookForm.Top = _formData.ContainsKey("Top") ? (int)_formData["Top"] : labBookForm.Top;
+                labBookForm.Width = _formData.ContainsKey("Width") ? (int)_formData["Width"] : labBookForm.Width;
+                labBookForm.Height = _formData.ContainsKey("Height") ? (int)_formData["Height"] : labBookForm.Height;
             }
         }
 
@@ -97,38 +106,35 @@ namespace LabBook.Service
             view.Columns["id"].HeaderText = "Nr D";
             view.Columns["id"].ReadOnly = true;
             view.Columns["id"].DisplayIndex = 0;
-            view.Columns["id"].Width = 70;
+            view.Columns["id"].Width = _formData.ContainsKey("id") ? (int)_formData["id"] : 70;
             view.Columns["id"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            view.Columns["id"].Resizable = DataGridViewTriState.False;
 
             view.Columns["title"].HeaderText = "Tytuł";
             view.Columns["title"].ReadOnly = true;
             view.Columns["title"].DisplayIndex = 1;
+            view.Columns["title"].Width = _formData.ContainsKey("title") ? (int)_formData["title"] : 100;
             view.Columns["title"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            view.Columns["title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //view.Columns["title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             view.Columns["cyc_name"].HeaderText = "Cykl";
             view.Columns["cyc_name"].DisplayIndex = 2;
             view.Columns["cyc_name"].ReadOnly = true;
-            view.Columns["cyc_name"].Width = 180;
+            view.Columns["cyc_name"].Width = _formData.ContainsKey("cyc_name") ? (int)_formData["cyc_name"] : 100;
             view.Columns["cyc_name"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             view.Columns["cyc_name"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            view.Columns["cyc_name"].Resizable = DataGridViewTriState.False;
 
             view.Columns["density"].HeaderText = "Gęstość";
             view.Columns["density"].DisplayIndex = 3;
-            view.Columns["density"].Width = 90;
+            view.Columns["density"].Width = _formData.ContainsKey("density") ? (int)_formData["density"] : 100;
             view.Columns["density"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             view.Columns["density"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            view.Columns["density"].Resizable = DataGridViewTriState.False;
 
             view.Columns["identifier"].HeaderText = "User";
             view.Columns["identifier"].DisplayIndex = 4;
             view.Columns["identifier"].ReadOnly = true;
-            view.Columns["identifier"].Width = 70;
+            view.Columns["identifier"].Width = _formData.ContainsKey("identifier") ? (int)_formData["identifier"] : 70;
             view.Columns["identifier"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             view.Columns["identifier"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            view.Columns["identifier"].Resizable = DataGridViewTriState.False;
 
             ResizeFilters();
         }

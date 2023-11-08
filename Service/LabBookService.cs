@@ -18,10 +18,13 @@ namespace LabBook.Service
         private readonly SqlConnection _connection;
         private readonly LabBookForm _labBookForm;
         private readonly LabBookRepository _labBookRepository;
+        private readonly ExpCycleRepository _expCycleRepository;
 
         private DataTable _labBookTable;
         private DataView _labBookView;
         private BindingSource _labBookBindingSource;
+
+        private IList<ExpCycle> _expCycles;
 
         private IDictionary<string, double> _formData = CommonFunction.LoadWindowsDataAsDictionary(dataFormFileName);
 
@@ -31,6 +34,7 @@ namespace LabBook.Service
             _connection = connection;
             _labBookForm = labBookForm;
             _labBookRepository = new LabBookRepository(_user, _connection);
+            _expCycleRepository = new ExpCycleRepository(_connection);
         }
 
         #region Save and Load data for LabBook form 
@@ -77,6 +81,7 @@ namespace LabBook.Service
             GetAllLabBook();
             PrepareDataGridViewLabBook();
 
+            GetAllExpCycles();
         }
 
         private void PrepareDataGridViewLabBook()
@@ -178,12 +183,30 @@ namespace LabBook.Service
             _labBookForm.GetBindingNavigator.BindingSource = _labBookBindingSource;
         }
 
+        private void GetAllExpCycles()
+        {
+            _expCycles = _expCycleRepository.GetAllExpCycles();
+            _labBookForm.GetComboExpCycle.DataSource = _expCycles;
+            _labBookForm.GetComboExpCycle.ValueMember = "Id";
+            _labBookForm.GetComboExpCycle.DisplayMember = "Name";
+            _labBookForm.GetComboExpCycle.SelectedIndexChanged += GetComboExpCycle_SelectedIndexChanged;
+
+            _labBookForm.GetComboCycleFilter.DataSource = _expCycles;
+            _labBookForm.GetComboCycleFilter.ValueMember = "Id";
+            _labBookForm.GetComboCycleFilter.DisplayMember = "Name";
+        }
+
         #endregion
 
 
         #region Navigation and Currents
 
         private void LabBookBindingSource_PositionChanged(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void GetComboExpCycle_SelectedIndexChanged(object sender, System.EventArgs e)
         {
 
         }

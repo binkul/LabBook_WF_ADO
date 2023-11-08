@@ -26,6 +26,7 @@ namespace LabBook.Forms.LabBook
         public TextBox GetTitleFilter => TxtTitleFilter;
         public TextBox GetIdentifierFilter => TxtIdentifierFilter;
         public ComboBox GetComboCycleFilter => CmbCycleFilter;
+        public ComboBox GetComboExpCycle => CmbExpCycle;
 
         #region Form Open/Load/Closing
 

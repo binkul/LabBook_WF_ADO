@@ -14,6 +14,8 @@ namespace LabBook.Service
     {
         private static readonly string dataFormFileName = "LabBookForm";
 
+        private static readonly SolidBrush redBrush = new SolidBrush(Color.Red);
+
         private readonly User _user;
         private readonly SqlConnection _connection;
         private readonly LabBookForm _labBookForm;
@@ -82,6 +84,8 @@ namespace LabBook.Service
             PrepareDataGridViewLabBook();
 
             GetAllExpCycles();
+
+            LabBookBindingSource_PositionChanged(null, null);
         }
 
         private void PrepareDataGridViewLabBook()
@@ -93,7 +97,7 @@ namespace LabBook.Service
             view.ColumnHeadersDefaultCellStyle.Font = new Font(view.DefaultCellStyle.Font.Name, 10, FontStyle.Bold);
             view.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
             view.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            view.RowHeadersWidth = _labBookForm.isAdmin ? 35 : 40;
+            view.RowHeadersWidth = _labBookForm.IsAdmin ? 35 : 40;
             view.DefaultCellStyle.ForeColor = Color.Black;
             view.MultiSelect = false;
             view.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -203,13 +207,68 @@ namespace LabBook.Service
 
         private void LabBookBindingSource_PositionChanged(object sender, System.EventArgs e)
         {
+            DataRowView current = null;
+            long id = -1;
+            bool admin = false;
 
+            if (_labBookBindingSource.Count > 0)
+            {
+                current = (DataRowView)_labBookBindingSource.Current;
+                admin = (long)current["user_id"] == _user.Id || _labBookForm.IsAdmin ? true : false;
+                id = (long)current["id"];
+            }
+
+            if (admin)
+            {
+                UnblockControls();
+            }
+            else
+            {
+                BlockControls();
+            }
         }
 
         private void GetComboExpCycle_SelectedIndexChanged(object sender, System.EventArgs e)
         {
 
         }
+
+        private void BlockControls()
+        {
+            _labBookForm.GetDgvLabBook.ReadOnly = true;
+            _labBookForm.GetTxtTitle.ReadOnly = true;
+            _labBookForm.GetExpCmbCycle.Enabled = false;
+            _labBookForm.GetCmbProject.Enabled = false;
+        }
+
+        private void UnblockControls()
+        {
+            _labBookForm.GetDgvLabBook.ReadOnly = false;
+            _labBookForm.GetTxtTitle.ReadOnly = false;
+            _labBookForm.GetExpCmbCycle.Enabled = true;
+            _labBookForm.GetCmbProject.Enabled = true;
+
+        }
+
+        #endregion
+
+
+        #region DataGridView and Others Events
+
+        public void IconInCellPainting(DataGridViewRowPostPaintEventArgs e)
+        {
+            int start = e.RowBounds.Left + 25;
+            int width = 4;
+            long userId = (long)_labBookForm.GetDgvLabBook.Rows[e.RowIndex].Cells["user_id"].Value;
+            if (_user.Id != userId)
+            {
+                Rectangle rectangleTop = new Rectangle(start, e.RowBounds.Top + 4, width, e.RowBounds.Height - 14);
+                Rectangle rectangleBottom = new Rectangle(start, e.RowBounds.Top + e.RowBounds.Height - 8, width, 4);
+                e.Graphics.FillRectangle(redBrush, rectangleTop);
+                e.Graphics.FillRectangle(redBrush, rectangleBottom);
+            }
+        }
+
 
         #endregion
     }

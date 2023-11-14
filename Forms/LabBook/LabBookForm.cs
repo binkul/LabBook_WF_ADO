@@ -19,12 +19,15 @@ namespace LabBook.Forms.LabBook
             _service = new LabBookService(this, _connection, _user);
         }
 
-        public bool isAdmin => _user.Permission.ToLower().Equals("admin");
+        public bool IsAdmin => _user.Permission.ToLower().Equals("admin");
         public DataGridView GetDgvLabBook => DgvLabBook;
         public BindingNavigator GetBindingNavigator => BindingNavigatorMain;
+        public TextBox GetTxtTitle => TxtTitle;
         public TextBox GetNrDFilter => TxtNrDFilter;
         public TextBox GetTitleFilter => TxtTitleFilter;
         public TextBox GetIdentifierFilter => TxtIdentifierFilter;
+        public ComboBox GetExpCmbCycle => CmbExpCycle;
+        public ComboBox GetCmbProject => CmbProject;
         public ComboBox GetComboCycleFilter => CmbCycleFilter;
         public ComboBox GetComboExpCycle => CmbExpCycle;
 
@@ -35,7 +38,13 @@ namespace LabBook.Forms.LabBook
             _service.LoadFormData(this);
             _service.PreapreAllData();
             Resize += LabBookForm_Resize;
+
+            if (!IsAdmin)
+            {
+                DgvLabBook.RowPostPaint += DgvLabBook_RowPostPaint; ;
+            }
         }
+
 
         private void LabBookForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -63,5 +72,28 @@ namespace LabBook.Forms.LabBook
 
         #endregion
 
+
+        #region DataGridView Events
+
+        private void DgvLabBook_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            _service.IconInCellPainting(e);
+        }
+
+        #endregion
+
+        private void TxtTitle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                e.Handled = true;
+                SendKeys.Send("{Tab}");
+            }
+
+            else
+            {
+                base.OnKeyPress(e);
+            }
+        }
     }
 }

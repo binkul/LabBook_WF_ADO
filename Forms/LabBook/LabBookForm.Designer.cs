@@ -170,6 +170,7 @@ namespace LabBook.Forms.LabBook
             this.TxtTitle.Name = "TxtTitle";
             this.TxtTitle.Size = new System.Drawing.Size(829, 27);
             this.TxtTitle.TabIndex = 1;
+            this.TxtTitle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtTitle_KeyPress);
             // 
             // LblDateCreated
             // 
@@ -376,7 +377,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageRemarks.Location = new System.Drawing.Point(4, 29);
             this.TabPageRemarks.Name = "TabPageRemarks";
             this.TabPageRemarks.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageRemarks.Size = new System.Drawing.Size(1155, 435);
+            this.TabPageRemarks.Size = new System.Drawing.Size(1219, 439);
             this.TabPageRemarks.TabIndex = 1;
             this.TabPageRemarks.Text = "Uwagi";
             // 
@@ -385,7 +386,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageObservation.BackColor = System.Drawing.SystemColors.Control;
             this.TabPageObservation.Location = new System.Drawing.Point(4, 29);
             this.TabPageObservation.Name = "TabPageObservation";
-            this.TabPageObservation.Size = new System.Drawing.Size(1155, 435);
+            this.TabPageObservation.Size = new System.Drawing.Size(1219, 439);
             this.TabPageObservation.TabIndex = 2;
             this.TabPageObservation.Text = "Obserwacje";
             // 
@@ -394,7 +395,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageViscosity.BackColor = System.Drawing.SystemColors.Control;
             this.TabPageViscosity.Location = new System.Drawing.Point(4, 29);
             this.TabPageViscosity.Name = "TabPageViscosity";
-            this.TabPageViscosity.Size = new System.Drawing.Size(1155, 435);
+            this.TabPageViscosity.Size = new System.Drawing.Size(1219, 439);
             this.TabPageViscosity.TabIndex = 3;
             this.TabPageViscosity.Text = "Lepkość";
             // 
@@ -403,7 +404,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageContrast.BackColor = System.Drawing.SystemColors.Control;
             this.TabPageContrast.Location = new System.Drawing.Point(4, 29);
             this.TabPageContrast.Name = "TabPageContrast";
-            this.TabPageContrast.Size = new System.Drawing.Size(1155, 435);
+            this.TabPageContrast.Size = new System.Drawing.Size(1219, 439);
             this.TabPageContrast.TabIndex = 4;
             this.TabPageContrast.Text = "Krycie";
             // 
@@ -412,7 +413,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageGloss.BackColor = System.Drawing.SystemColors.Control;
             this.TabPageGloss.Location = new System.Drawing.Point(4, 29);
             this.TabPageGloss.Name = "TabPageGloss";
-            this.TabPageGloss.Size = new System.Drawing.Size(1155, 435);
+            this.TabPageGloss.Size = new System.Drawing.Size(1219, 439);
             this.TabPageGloss.TabIndex = 5;
             this.TabPageGloss.Text = "Połysk";
             // 
@@ -421,7 +422,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageClass.BackColor = System.Drawing.SystemColors.Control;
             this.TabPageClass.Location = new System.Drawing.Point(4, 29);
             this.TabPageClass.Name = "TabPageClass";
-            this.TabPageClass.Size = new System.Drawing.Size(1155, 435);
+            this.TabPageClass.Size = new System.Drawing.Size(1219, 439);
             this.TabPageClass.TabIndex = 6;
             this.TabPageClass.Text = "Klasyfikacja";
             // 

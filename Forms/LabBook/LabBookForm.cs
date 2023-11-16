@@ -1,6 +1,7 @@
 ﻿using LabBook.ADO;
 using LabBook.Service;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace LabBook.Forms.LabBook
@@ -39,12 +40,9 @@ namespace LabBook.Forms.LabBook
             _service.PreapreAllData();
             Resize += LabBookForm_Resize;
 
-            if (!IsAdmin)
-            {
-                DgvLabBook.RowPostPaint += DgvLabBook_RowPostPaint; ;
-            }
+            DgvLabBook.RowPostPaint += DgvLabBook_RowPostPaint;
+            DgvLabBook.CellFormatting += DgvLabBook_CellFormatting;
         }
-
 
         private void LabBookForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -78,6 +76,11 @@ namespace LabBook.Forms.LabBook
         private void DgvLabBook_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
             _service.IconInCellPainting(e);
+        }
+
+        private void DgvLabBook_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            _service.BrightForeColorInDeleted(e);
         }
 
         #endregion

@@ -15,6 +15,7 @@ namespace LabBook.Service
         private static readonly string dataFormFileName = "LabBookForm";
 
         private static readonly SolidBrush redBrush = new SolidBrush(Color.Red);
+        private static readonly Color LightGrey = Color.FromArgb(200, 210, 210, 210);
 
         private readonly User _user;
         private readonly SqlConnection _connection;
@@ -210,21 +211,23 @@ namespace LabBook.Service
             DataRowView current = null;
             long id = -1;
             bool admin = false;
+            bool deleted = true;
 
             if (_labBookBindingSource.Count > 0)
             {
                 current = (DataRowView)_labBookBindingSource.Current;
                 admin = (long)current["user_id"] == _user.Id || _labBookForm.IsAdmin ? true : false;
+                deleted = (bool)current["deleted"];
                 id = (long)current["id"];
             }
 
-            if (admin)
+            if (deleted || !admin)
             {
-                UnblockControls();
+                BlockControls();
             }
             else
             {
-                BlockControls();
+                UnblockControls();
             }
         }
 
@@ -257,18 +260,44 @@ namespace LabBook.Service
 
         public void IconInCellPainting(DataGridViewRowPostPaintEventArgs e)
         {
-            int start = e.RowBounds.Left + 25;
-            int width = 4;
             long userId = (long)_labBookForm.GetDgvLabBook.Rows[e.RowIndex].Cells["user_id"].Value;
-            if (_user.Id != userId)
+            bool deleted = (bool)_labBookForm.GetDgvLabBook.Rows[e.RowIndex].Cells["deleted"].Value;
+
+            if (deleted)
             {
-                Rectangle rectangleTop = new Rectangle(start, e.RowBounds.Top + 4, width, e.RowBounds.Height - 14);
-                Rectangle rectangleBottom = new Rectangle(start, e.RowBounds.Top + e.RowBounds.Height - 8, width, 4);
+                string drawString = "Deleted ... Deleted ...";
+                StringFormat drawFormat = new StringFormat();
+                drawFormat.Alignment = StringAlignment.Center;
+                Font drawFont = new Font("Arial", 12, FontStyle.Bold);
+                int x = _labBookForm.GetDgvLabBook.RowHeadersWidth + 20;
+                int y = e.RowBounds.Top + 4;
+                int width = 300;
+                int height = e.RowBounds.Height;
+                Rectangle drawRect = new Rectangle(x, y, width, height);
+
+                e.Graphics.DrawString(drawString, drawFont, redBrush, drawRect, drawFormat);
+            }
+            else if (_user.Id != userId)
+            {
+                int x = e.RowBounds.Left + 25;
+                int width = 4;
+                Rectangle rectangleTop = new Rectangle(x, e.RowBounds.Top + 4, width, e.RowBounds.Height - 14);
+                Rectangle rectangleBottom = new Rectangle(x, e.RowBounds.Top + e.RowBounds.Height - 8, width, 4);
+
                 e.Graphics.FillRectangle(redBrush, rectangleTop);
                 e.Graphics.FillRectangle(redBrush, rectangleBottom);
             }
         }
 
+        public void BrightForeColorInDeleted(DataGridViewCellFormattingEventArgs e)
+        {
+            bool deleted = (bool)_labBookForm.GetDgvLabBook.Rows[e.RowIndex].Cells["deleted"].Value;
+
+            if (deleted)
+            {
+                e.CellStyle.ForeColor = LightGrey;
+            }
+        }
 
         #endregion
     }

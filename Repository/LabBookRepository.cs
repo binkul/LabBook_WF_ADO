@@ -9,7 +9,7 @@ namespace LabBook.Repository
     public class LabBookRepository
     {
         private readonly string _getAllLabBookQuery = "Select l.id, l.title, l.density, l.observation, l.remarks, l.user_id, u.identifier, " + 
-                "l.cycle_id, c.name as cyc_name, l.project_id, l.created, l.modified, l.deleted From LabBook.dbo.ExpLabBook l left join " +
+                "l.cycle_id, c.name as cyc_name, l.created, l.modified, l.deleted From LabBook.dbo.ExpLabBook l left join " +
                 "LabBook.dbo.Users u on l.user_id=u.id left join LabBook.dbo.ExpCycle c on l.cycle_id= c.id Order By l.id";
 
         private readonly User _user;

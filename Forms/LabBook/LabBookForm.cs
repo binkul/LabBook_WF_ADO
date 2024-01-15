@@ -23,12 +23,14 @@ namespace LabBook.Forms.LabBook
         public bool IsAdmin => _user.Permission.ToLower().Equals("admin");
         public DataGridView GetDgvLabBook => DgvLabBook;
         public BindingNavigator GetBindingNavigator => BindingNavigatorMain;
-        public TextBox GetTxtTitle => TxtTitle;
+        public TextBox GetTitle => TxtTitle;
         public TextBox GetNrDFilter => TxtNrDFilter;
         public TextBox GetTitleFilter => TxtTitleFilter;
         public TextBox GetIdentifierFilter => TxtIdentifierFilter;
+        public Label GetLabelNrD => LblNrD;
+        public Label GetDateCreated => LblDateCreated;
+        public Label GetDateModified => LblDateModified;
         public ComboBox GetExpCmbCycle => CmbExpCycle;
-        public ComboBox GetCmbProject => CmbProject;
         public ComboBox GetComboCycleFilter => CmbCycleFilter;
         public ComboBox GetComboExpCycle => CmbExpCycle;
 

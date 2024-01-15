@@ -2,6 +2,7 @@
 using LabBook.Commons;
 using LabBook.Forms.LabBook;
 using LabBook.Repository;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -26,8 +27,10 @@ namespace LabBook.Service
         private DataTable _labBookTable;
         private DataView _labBookView;
         private BindingSource _labBookBindingSource;
+        private DataRowView _currentLabBook;
 
         private IList<ExpCycle> _expCycles;
+        private IList<ExpCycle> _expFilterCycles;
 
         private IDictionary<string, double> _formData = CommonFunction.LoadWindowsDataAsDictionary(dataFormFileName);
 
@@ -83,8 +86,8 @@ namespace LabBook.Service
         {
             GetAllLabBook();
             PrepareDataGridViewLabBook();
-
-            GetAllExpCycles();
+            PrepareOthersControls();
+            FillComboBoxes();
 
             LabBookBindingSource_PositionChanged(null, null);
         }
@@ -106,7 +109,6 @@ namespace LabBook.Service
 
             view.Columns["user_id"].Visible = false;
             view.Columns["cycle_id"].Visible = false;
-            view.Columns["project_id"].Visible = false;
             view.Columns["deleted"].Visible = false;
             view.Columns.Remove("observation");
             view.Columns.Remove("remarks");
@@ -149,6 +151,154 @@ namespace LabBook.Service
             ResizeFilters();
         }
 
+        private void PrepareOthersControls()
+        {
+            _labBookForm.GetTitle.DataBindings.Clear();
+
+            _labBookForm.GetTitle.DataBindings.Add("Text", _labBookBindingSource, "title");
+        }
+
+        private void FillComboBoxes()
+        {
+            _expCycles = _expCycleRepository.GetAllExpCycles();
+            _labBookForm.GetComboExpCycle.DataSource = _expCycles;
+            _labBookForm.GetComboExpCycle.ValueMember = "Id";
+            _labBookForm.GetComboExpCycle.DisplayMember = "Name";
+            _labBookForm.GetComboExpCycle.SelectedIndexChanged += GetComboExpCycle_SelectedIndexChanged;
+
+            _expFilterCycles = new List<ExpCycle>();
+            foreach (ExpCycle cycle in _expCycles)
+            {
+                _expFilterCycles.Add(cycle);
+            }
+
+            _labBookForm.GetComboCycleFilter.DataSource = _expFilterCycles;
+            _labBookForm.GetComboCycleFilter.ValueMember = "Id";
+            _labBookForm.GetComboCycleFilter.DisplayMember = "Name";
+        }
+
+        #endregion
+
+
+        #region Load Data from Database
+
+        private void GetAllLabBook()
+        {
+            _labBookTable = _labBookRepository.GetAllLabBook();
+            _labBookView = new DataView(_labBookTable);
+            _labBookView.Sort = "id";
+
+            _labBookBindingSource = new BindingSource();
+            _labBookBindingSource.DataSource = _labBookView;
+            _labBookBindingSource.PositionChanged += LabBookBindingSource_PositionChanged;
+            _labBookForm.GetBindingNavigator.BindingSource = _labBookBindingSource;
+        }
+
+        #endregion
+
+
+        #region Navigation and Currents
+
+        private void LabBookBindingSource_PositionChanged(object sender, System.EventArgs e)
+        {
+            long id = -1;
+            bool admin = false;
+            bool deleted = true;
+
+            #region Get Current
+
+            if (_labBookBindingSource.Count > 0)
+            {
+                _currentLabBook = (DataRowView)_labBookBindingSource.Current;
+            }
+            else
+            {
+                _currentLabBook = null;
+            }
+
+            #endregion
+
+            #region Set Current Controls
+
+            if (_currentLabBook != null)
+            {
+                DateTime date = Convert.ToDateTime(_currentLabBook["created"]);
+                string show = date.ToString("dd-MM-yyyy");
+                _labBookForm.GetDateCreated.Text = show;
+                date = Convert.ToDateTime(_currentLabBook["modified"]);
+                show = date.ToString("dd-MM-yyyy");
+                _labBookForm.GetDateModified.Text = show;
+
+                string nr = "D" + _currentLabBook["id"].ToString();
+                _labBookForm.GetLabelNrD.Text = nr;
+            }
+            else
+            {
+                _labBookForm.GetLabelNrD.Text = id.ToString();
+                _labBookForm.GetDateCreated.Text = "Brak";
+                _labBookForm.GetDateModified.Text = "Brak";
+            }
+
+            #endregion
+
+            #region Synchro Combo Experimental Cycle
+
+            if (_currentLabBook != null)
+            {
+                _labBookForm.GetComboExpCycle.SelectedValue = _currentLabBook["cycle_id"];
+            }
+            else
+            {
+                _labBookForm.GetComboExpCycle.SelectedValue = 1;
+            }
+
+            #endregion
+
+            #region Block Controls
+
+            if (_currentLabBook != null)
+            {
+                admin = (long)_currentLabBook["user_id"] == _user.Id || _labBookForm.IsAdmin ? true : false;
+                deleted = (bool)_currentLabBook["deleted"];
+                id = (long)_currentLabBook["id"];
+            }
+
+            if (deleted || !admin)
+            {
+                BlockControls();
+            }
+            else
+            {
+                UnblockControls();
+            }
+
+            #endregion
+        }
+
+        private void GetComboExpCycle_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void BlockControls()
+        {
+            _labBookForm.GetDgvLabBook.ReadOnly = true;
+            _labBookForm.GetTitle.ReadOnly = true;
+            _labBookForm.GetExpCmbCycle.Enabled = false;
+        }
+
+        private void UnblockControls()
+        {
+            _labBookForm.GetDgvLabBook.ReadOnly = false;
+            _labBookForm.GetTitle.ReadOnly = false;
+            _labBookForm.GetExpCmbCycle.Enabled = true;
+        }
+
+        #endregion
+
+
+        #region Filter Data
+
         public void ResizeFilters()
         {
             int left = _labBookForm.GetDgvLabBook.Left + _labBookForm.GetDgvLabBook.RowHeadersWidth;
@@ -169,88 +319,6 @@ namespace LabBook.Service
             _labBookForm.GetIdentifierFilter.Left = _labBookForm.GetComboCycleFilter.Left + _labBookForm.GetDgvLabBook.Columns["cyc_name"].Width + _labBookForm.GetDgvLabBook.Columns["density"].Width;
             _labBookForm.GetIdentifierFilter.Width = _labBookForm.GetDgvLabBook.Columns["identifier"].Width - 1;
             _labBookForm.GetIdentifierFilter.Top = top;
-        }
-
-        #endregion
-
-
-        #region Load Data from Database
-
-        private void GetAllLabBook()
-        {
-            _labBookTable = _labBookRepository.GetAllLabBook();
-            _labBookView = new DataView(_labBookTable);
-            _labBookView.Sort = "id";
-
-            _labBookBindingSource = new BindingSource();
-            _labBookBindingSource.DataSource = _labBookView;
-            _labBookBindingSource.PositionChanged += LabBookBindingSource_PositionChanged;
-            _labBookForm.GetBindingNavigator.BindingSource = _labBookBindingSource;
-        }
-
-        private void GetAllExpCycles()
-        {
-            _expCycles = _expCycleRepository.GetAllExpCycles();
-            _labBookForm.GetComboExpCycle.DataSource = _expCycles;
-            _labBookForm.GetComboExpCycle.ValueMember = "Id";
-            _labBookForm.GetComboExpCycle.DisplayMember = "Name";
-            _labBookForm.GetComboExpCycle.SelectedIndexChanged += GetComboExpCycle_SelectedIndexChanged;
-
-            _labBookForm.GetComboCycleFilter.DataSource = _expCycles;
-            _labBookForm.GetComboCycleFilter.ValueMember = "Id";
-            _labBookForm.GetComboCycleFilter.DisplayMember = "Name";
-        }
-
-        #endregion
-
-
-        #region Navigation and Currents
-
-        private void LabBookBindingSource_PositionChanged(object sender, System.EventArgs e)
-        {
-            DataRowView current = null;
-            long id = -1;
-            bool admin = false;
-            bool deleted = true;
-
-            if (_labBookBindingSource.Count > 0)
-            {
-                current = (DataRowView)_labBookBindingSource.Current;
-                admin = (long)current["user_id"] == _user.Id || _labBookForm.IsAdmin ? true : false;
-                deleted = (bool)current["deleted"];
-                id = (long)current["id"];
-            }
-
-            if (deleted || !admin)
-            {
-                BlockControls();
-            }
-            else
-            {
-                UnblockControls();
-            }
-        }
-
-        private void GetComboExpCycle_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-
-        }
-
-        private void BlockControls()
-        {
-            _labBookForm.GetDgvLabBook.ReadOnly = true;
-            _labBookForm.GetTxtTitle.ReadOnly = true;
-            _labBookForm.GetExpCmbCycle.Enabled = false;
-            _labBookForm.GetCmbProject.Enabled = false;
-        }
-
-        private void UnblockControls()
-        {
-            _labBookForm.GetDgvLabBook.ReadOnly = false;
-            _labBookForm.GetTxtTitle.ReadOnly = false;
-            _labBookForm.GetExpCmbCycle.Enabled = true;
-            _labBookForm.GetCmbProject.Enabled = true;
-
         }
 
         #endregion

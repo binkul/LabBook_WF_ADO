@@ -31,11 +31,6 @@ namespace LabBook.Forms.LabBook
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LabBookForm));
-            this.ToolStripMenu = new System.Windows.Forms.ToolStrip();
-            this.ToolStripAdd = new System.Windows.Forms.ToolStripButton();
-            this.ToolStripDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.ToolStripSave = new System.Windows.Forms.ToolStripButton();
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.plikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dodajToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,12 +63,15 @@ namespace LabBook.Forms.LabBook
             this.TabPageClass = new System.Windows.Forms.TabPage();
             this.CmbExpCycle = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.CmbProject = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.ToolStripMenu.SuspendLayout();
+            this.LblDateModified = new System.Windows.Forms.Label();
+            this.BtnConProject = new System.Windows.Forms.Button();
+            this.BtnOpenProject = new System.Windows.Forms.Button();
+            this.BtnSave = new System.Windows.Forms.Button();
+            this.BtnDelete = new System.Windows.Forms.Button();
+            this.BtnAddNew = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigatorMain)).BeginInit();
             this.BindingNavigatorMain.SuspendLayout();
@@ -81,49 +79,6 @@ namespace LabBook.Forms.LabBook
             this.TabPageMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvLabBook)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ToolStripMenu
-            // 
-            this.ToolStripMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.ToolStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripAdd,
-            this.ToolStripDelete,
-            this.toolStripSeparator1,
-            this.ToolStripSave});
-            this.ToolStripMenu.Location = new System.Drawing.Point(0, 31);
-            this.ToolStripMenu.Name = "ToolStripMenu";
-            this.ToolStripMenu.Size = new System.Drawing.Size(1227, 27);
-            this.ToolStripMenu.TabIndex = 0;
-            this.ToolStripMenu.Text = "toolStrip1";
-            // 
-            // ToolStripAdd
-            // 
-            this.ToolStripAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ToolStripAdd.Image = global::LabBook.Properties.Resources.Add_new;
-            this.ToolStripAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ToolStripAdd.Name = "ToolStripAdd";
-            this.ToolStripAdd.Size = new System.Drawing.Size(29, 24);
-            // 
-            // ToolStripDelete
-            // 
-            this.ToolStripDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ToolStripDelete.Image = global::LabBook.Properties.Resources.Delete;
-            this.ToolStripDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ToolStripDelete.Name = "ToolStripDelete";
-            this.ToolStripDelete.Size = new System.Drawing.Size(29, 24);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
-            // 
-            // ToolStripSave
-            // 
-            this.ToolStripSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ToolStripSave.Image = global::LabBook.Properties.Resources.Save;
-            this.ToolStripSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ToolStripSave.Name = "ToolStripSave";
-            this.ToolStripSave.Size = new System.Drawing.Size(29, 24);
             // 
             // MenuStrip
             // 
@@ -153,22 +108,22 @@ namespace LabBook.Forms.LabBook
             // LblNrD
             // 
             this.LblNrD.AutoSize = true;
-            this.LblNrD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.LblNrD.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.LblNrD.ForeColor = System.Drawing.Color.Blue;
-            this.LblNrD.Location = new System.Drawing.Point(22, 73);
+            this.LblNrD.Location = new System.Drawing.Point(12, 101);
             this.LblNrD.Name = "LblNrD";
-            this.LblNrD.Size = new System.Drawing.Size(49, 20);
+            this.LblNrD.Size = new System.Drawing.Size(32, 25);
             this.LblNrD.TabIndex = 2;
-            this.LblNrD.Text = "1000";
+            this.LblNrD.Text = "-1";
             // 
             // TxtTitle
             // 
             this.TxtTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.TxtTitle.Location = new System.Drawing.Point(98, 70);
+            this.TxtTitle.Location = new System.Drawing.Point(115, 101);
             this.TxtTitle.Name = "TxtTitle";
-            this.TxtTitle.Size = new System.Drawing.Size(829, 27);
+            this.TxtTitle.Size = new System.Drawing.Size(812, 27);
             this.TxtTitle.TabIndex = 1;
             this.TxtTitle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtTitle_KeyPress);
             // 
@@ -178,11 +133,11 @@ namespace LabBook.Forms.LabBook
             this.LblDateCreated.AutoSize = true;
             this.LblDateCreated.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.LblDateCreated.ForeColor = System.Drawing.Color.Blue;
-            this.LblDateCreated.Location = new System.Drawing.Point(1074, 73);
+            this.LblDateCreated.Location = new System.Drawing.Point(1074, 104);
             this.LblDateCreated.Name = "LblDateCreated";
-            this.LblDateCreated.Size = new System.Drawing.Size(131, 20);
+            this.LblDateCreated.Size = new System.Drawing.Size(59, 20);
             this.LblDateCreated.TabIndex = 4;
-            this.LblDateCreated.Text = " DD-MM-YYYY";
+            this.LblDateCreated.Text = "BRAK";
             // 
             // BindingNavigatorMain
             // 
@@ -303,10 +258,10 @@ namespace LabBook.Forms.LabBook
             this.tabControl1.Controls.Add(this.TabPageGloss);
             this.tabControl1.Controls.Add(this.TabPageClass);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.tabControl1.Location = new System.Drawing.Point(0, 151);
+            this.tabControl1.Location = new System.Drawing.Point(0, 178);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1227, 472);
+            this.tabControl1.Size = new System.Drawing.Size(1227, 445);
             this.tabControl1.TabIndex = 6;
             // 
             // TabPageMain
@@ -320,7 +275,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageMain.Location = new System.Drawing.Point(4, 29);
             this.TabPageMain.Name = "TabPageMain";
             this.TabPageMain.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageMain.Size = new System.Drawing.Size(1219, 439);
+            this.TabPageMain.Size = new System.Drawing.Size(1219, 412);
             this.TabPageMain.TabIndex = 0;
             this.TabPageMain.Text = "Strona główna";
             // 
@@ -367,7 +322,7 @@ namespace LabBook.Forms.LabBook
             this.DgvLabBook.Name = "DgvLabBook";
             this.DgvLabBook.RowHeadersWidth = 51;
             this.DgvLabBook.RowTemplate.Height = 24;
-            this.DgvLabBook.Size = new System.Drawing.Size(1208, 384);
+            this.DgvLabBook.Size = new System.Drawing.Size(1208, 357);
             this.DgvLabBook.TabIndex = 0;
             this.DgvLabBook.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.DgvLabBook_ColumnWidthChanged);
             // 
@@ -431,9 +386,9 @@ namespace LabBook.Forms.LabBook
             this.CmbExpCycle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbExpCycle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.CmbExpCycle.FormattingEnabled = true;
-            this.CmbExpCycle.Location = new System.Drawing.Point(98, 103);
+            this.CmbExpCycle.Location = new System.Drawing.Point(115, 134);
             this.CmbExpCycle.Name = "CmbExpCycle";
-            this.CmbExpCycle.Size = new System.Drawing.Size(405, 28);
+            this.CmbExpCycle.Size = new System.Drawing.Size(388, 28);
             this.CmbExpCycle.TabIndex = 7;
             // 
             // label1
@@ -441,33 +396,11 @@ namespace LabBook.Forms.LabBook
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.ForeColor = System.Drawing.Color.Blue;
-            this.label1.Location = new System.Drawing.Point(22, 106);
+            this.label1.Location = new System.Drawing.Point(12, 137);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(45, 20);
             this.label1.TabIndex = 8;
             this.label1.Text = "Cykl";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.ForeColor = System.Drawing.Color.Blue;
-            this.label2.Location = new System.Drawing.Point(604, 106);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 20);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Projekt";
-            // 
-            // CmbProject
-            // 
-            this.CmbProject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CmbProject.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.CmbProject.FormattingEnabled = true;
-            this.CmbProject.Location = new System.Drawing.Point(707, 103);
-            this.CmbProject.Name = "CmbProject";
-            this.CmbProject.Size = new System.Drawing.Size(220, 28);
-            this.CmbProject.TabIndex = 10;
             // 
             // label3
             // 
@@ -475,7 +408,7 @@ namespace LabBook.Forms.LabBook
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label3.ForeColor = System.Drawing.Color.Blue;
-            this.label3.Location = new System.Drawing.Point(962, 73);
+            this.label3.Location = new System.Drawing.Point(962, 104);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 20);
             this.label3.TabIndex = 11;
@@ -487,34 +420,102 @@ namespace LabBook.Forms.LabBook
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label4.ForeColor = System.Drawing.Color.Blue;
-            this.label4.Location = new System.Drawing.Point(951, 111);
+            this.label4.Location = new System.Drawing.Point(951, 142);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(108, 20);
             this.label4.TabIndex = 13;
             this.label4.Text = "Modyfikacja";
             // 
-            // label5
+            // LblDateModified
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label5.ForeColor = System.Drawing.Color.Blue;
-            this.label5.Location = new System.Drawing.Point(1074, 111);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(131, 20);
-            this.label5.TabIndex = 12;
-            this.label5.Text = " DD-MM-YYYY";
+            this.LblDateModified.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.LblDateModified.AutoSize = true;
+            this.LblDateModified.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.LblDateModified.ForeColor = System.Drawing.Color.Blue;
+            this.LblDateModified.Location = new System.Drawing.Point(1074, 142);
+            this.LblDateModified.Name = "LblDateModified";
+            this.LblDateModified.Size = new System.Drawing.Size(59, 20);
+            this.LblDateModified.TabIndex = 12;
+            this.LblDateModified.Text = "BRAK";
+            // 
+            // BtnConProject
+            // 
+            this.BtnConProject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnConProject.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.BtnConProject.ForeColor = System.Drawing.Color.Red;
+            this.BtnConProject.Location = new System.Drawing.Point(699, 135);
+            this.BtnConProject.Name = "BtnConProject";
+            this.BtnConProject.Size = new System.Drawing.Size(228, 37);
+            this.BtnConProject.TabIndex = 14;
+            this.BtnConProject.Text = "Projekty powiązane";
+            this.BtnConProject.UseVisualStyleBackColor = true;
+            // 
+            // BtnOpenProject
+            // 
+            this.BtnOpenProject.BackgroundImage = global::LabBook.Properties.Resources.Project_icon;
+            this.BtnOpenProject.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BtnOpenProject.Location = new System.Drawing.Point(203, 35);
+            this.BtnOpenProject.Name = "BtnOpenProject";
+            this.BtnOpenProject.Size = new System.Drawing.Size(50, 48);
+            this.BtnOpenProject.TabIndex = 15;
+            this.BtnOpenProject.UseVisualStyleBackColor = true;
+            // 
+            // BtnSave
+            // 
+            this.BtnSave.BackgroundImage = global::LabBook.Properties.Resources.Save;
+            this.BtnSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BtnSave.Location = new System.Drawing.Point(136, 35);
+            this.BtnSave.Name = "BtnSave";
+            this.BtnSave.Size = new System.Drawing.Size(50, 48);
+            this.BtnSave.TabIndex = 16;
+            this.BtnSave.UseVisualStyleBackColor = true;
+            // 
+            // BtnDelete
+            // 
+            this.BtnDelete.BackgroundImage = global::LabBook.Properties.Resources.Delete;
+            this.BtnDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BtnDelete.Location = new System.Drawing.Point(72, 35);
+            this.BtnDelete.Name = "BtnDelete";
+            this.BtnDelete.Size = new System.Drawing.Size(50, 48);
+            this.BtnDelete.TabIndex = 17;
+            this.BtnDelete.UseVisualStyleBackColor = true;
+            // 
+            // BtnAddNew
+            // 
+            this.BtnAddNew.BackgroundImage = global::LabBook.Properties.Resources.Add_new;
+            this.BtnAddNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BtnAddNew.Location = new System.Drawing.Point(16, 34);
+            this.BtnAddNew.Name = "BtnAddNew";
+            this.BtnAddNew.Size = new System.Drawing.Size(50, 48);
+            this.BtnAddNew.TabIndex = 18;
+            this.BtnAddNew.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.groupBox1.Location = new System.Drawing.Point(4, 80);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(1215, 10);
+            this.groupBox1.TabIndex = 19;
+            this.groupBox1.TabStop = false;
             // 
             // LabBookForm
             // 
+            this.AccessibleRole = System.Windows.Forms.AccessibleRole.WhiteSpace;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1227, 653);
+            this.Controls.Add(this.BtnAddNew);
+            this.Controls.Add(this.BtnDelete);
+            this.Controls.Add(this.BtnSave);
+            this.Controls.Add(this.BtnOpenProject);
+            this.Controls.Add(this.BtnConProject);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.LblDateModified);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.CmbProject);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CmbExpCycle);
             this.Controls.Add(this.tabControl1);
@@ -522,16 +523,14 @@ namespace LabBook.Forms.LabBook
             this.Controls.Add(this.LblDateCreated);
             this.Controls.Add(this.TxtTitle);
             this.Controls.Add(this.LblNrD);
-            this.Controls.Add(this.ToolStripMenu);
             this.Controls.Add(this.MenuStrip);
+            this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MenuStrip;
             this.Name = "LabBookForm";
             this.Text = "LabBook";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LabBookForm_FormClosing);
             this.Load += new System.EventHandler(this.LabBookForm_Load);
-            this.ToolStripMenu.ResumeLayout(false);
-            this.ToolStripMenu.PerformLayout();
             this.MenuStrip.ResumeLayout(false);
             this.MenuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigatorMain)).EndInit();
@@ -547,9 +546,6 @@ namespace LabBook.Forms.LabBook
         }
 
         #endregion
-
-        private System.Windows.Forms.ToolStrip ToolStripMenu;
-        private System.Windows.Forms.ToolStripButton ToolStripAdd;
         private System.Windows.Forms.MenuStrip MenuStrip;
         private System.Windows.Forms.ToolStripMenuItem plikToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dodajToolStripMenuItem;
@@ -567,9 +563,6 @@ namespace LabBook.Forms.LabBook
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
-        private System.Windows.Forms.ToolStripButton ToolStripSave;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton ToolStripDelete;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage TabPageMain;
         private System.Windows.Forms.TabPage TabPageRemarks;
@@ -585,10 +578,14 @@ namespace LabBook.Forms.LabBook
         private System.Windows.Forms.ComboBox CmbCycleFilter;
         private System.Windows.Forms.ComboBox CmbExpCycle;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox CmbProject;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label LblDateModified;
+        private System.Windows.Forms.Button BtnConProject;
+        private System.Windows.Forms.Button BtnOpenProject;
+        private System.Windows.Forms.Button BtnSave;
+        private System.Windows.Forms.Button BtnDelete;
+        private System.Windows.Forms.Button BtnAddNew;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

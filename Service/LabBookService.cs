@@ -29,6 +29,8 @@ namespace LabBook.Service
         private BindingSource _labBookBindingSource;
         private DataRowView _currentLabBook;
 
+        private bool _modified = false;
+
         private IList<ExpCycle> _expCycles;
         private IList<ExpCycle> _expFilterCycles;
 
@@ -187,6 +189,7 @@ namespace LabBook.Service
         private void GetAllLabBook()
         {
             _labBookTable = _labBookRepository.GetAllLabBook();
+            _labBookTable.ColumnChanging += LabBookTable_ColumnChanging;
             _labBookView = new DataView(_labBookTable);
             _labBookView.Sort = "id";
 
@@ -199,7 +202,27 @@ namespace LabBook.Service
         #endregion
 
 
-        #region Navigation and Currents
+        #region Save Delete
+
+        public bool Modify
+        {
+            get => _modified;
+            set
+            {
+                _modified = value;
+                _labBookForm.EnableSaveButton();
+            }
+        }
+
+        #endregion
+
+
+        #region Current/Binkding/Navigation/DataTable
+
+        private void LabBookTable_ColumnChanging(object sender, DataColumnChangeEventArgs e)
+        {
+            Modify = true;
+        }
 
         private void LabBookBindingSource_PositionChanged(object sender, System.EventArgs e)
         {
@@ -279,7 +302,16 @@ namespace LabBook.Service
 
         private void GetComboExpCycle_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-
+            if (_currentLabBook != null)
+            {
+                ExpCycle widok = (ExpCycle)_labBookForm.GetExpCmbCycle.SelectedItem;
+                if ((_currentLabBook["cycle_id"].ToString() != widok.Id.ToString()))
+                {
+                    _currentLabBook["cycle_id"] = widok.Id;
+                    _currentLabBook["cyc_name"] = widok.Name;
+                    _labBookBindingSource.EndEdit();
+                }
+            }
         }
 
         private void BlockControls()

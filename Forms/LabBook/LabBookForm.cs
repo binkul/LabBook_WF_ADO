@@ -34,6 +34,8 @@ namespace LabBook.Forms.LabBook
         public ComboBox GetComboCycleFilter => CmbCycleFilter;
         public ComboBox GetComboExpCycle => CmbExpCycle;
 
+        public void EnableSaveButton() => BtnSave.Enabled = _service.Modify;
+
         #region Form Open/Load/Closing
 
         private void LabBookForm_Load(object sender, System.EventArgs e)
@@ -87,6 +89,7 @@ namespace LabBook.Forms.LabBook
         }
 
         #endregion
+
 
         #region Events
         private void TxtTitle_KeyPress(object sender, KeyPressEventArgs e)

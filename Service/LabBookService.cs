@@ -167,6 +167,8 @@ namespace LabBook.Service
             _labBookForm.GetComboExpCycle.SelectedIndexChanged += GetComboExpCycle_SelectedIndexChanged;
 
             _expFilterCycles = new List<ExpCycle>();
+            ExpCycle allData = new ExpCycle(0, "-- Wszystkie --", 1, DateTime.Now);
+            _expFilterCycles.Add(allData);
             foreach (ExpCycle cycle in _expCycles)
             {
                 _expFilterCycles.Add(cycle);
@@ -282,13 +284,23 @@ namespace LabBook.Service
 
         private void BlockControls()
         {
-            _labBookForm.GetDgvLabBook.ReadOnly = true;
+            DataGridView view = _labBookForm.GetDgvLabBook;
+
+            view.Columns["id"].ReadOnly = true;
+            view.Columns["title"].ReadOnly = true;
+            view.Columns["cyc_name"].ReadOnly = true;
+            view.Columns["density"].ReadOnly = true;
+            view.Columns["identifier"].ReadOnly = true;
+
             _labBookForm.GetTitle.ReadOnly = true;
             _labBookForm.GetExpCmbCycle.Enabled = false;
         }
 
         private void UnblockControls()
         {
+            DataGridView view = _labBookForm.GetDgvLabBook;
+
+            view.Columns["density"].ReadOnly = false;
             _labBookForm.GetDgvLabBook.ReadOnly = false;
             _labBookForm.GetTitle.ReadOnly = false;
             _labBookForm.GetExpCmbCycle.Enabled = true;
@@ -319,6 +331,111 @@ namespace LabBook.Service
             _labBookForm.GetIdentifierFilter.Left = _labBookForm.GetComboCycleFilter.Left + _labBookForm.GetDgvLabBook.Columns["cyc_name"].Width + _labBookForm.GetDgvLabBook.Columns["density"].Width;
             _labBookForm.GetIdentifierFilter.Width = _labBookForm.GetDgvLabBook.Columns["identifier"].Width - 1;
             _labBookForm.GetIdentifierFilter.Top = top;
+        }
+
+        public void Filter()
+        {
+            string id = _labBookForm.GetNrDFilter.Text;
+            string name = _labBookForm.GetTitleFilter.Text;
+            string cycle = _labBookForm.GetComboCycleFilter.Text;
+            string user = _labBookForm.GetIdentifierFilter.Text;
+            string filter = "";
+
+            #region Filter by Id
+
+            if (!CheckNrD(id))
+            {
+                _labBookView.RowFilter = "";
+                _labBookBindingSource.Position = 0;
+                return;
+            }
+
+            if (id.Length > 0)
+            {
+                filter += "id >= " + id;
+            }
+
+            #endregion
+
+            #region Filter by title
+
+            if (name.Length > 0)
+            {
+                if (filter.Length > 0)
+                {
+                    filter += "and title LIKE '*" + name + "*'";
+                }
+                else
+                {
+                    filter += "title LIKE '*" + name + "*'";
+                }
+            }
+
+            #endregion
+
+            #region Filter by Cycle
+
+            if (cycle.Length > 0 && cycle != "-- Wszystkie --")
+            {
+                if (filter.Length > 0)
+                {
+                    filter += "and cyc_name LIKE '" + cycle + "'";
+                }
+                else
+                {
+                    filter += "cyc_name LIKE '" + cycle + "'";
+                }
+            }
+
+            #endregion
+
+            #region Filter by User
+
+            if (user.Length > 0)
+            {
+                if (filter.Length > 0)
+                {
+                    filter += "and identifier LIKE '" + user + "*'";
+                }
+                else
+                {
+                    filter += "identifier LIKE '" + user + "*'";
+                }
+            }
+
+            #endregion
+
+            #region Add Filter to view
+
+            if (filter.Length > 0)
+            {
+                _labBookView.RowFilter = filter;
+            }
+            else
+            {
+                _labBookView.RowFilter = "";
+            }
+
+            _labBookBindingSource.Position = 0;
+
+            #endregion
+        }
+
+        private bool CheckNrD(string id)
+        {
+            long nr = -1;
+
+            if (id.Length ==0)
+            {
+                return true;
+            }
+            else if (!long.TryParse(id, out nr))
+            {
+                MessageBox.Show("Wprowadzona wartośc musi byc liczbą całkowitą!", "Błąd wartości", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            else
+                return true;
         }
 
         #endregion

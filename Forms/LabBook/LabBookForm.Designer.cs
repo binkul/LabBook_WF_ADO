@@ -211,7 +211,6 @@ namespace LabBook.Forms.LabBook
             // 
             this.bindingNavigatorPositionItem.AccessibleName = "Pozycja";
             this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
             this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 27);
             this.bindingNavigatorPositionItem.Text = "0";
@@ -287,6 +286,7 @@ namespace LabBook.Forms.LabBook
             this.CmbCycleFilter.Name = "CmbCycleFilter";
             this.CmbCycleFilter.Size = new System.Drawing.Size(177, 28);
             this.CmbCycleFilter.TabIndex = 4;
+            this.CmbCycleFilter.SelectedIndexChanged += new System.EventHandler(this.CmbCycleFilter_SelectedIndexChanged);
             // 
             // TxtIdentifierFilter
             // 
@@ -294,6 +294,7 @@ namespace LabBook.Forms.LabBook
             this.TxtIdentifierFilter.Name = "TxtIdentifierFilter";
             this.TxtIdentifierFilter.Size = new System.Drawing.Size(94, 27);
             this.TxtIdentifierFilter.TabIndex = 3;
+            this.TxtIdentifierFilter.TextChanged += new System.EventHandler(this.TxtNrDFilter_TextChanged);
             // 
             // TxtTitleFilter
             // 
@@ -301,6 +302,7 @@ namespace LabBook.Forms.LabBook
             this.TxtTitleFilter.Name = "TxtTitleFilter";
             this.TxtTitleFilter.Size = new System.Drawing.Size(122, 27);
             this.TxtTitleFilter.TabIndex = 2;
+            this.TxtTitleFilter.TextChanged += new System.EventHandler(this.TxtNrDFilter_TextChanged);
             // 
             // TxtNrDFilter
             // 
@@ -308,6 +310,7 @@ namespace LabBook.Forms.LabBook
             this.TxtNrDFilter.Name = "TxtNrDFilter";
             this.TxtNrDFilter.Size = new System.Drawing.Size(97, 27);
             this.TxtNrDFilter.TabIndex = 1;
+            this.TxtNrDFilter.TextChanged += new System.EventHandler(this.TxtNrDFilter_TextChanged);
             // 
             // DgvLabBook
             // 
@@ -332,7 +335,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageRemarks.Location = new System.Drawing.Point(4, 29);
             this.TabPageRemarks.Name = "TabPageRemarks";
             this.TabPageRemarks.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageRemarks.Size = new System.Drawing.Size(1219, 439);
+            this.TabPageRemarks.Size = new System.Drawing.Size(1219, 412);
             this.TabPageRemarks.TabIndex = 1;
             this.TabPageRemarks.Text = "Uwagi";
             // 
@@ -341,7 +344,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageObservation.BackColor = System.Drawing.SystemColors.Control;
             this.TabPageObservation.Location = new System.Drawing.Point(4, 29);
             this.TabPageObservation.Name = "TabPageObservation";
-            this.TabPageObservation.Size = new System.Drawing.Size(1219, 439);
+            this.TabPageObservation.Size = new System.Drawing.Size(1219, 412);
             this.TabPageObservation.TabIndex = 2;
             this.TabPageObservation.Text = "Obserwacje";
             // 
@@ -350,7 +353,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageViscosity.BackColor = System.Drawing.SystemColors.Control;
             this.TabPageViscosity.Location = new System.Drawing.Point(4, 29);
             this.TabPageViscosity.Name = "TabPageViscosity";
-            this.TabPageViscosity.Size = new System.Drawing.Size(1219, 439);
+            this.TabPageViscosity.Size = new System.Drawing.Size(1219, 412);
             this.TabPageViscosity.TabIndex = 3;
             this.TabPageViscosity.Text = "Lepkość";
             // 
@@ -359,7 +362,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageContrast.BackColor = System.Drawing.SystemColors.Control;
             this.TabPageContrast.Location = new System.Drawing.Point(4, 29);
             this.TabPageContrast.Name = "TabPageContrast";
-            this.TabPageContrast.Size = new System.Drawing.Size(1219, 439);
+            this.TabPageContrast.Size = new System.Drawing.Size(1219, 412);
             this.TabPageContrast.TabIndex = 4;
             this.TabPageContrast.Text = "Krycie";
             // 
@@ -368,7 +371,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageGloss.BackColor = System.Drawing.SystemColors.Control;
             this.TabPageGloss.Location = new System.Drawing.Point(4, 29);
             this.TabPageGloss.Name = "TabPageGloss";
-            this.TabPageGloss.Size = new System.Drawing.Size(1219, 439);
+            this.TabPageGloss.Size = new System.Drawing.Size(1219, 412);
             this.TabPageGloss.TabIndex = 5;
             this.TabPageGloss.Text = "Połysk";
             // 
@@ -377,7 +380,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageClass.BackColor = System.Drawing.SystemColors.Control;
             this.TabPageClass.Location = new System.Drawing.Point(4, 29);
             this.TabPageClass.Name = "TabPageClass";
-            this.TabPageClass.Size = new System.Drawing.Size(1219, 439);
+            this.TabPageClass.Size = new System.Drawing.Size(1219, 412);
             this.TabPageClass.TabIndex = 6;
             this.TabPageClass.Text = "Klasyfikacja";
             // 

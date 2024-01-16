@@ -58,6 +58,7 @@ namespace LabBook.Forms.LabBook
 
         #endregion
 
+
         #region Resize and change Filter boxes
 
         private void LabBookForm_Resize(object sender, System.EventArgs e)
@@ -87,6 +88,7 @@ namespace LabBook.Forms.LabBook
 
         #endregion
 
+        #region Events
         private void TxtTitle_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
@@ -100,5 +102,18 @@ namespace LabBook.Forms.LabBook
                 base.OnKeyPress(e);
             }
         }
+
+        private void TxtNrDFilter_TextChanged(object sender, System.EventArgs e)
+        {
+            _service.Filter();
+        }
+
+        private void CmbCycleFilter_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            _service.Filter();
+        }
+
+        #endregion
+
     }
 }

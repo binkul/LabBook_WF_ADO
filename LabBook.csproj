@@ -51,6 +51,7 @@
     <Compile Include="ADO\ExpCycle.cs" />
     <Compile Include="ADO\ProgramData.cs" />
     <Compile Include="ADO\User.cs" />
+    <Compile Include="Commons\ColumnData.cs" />
     <Compile Include="Commons\CommonFunction.cs" />
     <Compile Include="Commons\SerializeClass.cs" />
     <Compile Include="Forms\LabBook\LabBookForm.cs">

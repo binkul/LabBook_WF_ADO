@@ -22,6 +22,7 @@ namespace LabBook.Forms.LabBook
 
         public bool IsAdmin => _user.Permission.ToLower().Equals("admin");
         public DataGridView GetDgvLabBook => DgvLabBook;
+        public DataGridView GetDgvViscosity => DgvViscosity;
         public BindingNavigator GetBindingNavigator => BindingNavigatorMain;
         public TextBox GetTitle => TxtTitle;
         public TextBox GetNrDFilter => TxtNrDFilter;

@@ -93,6 +93,7 @@ namespace LabBook.Service
         {
             GetAllLabBook();
             PrepareDataGridViewLabBook();
+            PrepareDataGridViewViscosity();
             PrepareOthersControls();
             FillComboBoxes();
 
@@ -156,6 +157,42 @@ namespace LabBook.Service
             view.Columns["identifier"].SortMode = DataGridViewColumnSortMode.NotSortable;
 
             ResizeFilters();
+        }
+
+        private void PrepareDataGridViewViscosity()
+        {
+            DataGridView view = _labBookForm.GetDgvViscosity;
+            view.DataSource = _viscosityView;
+            view.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            view.RowsDefaultCellStyle.Font = new Font(view.DefaultCellStyle.Font.Name, 9, FontStyle.Regular);
+            view.ColumnHeadersDefaultCellStyle.Font = new Font(view.DefaultCellStyle.Font.Name, 9, FontStyle.Bold);
+            view.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            view.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            view.DefaultCellStyle.ForeColor = Color.Black;
+            view.MultiSelect = false;
+            view.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            view.AutoGenerateColumns = false;
+            view.RowHeadersWidth = 35;
+            view.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            view.Columns["id"].Visible = false;
+            view.Columns["id"].DisplayIndex = ColumnData.GetViscosityColumns.Count - 2;
+            view.Columns["labbook_id"].Visible = false;
+            view.Columns["labbook_id"].DisplayIndex = ColumnData.GetViscosityColumns.Count - 1;
+
+            foreach (DataGridViewColumn column in view.Columns)
+            {
+                string data;
+                if (ColumnData.GetViscosityColumns.TryGetValue(column.Name, out data))
+                {
+                    string[] colData = data.Split('|');
+                    view.Columns[column.Name].HeaderText = colData[0];
+                    view.Columns[column.Name].DisplayIndex = int.Parse(colData[1]);
+                    view.Columns[column.Name].Width = int.Parse(colData[2]);
+                }
+            }
+
+            view.Columns["days_distance"].Frozen = true;
         }
 
         private void PrepareOthersControls()

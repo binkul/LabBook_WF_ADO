@@ -8,7 +8,7 @@ namespace LabBook.Repository
 {
     public class LabBookRepository
     {
-        private readonly string _getAllLabBookQuery = "Select l.id, l.title, l.density, l.observation, l.remarks, l.user_id, u.identifier, " + 
+        private readonly string GET_ALL_LABBOOK = "Select l.id, l.title, l.density, l.observation, l.remarks, l.user_id, u.identifier, " + 
                 "l.cycle_id, c.name as cyc_name, l.created, l.modified, l.deleted From LabBook.dbo.ExpLabBook l left join " +
                 "LabBook.dbo.Users u on l.user_id=u.id left join LabBook.dbo.ExpCycle c on l.cycle_id= c.id Order By l.id";
 
@@ -28,7 +28,7 @@ namespace LabBook.Repository
             try
             {
                 table = new DataTable();
-                SqlDataAdapter adapter = new SqlDataAdapter(_getAllLabBookQuery, _connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(GET_ALL_LABBOOK, _connection);
                 adapter.Fill(table);
 
                 DataColumn primaryKeyColumn = new DataColumn();

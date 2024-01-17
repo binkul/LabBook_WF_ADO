@@ -23,13 +23,17 @@ namespace LabBook.Service
         private readonly LabBookForm _labBookForm;
         private readonly LabBookRepository _labBookRepository;
         private readonly ExpCycleRepository _expCycleRepository;
+        private readonly ViscosityRepository _viscosityRepository;
 
         private DataTable _labBookTable;
         private DataView _labBookView;
         private BindingSource _labBookBindingSource;
         private DataRowView _currentLabBook;
+        private DataTable _viscosityTable;
+        private DataView _viscosityView;
 
         private bool _modified = false;
+        private bool _visModified = false;
 
         private IList<ExpCycle> _expCycles;
         private IList<ExpCycle> _expFilterCycles;
@@ -43,6 +47,7 @@ namespace LabBook.Service
             _labBookForm = labBookForm;
             _labBookRepository = new LabBookRepository(_user, _connection);
             _expCycleRepository = new ExpCycleRepository(_connection);
+            _viscosityRepository = new ViscosityRepository(_connection);
         }
 
         #region Save and Load data for LabBook form 
@@ -156,8 +161,12 @@ namespace LabBook.Service
         private void PrepareOthersControls()
         {
             _labBookForm.GetTitle.DataBindings.Clear();
+            _labBookForm.GetConclusion.Clear();
+            _labBookForm.GetObservation.Clear();
 
             _labBookForm.GetTitle.DataBindings.Add("Text", _labBookBindingSource, "title");
+            _labBookForm.GetObservation.DataBindings.Add("Text", _labBookBindingSource, "remarks");
+            _labBookForm.GetObservation.DataBindings.Add("Text", _labBookBindingSource, "observation");
         }
 
         private void FillComboBoxes()
@@ -189,7 +198,7 @@ namespace LabBook.Service
         private void GetAllLabBook()
         {
             _labBookTable = _labBookRepository.GetAllLabBook();
-            _labBookTable.ColumnChanging += LabBookTable_ColumnChanging;
+            _labBookTable.ColumnChanged += LabBookTable_ColumnChanged;
             _labBookView = new DataView(_labBookTable);
             _labBookView.Sort = "id";
 
@@ -197,6 +206,11 @@ namespace LabBook.Service
             _labBookBindingSource.DataSource = _labBookView;
             _labBookBindingSource.PositionChanged += LabBookBindingSource_PositionChanged;
             _labBookForm.GetBindingNavigator.BindingSource = _labBookBindingSource;
+
+            _viscosityTable = _viscosityRepository.GetViscosityByLabBookId(-1);
+            _viscosityTable.ColumnChanged += ViscosityTable_ColumnChanged;
+            _viscosityView = new DataView(_viscosityTable);
+            _viscosityView.Sort = "date_created, date_update";
         }
 
         #endregion
@@ -214,14 +228,29 @@ namespace LabBook.Service
             }
         }
 
+        public bool ViscosityModify
+        {
+            get => _visModified;
+            set
+            {
+                _visModified = value;
+                _labBookForm.EnableSaveButton();
+            }
+        }
+
         #endregion
 
 
         #region Current/Binkding/Navigation/DataTable
 
-        private void LabBookTable_ColumnChanging(object sender, DataColumnChangeEventArgs e)
+        private void LabBookTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
         {
             Modify = true;
+        }
+
+        private void ViscosityTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+        {
+            _visModified = true;
         }
 
         private void LabBookBindingSource_PositionChanged(object sender, System.EventArgs e)

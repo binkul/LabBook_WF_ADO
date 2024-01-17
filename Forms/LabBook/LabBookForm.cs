@@ -27,6 +27,8 @@ namespace LabBook.Forms.LabBook
         public TextBox GetNrDFilter => TxtNrDFilter;
         public TextBox GetTitleFilter => TxtTitleFilter;
         public TextBox GetIdentifierFilter => TxtIdentifierFilter;
+        public RichTextBox GetConclusion => RtbConclusion;
+        public RichTextBox GetObservation => RtbObservation;
         public Label GetLabelNrD => LblNrD;
         public Label GetDateCreated => LblDateCreated;
         public Label GetDateModified => LblDateModified;
@@ -34,7 +36,7 @@ namespace LabBook.Forms.LabBook
         public ComboBox GetComboCycleFilter => CmbCycleFilter;
         public ComboBox GetComboExpCycle => CmbExpCycle;
 
-        public void EnableSaveButton() => BtnSave.Enabled = _service.Modify;
+        public void EnableSaveButton() => BtnSave.Enabled = _service.Modify | _service.ViscosityModify;
 
         #region Form Open/Load/Closing
 

@@ -10,14 +10,14 @@ namespace LabBook.Repository
     public class LoginRepository
     {
         private readonly SqlConnection _connection;
-        private readonly string _programData = "Select id, date, column_2, column_3, column_4, column_5 From LabBook.dbo.ProgramData " + 
+        private readonly string PROGRAM_DATA = "Select id, date, column_2, column_3, column_4, column_5 From LabBook.dbo.ProgramData " + 
                                                 "Where column_2 = 'dates' and column_3 = 'XXXX'";
-        private readonly string _updateToExpire = "Update LabBook.dbo.ProgramData Set column_4 = 'Expire'";
-        private readonly string _getUserByLoginAndPassword = "Select id, name, surname, e_mail, login, permission, " +
+        private readonly string UPDATE_TO_EXPIRE = "Update LabBook.dbo.ProgramData Set column_4 = 'Expire'";
+        private readonly string GET_USER_BY_LOGIN_AND_PASSWORD = "Select id, name, surname, e_mail, login, permission, " +
                                                             "identifier, active, date from LabBook.dbo.Users Where login = 'XXXX' and password = 'YYYY'";
-        private readonly string _saveUser = "Insert Into LabBook.dbo.Users(name, surname, e_mail, login, password, permission, identifier, active, date) " +
+        private readonly string SAVE_USER = "Insert Into LabBook.dbo.Users(name, surname, e_mail, login, password, permission, identifier, active, date) " +
                                             "Values(@name, @surname, @e_mail, @login, @password, @permission, @identifier, @active, @date);";
-        private readonly string _userExist = "Select count(*) as exist From LabBook.dbo.Users Where login = 'XXXX'";
+        private readonly string IS_USER_EXIST = "Select count(*) as exist From LabBook.dbo.Users Where login = 'XXXX'";
 
         public LoginRepository(SqlConnection connection)
         {
@@ -32,7 +32,7 @@ namespace LabBook.Repository
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = _connection;
-                string query = _programData.Replace("XXXX", password);
+                string query = PROGRAM_DATA.Replace("XXXX", password);
                 cmd.CommandText = query;
                 _connection.Open();
                 SqlDataReader rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
@@ -76,7 +76,7 @@ namespace LabBook.Repository
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = _connection;
-                string query = _getUserByLoginAndPassword.Replace("XXXX", login);
+                string query = GET_USER_BY_LOGIN_AND_PASSWORD.Replace("XXXX", login);
                 query = query.Replace("YYYY", password);
                 cmd.CommandText = query;
                 _connection.Open();
@@ -123,7 +123,7 @@ namespace LabBook.Repository
             try
             {
                 cmd.Connection = _connection;
-                cmd.CommandText = _saveUser;
+                cmd.CommandText = SAVE_USER;
                 cmd.Parameters.AddWithValue("@name", user.Name);
                 cmd.Parameters.AddWithValue("@surname", user.Surname);
                 cmd.Parameters.AddWithValue("@e_mail", user.Email);
@@ -163,7 +163,7 @@ namespace LabBook.Repository
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = _connection;
-                string query = _userExist.Replace("XXXX", login);
+                string query = IS_USER_EXIST.Replace("XXXX", login);
                 cmd.CommandText = query;
                 _connection.Open();
                 result = Convert.ToInt32(cmd.ExecuteScalar()) > 0;
@@ -194,7 +194,7 @@ namespace LabBook.Repository
             try
             {
                 cmd.Connection = _connection;
-                cmd.CommandText = _updateToExpire;
+                cmd.CommandText = UPDATE_TO_EXPIRE;
                 _connection.Open();
                 cmd.ExecuteNonQuery();
             }

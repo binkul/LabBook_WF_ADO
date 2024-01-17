@@ -12,7 +12,7 @@ namespace LabBook.Repository
 {
     public class ExpCycleRepository
     {
-        private readonly string _getAllCycle = "Select id, name, user_id, date From ExpCycle Order By name";
+        private readonly string GET_ALL_CYCLE = "Select id, name, user_id, date From ExpCycle Order By name";
         private readonly SqlConnection _connection;
 
         public ExpCycleRepository(SqlConnection connection)
@@ -27,7 +27,7 @@ namespace LabBook.Repository
 
             try
             {
-                SqlCommand command = new SqlCommand(_getAllCycle, _connection);
+                SqlCommand command = new SqlCommand(GET_ALL_CYCLE, _connection);
                 _connection.Open();
                 reader = command.ExecuteReader();
 

@@ -76,6 +76,7 @@
     <Compile Include="Repository\ExpCycleRepository.cs" />
     <Compile Include="Repository\LabBookRepository.cs" />
     <Compile Include="Repository\LoginRepository.cs" />
+    <Compile Include="Repository\ViscosityRepository.cs" />
     <Compile Include="Security\Encrypt.cs" />
     <Compile Include="Service\LabBookService.cs" />
     <EmbeddedResource Include="Forms\LabBook\LabBookForm.resx">

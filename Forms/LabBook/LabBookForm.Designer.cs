@@ -56,7 +56,9 @@ namespace LabBook.Forms.LabBook
             this.TxtNrDFilter = new System.Windows.Forms.TextBox();
             this.DgvLabBook = new System.Windows.Forms.DataGridView();
             this.TabPageRemarks = new System.Windows.Forms.TabPage();
+            this.RtbConclusion = new System.Windows.Forms.RichTextBox();
             this.TabPageObservation = new System.Windows.Forms.TabPage();
+            this.RtbObservation = new System.Windows.Forms.RichTextBox();
             this.TabPageViscosity = new System.Windows.Forms.TabPage();
             this.TabPageContrast = new System.Windows.Forms.TabPage();
             this.TabPageGloss = new System.Windows.Forms.TabPage();
@@ -72,12 +74,17 @@ namespace LabBook.Forms.LabBook
             this.BtnDelete = new System.Windows.Forms.Button();
             this.BtnAddNew = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.DgvViscosity = new System.Windows.Forms.DataGridView();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigatorMain)).BeginInit();
             this.BindingNavigatorMain.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.TabPageMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvLabBook)).BeginInit();
+            this.TabPageRemarks.SuspendLayout();
+            this.TabPageObservation.SuspendLayout();
+            this.TabPageViscosity.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvViscosity)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuStrip
@@ -211,7 +218,6 @@ namespace LabBook.Forms.LabBook
             // 
             this.bindingNavigatorPositionItem.AccessibleName = "Pozycja";
             this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
             this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 27);
             this.bindingNavigatorPositionItem.Text = "0";
@@ -333,6 +339,7 @@ namespace LabBook.Forms.LabBook
             // TabPageRemarks
             // 
             this.TabPageRemarks.BackColor = System.Drawing.SystemColors.Control;
+            this.TabPageRemarks.Controls.Add(this.RtbConclusion);
             this.TabPageRemarks.Location = new System.Drawing.Point(4, 29);
             this.TabPageRemarks.Name = "TabPageRemarks";
             this.TabPageRemarks.Padding = new System.Windows.Forms.Padding(3);
@@ -340,18 +347,42 @@ namespace LabBook.Forms.LabBook
             this.TabPageRemarks.TabIndex = 1;
             this.TabPageRemarks.Text = "Uwagi";
             // 
+            // RtbConclusion
+            // 
+            this.RtbConclusion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RtbConclusion.Location = new System.Drawing.Point(3, 6);
+            this.RtbConclusion.Name = "RtbConclusion";
+            this.RtbConclusion.Size = new System.Drawing.Size(1212, 400);
+            this.RtbConclusion.TabIndex = 0;
+            this.RtbConclusion.Text = "";
+            // 
             // TabPageObservation
             // 
             this.TabPageObservation.BackColor = System.Drawing.SystemColors.Control;
+            this.TabPageObservation.Controls.Add(this.RtbObservation);
             this.TabPageObservation.Location = new System.Drawing.Point(4, 29);
             this.TabPageObservation.Name = "TabPageObservation";
             this.TabPageObservation.Size = new System.Drawing.Size(1219, 412);
             this.TabPageObservation.TabIndex = 2;
             this.TabPageObservation.Text = "Obserwacje";
             // 
+            // RtbObservation
+            // 
+            this.RtbObservation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RtbObservation.Location = new System.Drawing.Point(3, 3);
+            this.RtbObservation.Name = "RtbObservation";
+            this.RtbObservation.Size = new System.Drawing.Size(1213, 406);
+            this.RtbObservation.TabIndex = 0;
+            this.RtbObservation.Text = "";
+            // 
             // TabPageViscosity
             // 
             this.TabPageViscosity.BackColor = System.Drawing.SystemColors.Control;
+            this.TabPageViscosity.Controls.Add(this.DgvViscosity);
             this.TabPageViscosity.Location = new System.Drawing.Point(4, 29);
             this.TabPageViscosity.Name = "TabPageViscosity";
             this.TabPageViscosity.Size = new System.Drawing.Size(1219, 412);
@@ -507,6 +538,16 @@ namespace LabBook.Forms.LabBook
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             // 
+            // DgvViscosity
+            // 
+            this.DgvViscosity.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvViscosity.Location = new System.Drawing.Point(0, 3);
+            this.DgvViscosity.Name = "DgvViscosity";
+            this.DgvViscosity.RowHeadersWidth = 51;
+            this.DgvViscosity.RowTemplate.Height = 24;
+            this.DgvViscosity.Size = new System.Drawing.Size(1215, 406);
+            this.DgvViscosity.TabIndex = 0;
+            // 
             // LabBookForm
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.WhiteSpace;
@@ -545,6 +586,10 @@ namespace LabBook.Forms.LabBook
             this.TabPageMain.ResumeLayout(false);
             this.TabPageMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvLabBook)).EndInit();
+            this.TabPageRemarks.ResumeLayout(false);
+            this.TabPageObservation.ResumeLayout(false);
+            this.TabPageViscosity.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DgvViscosity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -592,5 +637,8 @@ namespace LabBook.Forms.LabBook
         private System.Windows.Forms.Button BtnDelete;
         private System.Windows.Forms.Button BtnAddNew;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RichTextBox RtbConclusion;
+        private System.Windows.Forms.RichTextBox RtbObservation;
+        private System.Windows.Forms.DataGridView DgvViscosity;
     }
 }

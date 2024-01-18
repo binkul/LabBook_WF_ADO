@@ -60,6 +60,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageObservation = new System.Windows.Forms.TabPage();
             this.RtbObservation = new System.Windows.Forms.RichTextBox();
             this.TabPageViscosity = new System.Windows.Forms.TabPage();
+            this.DgvViscosity = new System.Windows.Forms.DataGridView();
             this.TabPageContrast = new System.Windows.Forms.TabPage();
             this.TabPageGloss = new System.Windows.Forms.TabPage();
             this.TabPageClass = new System.Windows.Forms.TabPage();
@@ -74,7 +75,6 @@ namespace LabBook.Forms.LabBook
             this.BtnDelete = new System.Windows.Forms.Button();
             this.BtnAddNew = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.DgvViscosity = new System.Windows.Forms.DataGridView();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigatorMain)).BeginInit();
             this.BindingNavigatorMain.SuspendLayout();
@@ -352,6 +352,7 @@ namespace LabBook.Forms.LabBook
             this.RtbConclusion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.RtbConclusion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.RtbConclusion.Location = new System.Drawing.Point(3, 6);
             this.RtbConclusion.Name = "RtbConclusion";
             this.RtbConclusion.Size = new System.Drawing.Size(1212, 400);
@@ -373,6 +374,7 @@ namespace LabBook.Forms.LabBook
             this.RtbObservation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.RtbObservation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.RtbObservation.Location = new System.Drawing.Point(3, 3);
             this.RtbObservation.Name = "RtbObservation";
             this.RtbObservation.Size = new System.Drawing.Size(1213, 406);
@@ -388,6 +390,19 @@ namespace LabBook.Forms.LabBook
             this.TabPageViscosity.Size = new System.Drawing.Size(1219, 412);
             this.TabPageViscosity.TabIndex = 3;
             this.TabPageViscosity.Text = "Lepkość";
+            // 
+            // DgvViscosity
+            // 
+            this.DgvViscosity.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DgvViscosity.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvViscosity.Location = new System.Drawing.Point(0, 3);
+            this.DgvViscosity.Name = "DgvViscosity";
+            this.DgvViscosity.RowHeadersWidth = 51;
+            this.DgvViscosity.RowTemplate.Height = 24;
+            this.DgvViscosity.Size = new System.Drawing.Size(1215, 406);
+            this.DgvViscosity.TabIndex = 0;
             // 
             // TabPageContrast
             // 
@@ -537,16 +552,6 @@ namespace LabBook.Forms.LabBook
             this.groupBox1.Size = new System.Drawing.Size(1215, 10);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
-            // 
-            // DgvViscosity
-            // 
-            this.DgvViscosity.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvViscosity.Location = new System.Drawing.Point(0, 3);
-            this.DgvViscosity.Name = "DgvViscosity";
-            this.DgvViscosity.RowHeadersWidth = 51;
-            this.DgvViscosity.RowTemplate.Height = 24;
-            this.DgvViscosity.Size = new System.Drawing.Size(1215, 406);
-            this.DgvViscosity.TabIndex = 0;
             // 
             // LabBookForm
             // 

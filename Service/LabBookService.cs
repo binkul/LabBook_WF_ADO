@@ -9,6 +9,22 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
 
+enum ViscosityType
+{
+    NOT_SET,
+    START,
+    STD,
+    STD_X,
+    PRB,
+    SOLVENT,
+    SOLVENT_X,
+    KREBS,
+    ICI,
+    KREBS_ICI,
+    FULL,
+    SPEC
+}
+
 namespace LabBook.Service
 {
     public class LabBookService
@@ -31,6 +47,8 @@ namespace LabBook.Service
         private DataRowView _currentLabBook;
         private DataTable _viscosityTable;
         private DataView _viscosityView;
+        private ViscosityColumn _viscosityColumnsOld = null;
+        private ViscosityColumn _viscosityColumnsCurrent = new ViscosityColumn("START");
 
         private bool _modified = false;
         private bool _visModified = false;
@@ -94,10 +112,10 @@ namespace LabBook.Service
             GetAllLabBook();
             PrepareDataGridViewLabBook();
             PrepareDataGridViewViscosity();
-            PrepareOthersControls();
             FillComboBoxes();
+            PrepareOthersControls();
 
-            LabBookBindingSource_PositionChanged(null, null);
+            //LabBookBindingSource_PositionChanged(null, null);
         }
 
         private void PrepareDataGridViewLabBook()
@@ -179,6 +197,7 @@ namespace LabBook.Service
             view.Columns["id"].DisplayIndex = ColumnData.GetViscosityColumns.Count - 2;
             view.Columns["labbook_id"].Visible = false;
             view.Columns["labbook_id"].DisplayIndex = ColumnData.GetViscosityColumns.Count - 1;
+            view.Columns.Remove("vis_type");
 
             foreach (DataGridViewColumn column in view.Columns)
             {
@@ -189,6 +208,7 @@ namespace LabBook.Service
                     view.Columns[column.Name].HeaderText = colData[0];
                     view.Columns[column.Name].DisplayIndex = int.Parse(colData[1]);
                     view.Columns[column.Name].Width = int.Parse(colData[2]);
+                    view.Columns[column.Name].SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
             }
 
@@ -202,7 +222,7 @@ namespace LabBook.Service
             _labBookForm.GetObservation.Clear();
 
             _labBookForm.GetTitle.DataBindings.Add("Text", _labBookBindingSource, "title");
-            _labBookForm.GetObservation.DataBindings.Add("Text", _labBookBindingSource, "remarks");
+            _labBookForm.GetConclusion.DataBindings.Add("Text", _labBookBindingSource, "remarks");
             _labBookForm.GetObservation.DataBindings.Add("Text", _labBookBindingSource, "observation");
         }
 
@@ -253,7 +273,7 @@ namespace LabBook.Service
         #endregion
 
 
-        #region Save Delete
+        #region CRUD Operation
 
         public bool Modify
         {
@@ -275,6 +295,13 @@ namespace LabBook.Service
             }
         }
 
+        private void ReloadViscosity(long id)
+        {
+            _viscosityTable.Clear();
+            _viscosityRepository.LoadViscosityByLabBookId(_viscosityTable, id);
+            ViscosityModify = false;
+        }
+
         #endregion
 
 
@@ -287,12 +314,12 @@ namespace LabBook.Service
 
         private void ViscosityTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
         {
-            _visModified = true;
+            ViscosityModify = true;
         }
 
         private void LabBookBindingSource_PositionChanged(object sender, System.EventArgs e)
         {
-            long id = -1;
+            long id = 0;
             bool admin = false;
             bool deleted = true;
 
@@ -301,6 +328,7 @@ namespace LabBook.Service
             if (_labBookBindingSource.Count > 0)
             {
                 _currentLabBook = (DataRowView)_labBookBindingSource.Current;
+                id = Convert.ToInt64(_currentLabBook["id"]);
             }
             else
             {
@@ -325,7 +353,7 @@ namespace LabBook.Service
             }
             else
             {
-                _labBookForm.GetLabelNrD.Text = id.ToString();
+                _labBookForm.GetLabelNrD.Text = "-1";
                 _labBookForm.GetDateCreated.Text = "Brak";
                 _labBookForm.GetDateModified.Text = "Brak";
             }
@@ -345,13 +373,24 @@ namespace LabBook.Service
 
             #endregion
 
+            #region Reload Viscosity
+
+            if (_currentLabBook != null)
+            {
+                ReloadViscosity(id);
+                _viscosityColumnsOld = _viscosityColumnsCurrent;
+                _viscosityColumnsCurrent = _viscosityRepository.GetViscosityColumnById(id);
+                ShowViscosityColumns();
+            }
+
+            #endregion
+
             #region Block Controls
 
             if (_currentLabBook != null)
             {
                 admin = (long)_currentLabBook["user_id"] == _user.Id || _labBookForm.IsAdmin ? true : false;
                 deleted = (bool)_currentLabBook["deleted"];
-                id = (long)_currentLabBook["id"];
             }
 
             if (deleted || !admin)
@@ -402,6 +441,88 @@ namespace LabBook.Service
             _labBookForm.GetDgvLabBook.ReadOnly = false;
             _labBookForm.GetTitle.ReadOnly = false;
             _labBookForm.GetExpCmbCycle.Enabled = true;
+        }
+
+        private void ShowViscosityColumns()
+        {
+            if (_viscosityColumnsOld.Type == _viscosityColumnsCurrent.Type)
+            {
+                return;
+            }
+            else
+            {
+                DataGridView view = _labBookForm.GetDgvViscosity;
+                HideViscosityColumns();
+                ViscosityType type;
+                Enum.TryParse(_viscosityColumnsCurrent.Type, out type);
+                string[] columns;
+
+                switch (type)
+                {
+                    case ViscosityType.START:
+                        columns = ColumnData.START_FIELDS.Split('|');
+                        break;
+                    case ViscosityType.NOT_SET:
+                        columns = ColumnData.STD_FIELDS.Split('|');
+                        break;
+                    case ViscosityType.STD:
+                        columns = ColumnData.STD_FIELDS.Split('|');
+                        break;
+                    case ViscosityType.STD_X:
+                        columns = ColumnData.STD_X_FIELDS.Split('|');
+                        break;
+                    case ViscosityType.PRB:
+                        columns = ColumnData.PRB_FIELDS.Split('|');
+                        break;
+                    case ViscosityType.SOLVENT:
+                        columns = ColumnData.SLV_FIELDS.Split('|');
+                        break;
+                    case ViscosityType.SOLVENT_X:
+                        columns = ColumnData.SLV_X_FIELDS.Split('|');
+                        break;
+                    case ViscosityType.KREBS:
+                        columns = ColumnData.KREBS_FIELDS.Split('|');
+                        break;
+                    case ViscosityType.ICI:
+                        columns = ColumnData.ICI_FIELDS.Split('|');
+                        break;
+                    case ViscosityType.KREBS_ICI:
+                        columns = ColumnData.KREBS_ICI_FIELDS.Split('|');
+                        break;
+                    case ViscosityType.FULL:
+                        columns = ColumnData.FULL_FIELDS.Split('|');
+                        break;
+                    case ViscosityType.SPEC:
+                        columns = _viscosityColumnsCurrent.Fields.Split('|');
+                        break;
+                    default:
+                        columns = ColumnData.STD_FIELDS.Split('|');
+                        break;
+                }
+
+                foreach (string col in columns)
+                {
+                    if (ColumnData.GetViscosityColumns.ContainsKey(col))
+                    {
+                        view.Columns[col].Visible = true;
+                    }
+                }
+
+            }
+        }
+
+        private void HideViscosityColumns()
+        {
+            DataGridView dgvViscosity = _labBookForm.GetDgvViscosity;
+
+            foreach (DataGridViewColumn column in dgvViscosity.Columns)
+            {
+                if (column.Name == "date_created" || column.Name == "date_update" || column.Name == "days_distance" || column.Name == "temp")
+                {
+                    continue;
+                }
+                column.Visible = false;
+            }
         }
 
         #endregion

@@ -119,6 +119,26 @@ namespace LabBook.Forms.LabBook
             _service.Filter();
         }
 
+        private void BtnAddNew_Click(object sender, System.EventArgs e)
+        {
+            _service.AddNewButton();
+        }
+
+        private void BtnSave_Click(object sender, System.EventArgs e)
+        {
+            _service.SaveButton();
+        }
+
+        private void BtnDelete_Click(object sender, System.EventArgs e)
+        {
+            _service.DeleteButton();
+        }
+
+        private void DgvViscosity_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+        {
+            _service.DefaultValuesForViscosityDGV(e);
+        }
+
         #endregion
 
     }

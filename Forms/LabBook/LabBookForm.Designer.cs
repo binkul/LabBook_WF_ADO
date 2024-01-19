@@ -403,6 +403,7 @@ namespace LabBook.Forms.LabBook
             this.DgvViscosity.RowTemplate.Height = 24;
             this.DgvViscosity.Size = new System.Drawing.Size(1215, 406);
             this.DgvViscosity.TabIndex = 0;
+            this.DgvViscosity.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.DgvViscosity_DefaultValuesNeeded);
             // 
             // TabPageContrast
             // 
@@ -515,21 +516,23 @@ namespace LabBook.Forms.LabBook
             this.BtnSave.BackgroundImage = global::LabBook.Properties.Resources.Save;
             this.BtnSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.BtnSave.Enabled = false;
-            this.BtnSave.Location = new System.Drawing.Point(136, 35);
+            this.BtnSave.Location = new System.Drawing.Point(72, 35);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(50, 48);
             this.BtnSave.TabIndex = 16;
             this.BtnSave.UseVisualStyleBackColor = true;
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // BtnDelete
             // 
             this.BtnDelete.BackgroundImage = global::LabBook.Properties.Resources.Delete;
             this.BtnDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.BtnDelete.Location = new System.Drawing.Point(72, 35);
+            this.BtnDelete.Location = new System.Drawing.Point(147, 35);
             this.BtnDelete.Name = "BtnDelete";
             this.BtnDelete.Size = new System.Drawing.Size(50, 48);
             this.BtnDelete.TabIndex = 17;
             this.BtnDelete.UseVisualStyleBackColor = true;
+            this.BtnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // BtnAddNew
             // 
@@ -540,6 +543,7 @@ namespace LabBook.Forms.LabBook
             this.BtnAddNew.Size = new System.Drawing.Size(50, 48);
             this.BtnAddNew.TabIndex = 18;
             this.BtnAddNew.UseVisualStyleBackColor = true;
+            this.BtnAddNew.Click += new System.EventHandler(this.BtnAddNew_Click);
             // 
             // groupBox1
             // 

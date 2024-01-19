@@ -25,6 +25,14 @@ enum ViscosityType
     SPEC
 }
 
+enum MeasureType
+{
+    BROOKFIELD,
+    KREBS,
+    ICI,
+    MIXED
+}
+
 namespace LabBook.Service
 {
     public class LabBookService
@@ -47,11 +55,13 @@ namespace LabBook.Service
         private DataRowView _currentLabBook;
         private DataTable _viscosityTable;
         private DataView _viscosityView;
+        private BindingSource _viscosityBindingSource;
         private ViscosityColumn _viscosityColumnsOld = null;
         private ViscosityColumn _viscosityColumnsCurrent = new ViscosityColumn("START");
 
         private bool _modified = false;
         private bool _visModified = false;
+        private MeasureType _measureType = MeasureType.BROOKFIELD;
 
         private IList<ExpCycle> _expCycles;
         private IList<ExpCycle> _expFilterCycles;
@@ -114,8 +124,6 @@ namespace LabBook.Service
             PrepareDataGridViewViscosity();
             FillComboBoxes();
             PrepareOthersControls();
-
-            //LabBookBindingSource_PositionChanged(null, null);
         }
 
         private void PrepareDataGridViewLabBook()
@@ -180,7 +188,7 @@ namespace LabBook.Service
         private void PrepareDataGridViewViscosity()
         {
             DataGridView view = _labBookForm.GetDgvViscosity;
-            view.DataSource = _viscosityView;
+            view.DataSource = _viscosityBindingSource;
             view.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             view.RowsDefaultCellStyle.Font = new Font(view.DefaultCellStyle.Font.Name, 9, FontStyle.Regular);
             view.ColumnHeadersDefaultCellStyle.Font = new Font(view.DefaultCellStyle.Font.Name, 9, FontStyle.Bold);
@@ -188,19 +196,26 @@ namespace LabBook.Service
             view.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             view.DefaultCellStyle.ForeColor = Color.Black;
             view.MultiSelect = false;
-            view.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            view.SelectionMode = DataGridViewSelectionMode.CellSelect;
             view.AutoGenerateColumns = false;
             view.RowHeadersWidth = 35;
             view.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             view.Columns["id"].Visible = false;
-            view.Columns["id"].DisplayIndex = ColumnData.GetViscosityColumns.Count - 2;
+            view.Columns["id"].DisplayIndex = ColumnData.GetViscosityColumns.Count - 3;
             view.Columns["labbook_id"].Visible = false;
-            view.Columns["labbook_id"].DisplayIndex = ColumnData.GetViscosityColumns.Count - 1;
-            view.Columns.Remove("vis_type");
+            view.Columns["labbook_id"].DisplayIndex = ColumnData.GetViscosityColumns.Count - 2;
+            view.Columns["vis_type"].Visible = false;
+            view.Columns["vis_type"].DisplayIndex = ColumnData.GetViscosityColumns.Count - 1;
 
             foreach (DataGridViewColumn column in view.Columns)
             {
+                if (column.Name == "days_distance")
+                {
+                    view.Columns[column.Name].ReadOnly = true;
+                    continue;
+                }
+
                 string data;
                 if (ColumnData.GetViscosityColumns.TryGetValue(column.Name, out data))
                 {
@@ -268,6 +283,7 @@ namespace LabBook.Service
             _viscosityTable.ColumnChanged += ViscosityTable_ColumnChanged;
             _viscosityView = new DataView(_viscosityTable);
             _viscosityView.Sort = "date_created, date_update";
+            _viscosityBindingSource = new BindingSource { DataSource = _viscosityView };
         }
 
         #endregion
@@ -300,6 +316,81 @@ namespace LabBook.Service
             _viscosityTable.Clear();
             _viscosityRepository.LoadViscosityByLabBookId(_viscosityTable, id);
             ViscosityModify = false;
+        }
+
+        private void Save()
+        {
+
+        }
+
+        private void SaveViscosity()
+        {
+            _labBookForm.GetDgvViscosity.EndEdit();
+            bool save = false;
+            bool update = false;
+
+            #region Save new
+
+            DataTable addedRows = _viscosityTable.GetChanges(DataRowState.Added);
+
+            if (addedRows != null)
+            {
+                foreach(DataRow row in addedRows.Rows)
+                {
+                    save = _viscosityRepository.SaveViscosity(row);
+                    if (save)
+                    {
+                        row.AcceptChanges();
+                    }
+                }
+            }
+
+            #endregion
+
+            #region Update
+
+            DataTable updatedRows = _viscosityTable.GetChanges(DataRowState.Modified);
+
+            if (updatedRows != null)
+            {
+                foreach (DataRow row in updatedRows.Rows)
+                {
+                    update = _viscosityRepository.UpdateViscosity(row);
+                    if (update)
+                    {
+                        row.AcceptChanges();
+                    }
+                }
+            }
+
+            #endregion
+
+            ViscosityModify = save & update;
+            if (!ViscosityModify)
+            {
+                ReloadViscosity((long)_currentLabBook["id"]);
+            }
+            _labBookForm.EnableSaveButton();
+        }
+
+        #endregion
+
+
+        #region Menu and Button
+
+        public void AddNewButton()
+        {
+
+        }
+
+        public void SaveButton()
+        {
+            SaveViscosity();
+        }
+
+        public void DeleteButton()
+        {
+
         }
 
         #endregion
@@ -522,6 +613,19 @@ namespace LabBook.Service
                     continue;
                 }
                 column.Visible = false;
+            }
+        }
+
+        public void DefaultValuesForViscosityDGV(DataGridViewRowEventArgs e)
+        {
+            if (_currentLabBook != null)
+            {
+                long id = Convert.ToInt64(_currentLabBook["id"]);
+                e.Row.Cells["id"].Value = -1;
+                e.Row.Cells["labbook_id"].Value = Convert.ToInt64(_currentLabBook["id"]);
+                e.Row.Cells["date_created"].Value = Convert.ToDateTime(_currentLabBook["created"]);
+                e.Row.Cells["date_update"].Value = DateTime.Today;
+                e.Row.Cells["vis_type"].Value = _measureType.ToString();
             }
         }
 

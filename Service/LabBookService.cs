@@ -11,8 +11,6 @@ using System.Windows.Forms;
 
 enum ViscosityType
 {
-    NOT_SET,
-    START,
     STD,
     STD_X,
     PRB,
@@ -22,7 +20,7 @@ enum ViscosityType
     ICI,
     KREBS_ICI,
     FULL,
-    SPEC
+    NOT_SET
 }
 
 enum MeasureType
@@ -57,7 +55,7 @@ namespace LabBook.Service
         private DataView _viscosityView;
         private BindingSource _viscosityBindingSource;
         private ViscosityColumn _viscosityColumnsOld = null;
-        private ViscosityColumn _viscosityColumnsCurrent = new ViscosityColumn("START");
+        private ViscosityColumn _viscosityColumnsCurrent = new ViscosityColumn("STD");
 
         private bool _modified = false;
         private bool _visModified = false;
@@ -393,6 +391,41 @@ namespace LabBook.Service
 
         }
 
+        public void SelectViscosityView(int position)
+        {
+            switch(position)
+            {
+                case 0:
+                    _viscosityColumnsCurrent.Type = ViscosityType.STD.ToString();
+                    break;
+                case 1:
+                    _viscosityColumnsCurrent.Type = ViscosityType.STD_X.ToString();
+                    break;
+                case 2:
+                    _viscosityColumnsCurrent.Type = ViscosityType.PRB.ToString();
+                    break;
+                case 3:
+                    _viscosityColumnsCurrent.Type = ViscosityType.SOLVENT.ToString();
+                    break;
+                case 4:
+                    _viscosityColumnsCurrent.Type = ViscosityType.SOLVENT_X.ToString();
+                    break;
+                case 5:
+                    _viscosityColumnsCurrent.Type = ViscosityType.KREBS.ToString();
+                    break;
+                case 6:
+                    _viscosityColumnsCurrent.Type = ViscosityType.ICI.ToString();
+                    break;
+                case 7:
+                    _viscosityColumnsCurrent.Type = ViscosityType.KREBS_ICI.ToString();
+                    break;
+                default:
+                    _viscosityColumnsCurrent.Type = ViscosityType.FULL.ToString();
+                    break;
+            }
+            ShowViscosityColumns();
+        }
+
         #endregion
 
 
@@ -464,7 +497,7 @@ namespace LabBook.Service
 
             #endregion
 
-            #region Reload Viscosity
+            #region Reload Viscosity and Change Viscosity Columns
 
             if (_currentLabBook != null)
             {
@@ -472,6 +505,10 @@ namespace LabBook.Service
                 _viscosityColumnsOld = _viscosityColumnsCurrent;
                 _viscosityColumnsCurrent = _viscosityRepository.GetViscosityColumnById(id);
                 ShowViscosityColumns();
+                ViscosityType type = (ViscosityType)Enum.Parse(typeof(ViscosityType), _viscosityColumnsCurrent.Type);
+                if (type == ViscosityType.NOT_SET)
+                    type = ViscosityType.STD;
+                _labBookForm.SelectViscosityItem((int)type);
             }
 
             #endregion
@@ -550,12 +587,6 @@ namespace LabBook.Service
 
                 switch (type)
                 {
-                    case ViscosityType.START:
-                        columns = ColumnData.START_FIELDS.Split('|');
-                        break;
-                    case ViscosityType.NOT_SET:
-                        columns = ColumnData.STD_FIELDS.Split('|');
-                        break;
                     case ViscosityType.STD:
                         columns = ColumnData.STD_FIELDS.Split('|');
                         break;
@@ -582,9 +613,6 @@ namespace LabBook.Service
                         break;
                     case ViscosityType.FULL:
                         columns = ColumnData.FULL_FIELDS.Split('|');
-                        break;
-                    case ViscosityType.SPEC:
-                        columns = _viscosityColumnsCurrent.Fields.Split('|');
                         break;
                     default:
                         columns = ColumnData.STD_FIELDS.Split('|');

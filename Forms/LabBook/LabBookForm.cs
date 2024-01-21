@@ -95,6 +95,7 @@ namespace LabBook.Forms.LabBook
 
 
         #region Events
+
         private void TxtTitle_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
@@ -139,7 +140,79 @@ namespace LabBook.Forms.LabBook
             _service.DefaultValuesForViscosityDGV(e);
         }
 
+        private void StandardToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            ToolStripMenuItem position = (ToolStripMenuItem)sender;
+
+            int nr = 0;
+            if (int.TryParse(position.Tag.ToString(), out nr))
+            {
+                SelectViscosityItem(nr);
+                _service.SelectViscosityView(nr);
+            }
+        }
+
+        private void LabBookTabControl_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            TabControl tab = (TabControl)sender;
+            
+            if (tab.SelectedTab.Name == "TabPageViscosity")
+            {
+                ViscosityToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                ViscosityToolStripMenuItem.Enabled = false;
+            }
+        }
+
         #endregion
 
+        #region Others function
+
+        public void SelectViscosityItem(int position)
+        {
+            DeselctAllViscosityItems();
+            switch (position)
+            {
+                case 0:
+                    StandardToolStripMenuItem.Checked = true;
+                    break;
+                case 1:
+                    StandardXToolStripMenuItem.Checked = true;
+                    break;
+                case 2:
+                    PrbToolStripMenuItem.Checked = true;
+                    break;
+                case 3:
+                    SolventToolStripMenuItem.Checked = true;
+                    break;
+                case 4:
+                    SolventXToolStripMenuItem.Checked = true;
+                    break;
+                case 5:
+                    KrebsStripMenuItem.Checked = true;
+                    break;
+                case 6:
+                    IciToolStripMenuItem.Checked = true;
+                    break;
+                case 7:
+                    KrebsICIToolStripMenuItem.Checked = true;
+                    break;
+                default:
+                    FullToolStripMenuItem.Checked = true;
+                    break;
+            }
+        }
+
+        private void DeselctAllViscosityItems()
+        {
+            foreach (ToolStripMenuItem item in ViscosityToolStripMenuItem.DropDownItems)
+            {
+                item.Checked = false;
+            }
+        }
+
+        #endregion
     }
 }

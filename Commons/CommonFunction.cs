@@ -127,6 +127,11 @@ namespace LabBook.Commons
             return text.Equals(DBNull.Value) ? null : text.ToString();
         }
 
+        public static object NullToDBNullConv(string text)
+        {
+            return String.IsNullOrEmpty(text) ? DBNull.Value : (object)text;
+        }
+
         public static object NullToDBNullConv(double? input)
         {
             return input == null ? DBNull.Value : (object)input;

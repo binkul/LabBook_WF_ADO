@@ -25,6 +25,8 @@ namespace LabBook.Repository
         private const string UPDATE = "Update LabBook.dbo.ExpViscosity Set labbook_id=@a, date_created=@b, date_update=@c, temp=@d, pH=@e, vis_type=@f, brook_1=@g, brook_5=@h, " +
             "brook_10=@i, brook_20=@j, brook_30=@k, brook_40=@l, brook_50=@m, brook_60=@n, brook_70=@o, brook_80=@p, brook_90=@r, brook_100=@s, brook_disc=@t, brook_comment=@u, " +
             "brook_x_vis=@v, brook_x_rpm=@w, brook_x_disc=@x, krebs=@y, krebs_comment=@z, ici=@aa, ici_disc=@ab, ici_comment=@ac WHERE id=@id";
+        private const string SAVE_VIS_COLUMNS = "Insert Into LabBook.dbo.ExpViscosityColumns(labBook_id, type, fields) values(@a, @b, @c)";
+        private const string Delete_VIS_COLUMNS = "Delete From LabBook.dbo.ExpViscosityColumns Where labBook_id=";
 
         private readonly SqlConnection _connection;
 
@@ -89,7 +91,7 @@ namespace LabBook.Repository
 
         public ViscosityColumn GetViscosityColumnById(long id)
         {
-            ViscosityColumn columns = new ViscosityColumn();
+            ViscosityColumn columns = new ViscosityColumn(-1, id, ViscosityType.STD, "");
 
                 try
                 {
@@ -109,7 +111,8 @@ namespace LabBook.Repository
 
                         columns.Id = nr;
                         columns.LabBookId = labId;
-                        columns.Type = type;
+                        ViscosityType visType = Enum.TryParse<ViscosityType>(type, out visType) ? visType : ViscosityType.STD;
+                        columns.Type = visType;
                         columns.Fields = fields;
 
                         reader.Close();
@@ -260,6 +263,73 @@ namespace LabBook.Repository
             }
 
             return result;
+        }
+
+        public bool SaveViscosityColumn(ViscosityColumn viscosityColumn)
+        {
+            bool result = true;
+
+            SqlCommand cmd = new SqlCommand();
+
+            try
+            {
+                cmd.CommandText = SAVE_VIS_COLUMNS;
+                cmd.Connection = _connection;
+                cmd.Parameters.AddWithValue("@a", viscosityColumn.LabBookId);
+                cmd.Parameters.AddWithValue("@b", viscosityColumn.Type);
+                cmd.Parameters.AddWithValue("@c", CommonFunction.NullToDBNullConv(viscosityColumn.Fields));
+                _connection.Open();
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Problem z połączeniem z serwerem. Prawdopodobnie serwer jest wyłączony, błąd w nazwie serwera lub dostępie do bazy: '" + ex.Message + "'. Błąd z poziomu Save Viscosity Columns.",
+                    "Błąd połaczenia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                result = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Problem z połączeniem z serwerem. Prawdopodobnie serwer jest wyłączony: '" + ex.Message + "'. Błąd z poziomu Save Viscosity Columns.",
+                    "Błąd połączenia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                result = false;
+            }
+            finally
+            {
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+
+
+            return result;
+        }
+
+        public void DeleteViscosityColumn(long labBook)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            try
+            {
+                cmd.CommandText = Delete_VIS_COLUMNS + labBook.ToString();
+                cmd.Connection = _connection;
+                _connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Problem z połączeniem z serwerem. Prawdopodobnie serwer jest wyłączony, błąd w nazwie serwera lub dostępie do bazy: '" + ex.Message + "'. Błąd z poziomu Delete Viscosity Column.",
+                    "Błąd połaczenia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Problem z połączeniem z serwerem. Prawdopodobnie serwer jest wyłączony: '" + ex.Message + "'. Błąd z poziomu Delete Viscosity Column.",
+                    "Błąd połączenia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
         }
     }
 }

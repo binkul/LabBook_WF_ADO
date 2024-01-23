@@ -75,6 +75,7 @@ namespace LabBook.Forms.LabBook
             this.TabPageContrast = new System.Windows.Forms.TabPage();
             this.TabPageGloss = new System.Windows.Forms.TabPage();
             this.TabPageClass = new System.Windows.Forms.TabPage();
+            this.TabPageResults = new System.Windows.Forms.TabPage();
             this.CmbExpCycle = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -86,6 +87,7 @@ namespace LabBook.Forms.LabBook
             this.BtnDelete = new System.Windows.Forms.Button();
             this.BtnAddNew = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.SetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigatorMain)).BeginInit();
             this.BindingNavigatorMain.SuspendLayout();
@@ -143,7 +145,8 @@ namespace LabBook.Forms.LabBook
             this.KrebsStripMenuItem,
             this.IciToolStripMenuItem,
             this.KrebsICIToolStripMenuItem,
-            this.FullToolStripMenuItem});
+            this.FullToolStripMenuItem,
+            this.SetToolStripMenuItem});
             this.ViscosityToolStripMenuItem.Enabled = false;
             this.ViscosityToolStripMenuItem.Name = "ViscosityToolStripMenuItem";
             this.ViscosityToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
@@ -338,7 +341,6 @@ namespace LabBook.Forms.LabBook
             // 
             this.bindingNavigatorPositionItem.AccessibleName = "Pozycja";
             this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
             this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 27);
             this.bindingNavigatorPositionItem.Text = "0";
@@ -384,6 +386,7 @@ namespace LabBook.Forms.LabBook
             this.LabBookTabControl.Controls.Add(this.TabPageContrast);
             this.LabBookTabControl.Controls.Add(this.TabPageGloss);
             this.LabBookTabControl.Controls.Add(this.TabPageClass);
+            this.LabBookTabControl.Controls.Add(this.TabPageResults);
             this.LabBookTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.LabBookTabControl.Location = new System.Drawing.Point(0, 178);
             this.LabBookTabControl.Name = "LabBookTabControl";
@@ -554,6 +557,15 @@ namespace LabBook.Forms.LabBook
             this.TabPageClass.TabIndex = 6;
             this.TabPageClass.Text = "Klasyfikacja";
             // 
+            // TabPageResults
+            // 
+            this.TabPageResults.BackColor = System.Drawing.SystemColors.Control;
+            this.TabPageResults.Location = new System.Drawing.Point(4, 29);
+            this.TabPageResults.Name = "TabPageResults";
+            this.TabPageResults.Size = new System.Drawing.Size(1219, 412);
+            this.TabPageResults.TabIndex = 7;
+            this.TabPageResults.Text = "Wyniki";
+            // 
             // CmbExpCycle
             // 
             this.CmbExpCycle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -679,6 +691,14 @@ namespace LabBook.Forms.LabBook
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             // 
+            // SetToolStripMenuItem
+            // 
+            this.SetToolStripMenuItem.Name = "SetToolStripMenuItem";
+            this.SetToolStripMenuItem.Size = new System.Drawing.Size(230, 28);
+            this.SetToolStripMenuItem.Tag = "9";
+            this.SetToolStripMenuItem.Text = "Wybrane";
+            this.SetToolStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
+            // 
             // LabBookForm
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.WhiteSpace;
@@ -782,5 +802,7 @@ namespace LabBook.Forms.LabBook
         private System.Windows.Forms.ToolStripMenuItem IciToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem KrebsICIToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem FullToolStripMenuItem;
+        private System.Windows.Forms.TabPage TabPageResults;
+        private System.Windows.Forms.ToolStripMenuItem SetToolStripMenuItem;
     }
 }

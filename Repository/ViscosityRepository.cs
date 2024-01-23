@@ -35,10 +35,8 @@ namespace LabBook.Repository
             _connection = connection;
         }
 
-        public DataTable GetViscosityByLabBookId(long id)
+        public void GetViscosityByLabBookId(DataTable viscosity, long id)
         {
-            DataTable viscosity = new DataTable();
-
             try
             {
                 string kwer = GET_VISCOSITY_BY_ID.Replace("XXXX", id.ToString());
@@ -60,8 +58,6 @@ namespace LabBook.Repository
                 if (_connection.State == ConnectionState.Open)
                     _connection.Close();
             }
-
-            return viscosity;
         }
 
         public void LoadViscosityByLabBookId(DataTable viscosity, long id)

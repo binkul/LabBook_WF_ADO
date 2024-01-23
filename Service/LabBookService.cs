@@ -1,6 +1,7 @@
 ﻿using LabBook.ADO;
 using LabBook.Commons;
 using LabBook.Forms.LabBook;
+using LabBook.Forms.Viscosity;
 using LabBook.Repository;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,8 @@ public enum ViscosityType
     KREBS,
     ICI,
     KREBS_ICI,
-    FULL
+    FULL,
+    SPEC
 }
 
 public enum MeasureType
@@ -266,6 +268,7 @@ namespace LabBook.Service
 
         private void GetAllLabBook()
         {
+            #region LabBook DataTable and View
             _labBookTable = _labBookRepository.GetAllLabBook();
             _labBookTable.ColumnChanged += LabBookTable_ColumnChanged;
             _labBookView = new DataView(_labBookTable);
@@ -275,12 +278,25 @@ namespace LabBook.Service
             _labBookBindingSource.DataSource = _labBookView;
             _labBookBindingSource.PositionChanged += LabBookBindingSource_PositionChanged;
             _labBookForm.GetBindingNavigator.BindingSource = _labBookBindingSource;
+            #endregion
 
-            _viscosityTable = _viscosityRepository.GetViscosityByLabBookId(-1);
+            #region Viscosity DataTable and View
+            _viscosityTable = new DataTable();
+            DataColumn kolumna = new DataColumn();
+            kolumna.ColumnName = "Nr";
+            kolumna.DataType = Type.GetType("System.Int64");
+            kolumna.AllowDBNull = false;
+            kolumna.AutoIncrement = true;
+            kolumna.AutoIncrementSeed = 1;
+            kolumna.AutoIncrementStep = 1;
+            _viscosityTable.Columns.Add(kolumna);
+            _viscosityRepository.GetViscosityByLabBookId(_viscosityTable, -1);
             _viscosityTable.ColumnChanged += ViscosityTable_ColumnChanged;
+
             _viscosityView = new DataView(_viscosityTable);
             _viscosityView.Sort = "date_created, date_update";
             _viscosityBindingSource = new BindingSource { DataSource = _viscosityView };
+            #endregion
         }
 
         #endregion
@@ -571,51 +587,6 @@ namespace LabBook.Service
             {
                 HideViscosityColumns();
                 ShowViscosityColumns();
-                //DataGridView view = _labBookForm.GetDgvViscosity;
-                //string[] columns;
-
-                //switch (_viscosityColumnsCurrent.Type)
-                //{
-                //    case ViscosityType.STD:
-                //        columns = ColumnData.STD_FIELDS.Split('|');
-                //        break;
-                //    case ViscosityType.STD_X:
-                //        columns = ColumnData.STD_X_FIELDS.Split('|');
-                //        break;
-                //    case ViscosityType.PRB:
-                //        columns = ColumnData.PRB_FIELDS.Split('|');
-                //        break;
-                //    case ViscosityType.SOLVENT:
-                //        columns = ColumnData.SLV_FIELDS.Split('|');
-                //        break;
-                //    case ViscosityType.SOLVENT_X:
-                //        columns = ColumnData.SLV_X_FIELDS.Split('|');
-                //        break;
-                //    case ViscosityType.KREBS:
-                //        columns = ColumnData.KREBS_FIELDS.Split('|');
-                //        break;
-                //    case ViscosityType.ICI:
-                //        columns = ColumnData.ICI_FIELDS.Split('|');
-                //        break;
-                //    case ViscosityType.KREBS_ICI:
-                //        columns = ColumnData.KREBS_ICI_FIELDS.Split('|');
-                //        break;
-                //    case ViscosityType.FULL:
-                //        columns = ColumnData.FULL_FIELDS.Split('|');
-                //        break;
-                //    default:
-                //        columns = ColumnData.STD_FIELDS.Split('|');
-                //        break;
-                //}
-
-                //foreach (string col in columns)
-                //{
-                //    if (ColumnData.GetViscosityColumns.ContainsKey(col))
-                //    {
-                //        view.Columns[col].Visible = true;
-                //    }
-                //}
-
             }
         }
         
@@ -667,6 +638,9 @@ namespace LabBook.Service
                 case ViscosityType.FULL:
                     columns = ColumnData.FULL_FIELDS.Split('|');
                     break;
+                case ViscosityType.SPEC:
+                    columns = !string.IsNullOrEmpty(_viscosityColumnsCurrent.Fields) ? _viscosityColumnsCurrent.Fields.Split('|') : ColumnData.STD_FIELDS.Split('|');
+                    break;
                 default:
                     columns = ColumnData.STD_FIELDS.Split('|');
                     break;
@@ -717,8 +691,12 @@ namespace LabBook.Service
                 case 7:
                     _viscosityColumnsCurrent.Type = ViscosityType.KREBS_ICI;
                     break;
-                default:
+                case 8:
                     _viscosityColumnsCurrent.Type = ViscosityType.FULL;
+                    break;
+                default:
+                    SetViscosityFields();
+                    _viscosityColumnsCurrent.Type = ViscosityType.SPEC;
                     break;
             }
         }
@@ -738,6 +716,14 @@ namespace LabBook.Service
             {
                 var itemFromPosition = (ToolStripMenuItem)_labBookForm.GetViscosityMenuItem.DropDownItems[position];
                 itemFromPosition.Checked = true;
+            }
+        }
+
+        public void SetViscosityFields()
+        {
+            using(ViscosityColumnsForm form = new ViscosityColumnsForm(_viscosityColumnsCurrent.Fields))
+            {
+                form.ShowDialog();
             }
         }
 

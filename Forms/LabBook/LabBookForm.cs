@@ -159,6 +159,17 @@ namespace LabBook.Forms.LabBook
             {
                 ViscosityToolStripMenuItem.Enabled = false;
             }
+
+            if (tab.SelectedTab.Name == "TabPageViscosity" || tab.SelectedTab.Name == "TabPageMain" || tab.SelectedTab.Name == "TabPageContrast")
+            {
+                BtnDelete.Enabled = true;
+            }
+            else
+            {
+                BtnDelete.Enabled = false;
+            }
+
+
         }
 
         #endregion

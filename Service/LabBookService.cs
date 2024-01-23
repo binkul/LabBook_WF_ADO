@@ -210,13 +210,11 @@ namespace LabBook.Service
             foreach (DataGridViewColumn column in view.Columns)
             {
 
-                string data;
-                if (ColumnData.GetViscosityColumns.TryGetValue(column.Name, out data))
+                if (ColumnData.GetViscosityColumns.TryGetValue(column.Name, out IList<string> data))
                 {
-                    string[] colData = data.Split('|');
-                    view.Columns[column.Name].HeaderText = colData[0];
-                    view.Columns[column.Name].DisplayIndex = int.Parse(colData[1]);
-                    view.Columns[column.Name].Width = int.Parse(colData[2]);
+                    view.Columns[column.Name].HeaderText = data[0];
+                    view.Columns[column.Name].DisplayIndex = int.Parse(data[1]);
+                    view.Columns[column.Name].Width = int.Parse(data[2]);
                     view.Columns[column.Name].SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
 

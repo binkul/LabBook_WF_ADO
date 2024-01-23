@@ -31,7 +31,7 @@ namespace LabBook.Forms.Viscosity
         {
             this.BtnOk = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
-            this.ChPh = new System.Windows.Forms.CheckBox();
+            this.ChbPh = new System.Windows.Forms.CheckBox();
             this.ChbBrook_1 = new System.Windows.Forms.CheckBox();
             this.ChbBrook_5 = new System.Windows.Forms.CheckBox();
             this.ChbBrook_10 = new System.Windows.Forms.CheckBox();
@@ -77,16 +77,16 @@ namespace LabBook.Forms.Viscosity
             this.BtnCancel.Text = "Anuluj";
             this.BtnCancel.UseVisualStyleBackColor = true;
             // 
-            // ChPh
+            // ChbPh
             // 
-            this.ChPh.AutoSize = true;
-            this.ChPh.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.ChPh.Location = new System.Drawing.Point(31, 58);
-            this.ChPh.Name = "ChPh";
-            this.ChPh.Size = new System.Drawing.Size(91, 24);
-            this.ChPh.TabIndex = 2;
-            this.ChPh.Text = "Pole pH";
-            this.ChPh.UseVisualStyleBackColor = true;
+            this.ChbPh.AutoSize = true;
+            this.ChbPh.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ChbPh.Location = new System.Drawing.Point(31, 58);
+            this.ChbPh.Name = "ChbPh";
+            this.ChbPh.Size = new System.Drawing.Size(91, 24);
+            this.ChbPh.TabIndex = 2;
+            this.ChbPh.Text = "Pole pH";
+            this.ChbPh.UseVisualStyleBackColor = true;
             // 
             // ChbBrook_1
             // 
@@ -369,7 +369,7 @@ namespace LabBook.Forms.Viscosity
             this.Controls.Add(this.ChbBrook_10);
             this.Controls.Add(this.ChbBrook_5);
             this.Controls.Add(this.ChbBrook_1);
-            this.Controls.Add(this.ChPh);
+            this.Controls.Add(this.ChbPh);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnOk);
             this.Name = "ViscosityColumnsForm";
@@ -385,7 +385,7 @@ namespace LabBook.Forms.Viscosity
 
         private System.Windows.Forms.Button BtnOk;
         private System.Windows.Forms.Button BtnCancel;
-        private System.Windows.Forms.CheckBox ChPh;
+        private System.Windows.Forms.CheckBox ChbPh;
         private System.Windows.Forms.CheckBox ChbBrook_1;
         private System.Windows.Forms.CheckBox ChbBrook_5;
         private System.Windows.Forms.CheckBox ChbBrook_10;

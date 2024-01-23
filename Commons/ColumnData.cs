@@ -15,39 +15,39 @@ namespace LabBook.Commons
         public const string KREBS_ICI_FIELDS = "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|krebs|krebs_comment|ici|ici_disc|ici_comment";
         public const string FULL_FIELDS = "pH|brook_1|brook_5|brook_10|brook_20|brook_30|brook_40|brook_50|brook_60|brook_70|brook_80|brook_90|brook_100|brook_100|brook_disc|brook_comment|brook_x_vis|brook_x_rpm|brook_x_disc|krebs|krebs_comment|krebs|krebs_comment|ici|ici_disc|ici_comment";
 
-        private static readonly IDictionary<string, string> VISCOSITY_COLUMNS = new Dictionary<string, string>()
+        private static readonly IDictionary<string, IList<string>> VISCOSITY_COLUMNS = new Dictionary<string, IList<string>>()
         {
-            // key - kolumn name id DataBase; Value - column Header in DGV|column DisplayIndex in DGV|Column width in DGV|Full column description for other use
-            {"date_created", "Utworzony|0|100|Data utworzenia" },
-            {"date_update", "Pomiar|1|100|Data pomiaru" },
-            {"days_distance", "Doba|2|100|Doba od pomiaru" },
-            {"temp", "Temp|3|100|Temperatura" },
-            {"pH", "pH|4|80|pH" },
-            {"brook_1", "Lep 1|5|100|Lepkość 1 rpm" },
-            {"brook_5", "Lep 5|6|100|Lepkość 5 rpm" },
-            {"brook_10", "Lep 10|7|100|Lepkość 10 rpm" },
-            {"brook_20", "Lep 20|8|100|Lepkość 20 rpm" },
-            {"brook_30", "Lep 30|9|100|Lepkość 30 rpm" },
-            {"brook_40", "Lep 40|10|100|Lepkość 40 rpm" },
-            {"brook_50", "Lep 50|11|100|Lepkość 50 rpm" },
-            {"brook_60", "Lep 60|12|100|Lepkość 60 rpm" },
-            {"brook_70", "Lep 70|13|100|Lepkość 70 rpm" },
-            {"brook_80", "Lep 80|14|100|Lepkość 80 rpm" },
-            {"brook_90", "Lep 90|15|100|Lepkość 90 rpm" },
-            {"brook_100", "Lep 100|16|100|Lepkość 100 rpm" },
-            {"brook_disc", "Dysk|17|80|Dysk numer" },
-            {"brook_comment", "Lepkość uwagi|18|200|Brookfield uwagi" },
-            {"brook_x_vis", "Lep X|19|100|Lepkość x" },
-            {"brook_x_rpm", "Obr. X|20|100|Obroty X" },
-            {"brook_x_disc", "Dysk X|21|80|Dysk x" },
-            {"krebs", "Krebs|22|100|Lepkość Krebs" },
-            {"krebs_comment", "Krebs uwagi|23|200|Krebs uwagi" },
-            {"ici", "ICI|24|80|Lepkość ICI" },
-            {"ici_disc", "ICI dysk|25|80|ICI Dysk" },
-            {"ici_comment", "ICI uwagi|26|150|ICI uwagi" }
+            // key - kolumn name id DataBase; Value - column Header name in DGV|column DisplayIndex in DGV|Column width in DGV|Full column description for other use|ChbBox name in ViscosityColumnsForms
+            {"date_created", new List<string>(){ "Utworzony", "0", "100", "Data utworzenia", "?" } },
+            {"date_update", new List<string>(){ "Pomiar", "1", "100", "Data pomiaru", "?" } },
+            {"days_distance", new List<string>(){ "Doba", "2", "100", "Doba od pomiaru", "?" } },
+            {"temp", new List<string>(){ "Temp", "3", "100", "Temperatura", "?" } },
+            {"pH", new List<string>(){ "pH", "4", "80", "pH", "ChbPh" } },
+            {"brook_1", new List<string>(){ "Lep 1", "5", "100", "Lepkość 1 rpm", "ChbBrook_1" } },
+            {"brook_5", new List<string>(){ "Lep 5", "6", "100", "Lepkość 5 rpm", "ChbBrook_5" } },
+            {"brook_10", new List<string>(){ "Lep 10", "7", "100", "Lepkość 10 rpm", "ChbBrook_10" } },
+            {"brook_20", new List<string>(){ "Lep 20", "8", "100", "Lepkość 20 rpm", "ChbBrook_20" } },
+            {"brook_30", new List<string>(){ "Lep 30", "9", "100", "Lepkość 30 rpm", "ChbBrook_30" } },
+            {"brook_40", new List<string>(){ "Lep 40", "10", "100", "Lepkość 40 rpm", "ChbBrook_40" } },
+            {"brook_50", new List<string>(){ "Lep 50", "11", "100", "Lepkość 50 rpm", "ChbBrook_50" } },
+            {"brook_60", new List<string>(){ "Lep 60", "12", "100", "Lepkość 60 rpm", "ChbBrook_60" } },
+            {"brook_70", new List<string>(){ "Lep 70", "13", "100", "Lepkość 70 rpm", "ChbBrook_70" } },
+            {"brook_80", new List<string>(){ "Lep 80", "14", "100", "Lepkość 80 rpm", "ChbBrook_80" } },
+            {"brook_90", new List<string>(){ "Lep 90", "15", "100", "Lepkość 90 rpm", "ChbBrook_90" } },
+            {"brook_100", new List<string>(){ "Lep 100", "16", "100", "Lepkość 100 rpm", "ChbBrook_100" } },
+            {"brook_disc", new List<string>(){ "Dysk", "17", "80", "Dysk numer", "ChbBrook_disc" } },
+            {"brook_comment", new List<string>(){ "Lepkość uwagi", "18", "200", "Brookfield uwagi", "ChbBrook_comment" } },
+            {"brook_x_vis", new List<string>(){ "Lep X", "19", "100", "Lepkość x", "ChbBrook_X" } },
+            {"brook_x_rpm", new List<string>(){ "Obr. X", "20", "100", "Obroty X", "ChbBrook_X_rpm" } },
+            {"brook_x_disc", new List<string>(){ "Dysk X", "21", "80", "Dysk x", "ChbBrook_X_disc" } },
+            {"krebs", new List<string>(){ "Krebs", "22", "100", "Lepkość Krebs", "ChbKrebs" } },
+            {"krebs_comment", new List<string>(){ "Krebs uwagi", "23", "200", "Krebs uwagi", "ChbKrebs_comment" } },
+            {"ici", new List<string>(){ "ICI", "24", "80", "Lepkość ICI", "ChbIci" } },
+            {"ici_disc", new List<string>(){ "ICI dysk", "25", "80", "ICI Dysk", "ChbIci_disc" } },
+            {"ici_comment", new List<string>(){ "ICI uwagi", "26", "150", "ICI uwagi", "ChbIci_comment" } }
         };
 
-        public static IDictionary<string, string> GetViscosityColumns => VISCOSITY_COLUMNS;
+        public static IDictionary<string, IList<string>> GetViscosityColumns => VISCOSITY_COLUMNS;
 
     }
 }

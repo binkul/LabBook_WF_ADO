@@ -272,7 +272,7 @@ namespace LabBook.Repository
                 cmd.CommandText = SAVE_VIS_COLUMNS;
                 cmd.Connection = _connection;
                 cmd.Parameters.AddWithValue("@a", viscosityColumn.LabBookId);
-                cmd.Parameters.AddWithValue("@b", viscosityColumn.Type);
+                cmd.Parameters.AddWithValue("@b", Enum.GetName(typeof(ViscosityType), viscosityColumn.Type));
                 cmd.Parameters.AddWithValue("@c", CommonFunction.NullToDBNullConv(viscosityColumn.Fields));
                 _connection.Open();
                 cmd.ExecuteNonQuery();

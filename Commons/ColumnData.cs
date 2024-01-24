@@ -4,16 +4,29 @@ namespace LabBook.Commons
 {
     public static class ColumnData
     {
-        public const string START_FIELDS = "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment";
-        public const string STD_FIELDS = "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment";
-        public const string STD_X_FIELDS = "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|brook_x_vis|brook_x_rpm|brook_x_disc";
-        public const string PRB_FIELDS = "pH|brook_1|brook_5|brook_10|brook_20|brook_50|brook_100|brook_disc|brook_comment";
-        public const string SLV_FIELDS = "brook_1|brook_5|brook_20|brook_disc|brook_comment";
-        public const string SLV_X_FIELDS = "brook_1|brook_5|brook_20|brook_disc|brook_comment|brook_x_vis|brook_x_rpm|brook_x_disc";
-        public const string KREBS_FIELDS = "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|krebs|krebs_comment";
-        public const string ICI_FIELDS = "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|ici|ici_disc|ici_comment";
-        public const string KREBS_ICI_FIELDS = "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|krebs|krebs_comment|ici|ici_disc|ici_comment";
-        public const string FULL_FIELDS = "pH|brook_1|brook_5|brook_10|brook_20|brook_30|brook_40|brook_50|brook_60|brook_70|brook_80|brook_90|brook_100|brook_100|brook_disc|brook_comment|brook_x_vis|brook_x_rpm|brook_x_disc|krebs|krebs_comment|krebs|krebs_comment|ici|ici_disc|ici_comment";
+        //public const string STD_FIELDS = "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment";
+        //public const string STD_X_FIELDS = "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|brook_x_vis|brook_x_rpm|brook_x_disc";
+        //public const string PRB_FIELDS = "pH|brook_1|brook_5|brook_10|brook_20|brook_50|brook_100|brook_disc|brook_comment";
+        //public const string SLV_FIELDS = "brook_1|brook_5|brook_20|brook_disc|brook_comment";
+        //public const string SLV_X_FIELDS = "brook_1|brook_5|brook_20|brook_disc|brook_comment|brook_x_vis|brook_x_rpm|brook_x_disc";
+        //public const string KREBS_FIELDS = "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|krebs|krebs_comment";
+        //public const string ICI_FIELDS = "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|ici|ici_disc|ici_comment";
+        //public const string KREBS_ICI_FIELDS = "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|krebs|krebs_comment|ici|ici_disc|ici_comment";
+        //public const string FULL_FIELDS = "pH|brook_1|brook_5|brook_10|brook_20|brook_30|brook_40|brook_50|brook_60|brook_70|brook_80|brook_90|brook_100|brook_100|brook_disc|brook_comment|brook_x_vis|brook_x_rpm|brook_x_disc|krebs|krebs_comment|krebs|krebs_comment|ici|ici_disc|ici_comment";
+
+        private static readonly IDictionary<ViscosityType, string> VISCOSITY_FIELDS = new Dictionary<ViscosityType, string>()
+        {
+            { ViscosityType.STD,  "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment" },
+            { ViscosityType.STD_X,  "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|brook_x_vis|brook_x_rpm|brook_x_disc" },
+            { ViscosityType.PRB,  "pH|brook_1|brook_5|brook_10|brook_20|brook_50|brook_100|brook_disc|brook_comment" },
+            { ViscosityType.SOLVENT,  "brook_1|brook_5|brook_20|brook_disc|brook_comment" },
+            { ViscosityType.SOLVENT_X,  "brook_1|brook_5|brook_20|brook_disc|brook_comment|brook_x_vis|brook_x_rpm|brook_x_disc" },
+            { ViscosityType.KREBS,  "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|krebs|krebs_comment" },
+            { ViscosityType.ICI,  "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|ici|ici_disc|ici_comment" },
+            { ViscosityType.KREBS_ICI,  "pH|brook_1|brook_5|brook_20|brook_disc|brook_comment|krebs|krebs_comment|ici|ici_disc|ici_comment" },
+            { ViscosityType.FULL,  "pH|brook_1|brook_5|brook_10|brook_20|brook_30|brook_40|brook_50|brook_60|brook_70|brook_80|brook_90|brook_100|brook_100|brook_disc|brook_comment|brook_x_vis|brook_x_rpm|brook_x_disc|krebs|krebs_comment|krebs|krebs_comment|ici|ici_disc|ici_comment" },
+            { ViscosityType.SPEC, "" }
+        };
 
         private static readonly IDictionary<string, IList<string>> VISCOSITY_COLUMNS = new Dictionary<string, IList<string>>()
         {
@@ -48,6 +61,7 @@ namespace LabBook.Commons
         };
 
         public static IDictionary<string, IList<string>> GetViscosityColumns => VISCOSITY_COLUMNS;
+        public static IDictionary<ViscosityType, string> GetViscosityFields => VISCOSITY_FIELDS;
 
     }
 }

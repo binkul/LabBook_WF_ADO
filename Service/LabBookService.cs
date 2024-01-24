@@ -596,43 +596,17 @@ namespace LabBook.Service
         private void ShowViscosityColumns()
         {
             DataGridView view = _labBookForm.GetDgvViscosity;
+            IDictionary<ViscosityType, string> fields = ColumnData.GetViscosityFields;
             string[] columns;
 
-            switch (_viscosityColumnsCurrent.Type)
+
+            if (_viscosityColumnsCurrent.Type != ViscosityType.SPEC && fields.ContainsKey(_viscosityColumnsCurrent.Type))
             {
-                case ViscosityType.STD:
-                    columns = ColumnData.STD_FIELDS.Split('|');
-                    break;
-                case ViscosityType.STD_X:
-                    columns = ColumnData.STD_X_FIELDS.Split('|');
-                    break;
-                case ViscosityType.PRB:
-                    columns = ColumnData.PRB_FIELDS.Split('|');
-                    break;
-                case ViscosityType.SOLVENT:
-                    columns = ColumnData.SLV_FIELDS.Split('|');
-                    break;
-                case ViscosityType.SOLVENT_X:
-                    columns = ColumnData.SLV_X_FIELDS.Split('|');
-                    break;
-                case ViscosityType.KREBS:
-                    columns = ColumnData.KREBS_FIELDS.Split('|');
-                    break;
-                case ViscosityType.ICI:
-                    columns = ColumnData.ICI_FIELDS.Split('|');
-                    break;
-                case ViscosityType.KREBS_ICI:
-                    columns = ColumnData.KREBS_ICI_FIELDS.Split('|');
-                    break;
-                case ViscosityType.FULL:
-                    columns = ColumnData.FULL_FIELDS.Split('|');
-                    break;
-                case ViscosityType.SPEC:
-                    columns = !string.IsNullOrEmpty(_viscosityColumnsCurrent.Fields) ? _viscosityColumnsCurrent.Fields.Split('|') : ColumnData.STD_FIELDS.Split('|');
-                    break;
-                default:
-                    columns = ColumnData.STD_FIELDS.Split('|');
-                    break;
+                columns = fields[_viscosityColumnsCurrent.Type].Split('|');
+            }
+            else
+            {
+                columns = !string.IsNullOrEmpty(_viscosityColumnsCurrent.Fields) ? _viscosityColumnsCurrent.Fields.Split('|') : fields[ViscosityType.STD].Split('|');
             }
 
             foreach (string col in columns)

@@ -55,7 +55,6 @@ namespace LabBook.Service
         private DataTable _viscosityTable;
         private DataView _viscosityView;
         private BindingSource _viscosityBindingSource;
-        private ViscosityColumn _viscosityColumnsOld = null;
         private ViscosityColumn _viscosityColumnsCurrent = new ViscosityColumn("STD");
 
         private bool _modified = false;
@@ -482,7 +481,6 @@ namespace LabBook.Service
                 ReloadViscosity(id);
                 _viscosityColumnsCurrent = _viscosityRepository.GetViscosityColumnById(id);
                 ShowHideViscosityColumns();
-                _viscosityColumnsOld = _viscosityColumnsCurrent;
                 ViscosityType type = _viscosityColumnsCurrent.Type;
                 SelectViscosityItemOnMenu((int)type, null);
             }
@@ -577,15 +575,8 @@ namespace LabBook.Service
 
         private void ShowHideViscosityColumns()
         {
-            if (_viscosityColumnsOld != null && _viscosityColumnsOld.Type == _viscosityColumnsCurrent.Type)
-            {
-                return;
-            }
-            else
-            {
-                HideViscosityColumns();
-                ShowViscosityColumns();
-            }
+            HideViscosityColumns();
+            ShowViscosityColumns();
         }
         
         private void HideViscosityColumns()
@@ -722,6 +713,7 @@ namespace LabBook.Service
             using(ViscosityColumnsForm form = new ViscosityColumnsForm(_viscosityColumnsCurrent.Fields))
             {
                 form.ShowDialog();
+                _viscosityColumnsCurrent.Fields = form.Result;
             }
         }
 

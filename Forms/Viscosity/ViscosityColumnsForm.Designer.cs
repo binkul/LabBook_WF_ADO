@@ -66,6 +66,7 @@ namespace LabBook.Forms.Viscosity
             this.BtnOk.TabIndex = 0;
             this.BtnOk.Text = "Zapisz";
             this.BtnOk.UseVisualStyleBackColor = true;
+            this.BtnOk.Click += new System.EventHandler(this.BtnOk_Click);
             // 
             // BtnCancel
             // 
@@ -76,6 +77,7 @@ namespace LabBook.Forms.Viscosity
             this.BtnCancel.TabIndex = 1;
             this.BtnCancel.Text = "Anuluj";
             this.BtnCancel.UseVisualStyleBackColor = true;
+            this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // ChbPh
             // 

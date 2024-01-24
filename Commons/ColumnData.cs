@@ -18,10 +18,10 @@ namespace LabBook.Commons
         private static readonly IDictionary<string, IList<string>> VISCOSITY_COLUMNS = new Dictionary<string, IList<string>>()
         {
             // key - kolumn name id DataBase; Value - column Header name in DGV|column DisplayIndex in DGV|Column width in DGV|Full column description for other use|ChbBox name in ViscosityColumnsForms
-            {"date_created", new List<string>(){ "Utworzony", "0", "100", "Data utworzenia", "?" } },
-            {"date_update", new List<string>(){ "Pomiar", "1", "100", "Data pomiaru", "?" } },
-            {"days_distance", new List<string>(){ "Doba", "2", "100", "Doba od pomiaru", "?" } },
-            {"temp", new List<string>(){ "Temp", "3", "100", "Temperatura", "?" } },
+            {"date_created", new List<string>(){ "Utworzony", "0", "100", "Data utworzenia", "NULL" } },
+            {"date_update", new List<string>(){ "Pomiar", "1", "100", "Data pomiaru", "NULL" } },
+            {"days_distance", new List<string>(){ "Doba", "2", "100", "Doba od pomiaru", "NULL" } },
+            {"temp", new List<string>(){ "Temp", "3", "100", "Temperatura", "NULL" } },
             {"pH", new List<string>(){ "pH", "4", "80", "pH", "ChbPh" } },
             {"brook_1", new List<string>(){ "Lep 1", "5", "100", "Lepkość 1 rpm", "ChbBrook_1" } },
             {"brook_5", new List<string>(){ "Lep 5", "6", "100", "Lepkość 5 rpm", "ChbBrook_5" } },

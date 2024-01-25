@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ADO\CmbApplicator.cs" />
+    <Compile Include="ADO\ExpContrast.cs" />
     <Compile Include="ADO\ExpCycle.cs" />
     <Compile Include="ADO\ProgramData.cs" />
     <Compile Include="ADO\User.cs" />
@@ -81,6 +83,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ExpContrastRepository.cs" />
     <Compile Include="Repository\ExpCycleRepository.cs" />
     <Compile Include="Repository\LabBookRepository.cs" />
     <Compile Include="Repository\LoginRepository.cs" />

@@ -47,6 +47,7 @@ namespace LabBook.Service
         private readonly LabBookRepository _labBookRepository;
         private readonly ExpCycleRepository _expCycleRepository;
         private readonly ViscosityRepository _viscosityRepository;
+        private readonly ExpContrastRepository _contrastRepository;
 
         private DataTable _labBookTable;
         private DataView _labBookView;
@@ -74,6 +75,7 @@ namespace LabBook.Service
             _labBookRepository = new LabBookRepository(_user, _connection);
             _expCycleRepository = new ExpCycleRepository(_connection);
             _viscosityRepository = new ViscosityRepository(_connection);
+            _contrastRepository = new ExpContrastRepository(_connection);
         }
 
         #region Save and Load data for LabBook form 
@@ -596,17 +598,17 @@ namespace LabBook.Service
         private void ShowViscosityColumns()
         {
             DataGridView view = _labBookForm.GetDgvViscosity;
-            IDictionary<ViscosityType, string> fields = ColumnData.GetViscosityFields;
-            string[] columns;
+            IDictionary<ViscosityType, IList<string>> fields = ColumnData.GetViscosityFields;
+            IList<string> columns;
 
 
             if (_viscosityColumnsCurrent.Type != ViscosityType.SPEC && fields.ContainsKey(_viscosityColumnsCurrent.Type))
             {
-                columns = fields[_viscosityColumnsCurrent.Type].Split('|');
+                columns = fields[_viscosityColumnsCurrent.Type];
             }
             else
             {
-                columns = !string.IsNullOrEmpty(_viscosityColumnsCurrent.Fields) ? _viscosityColumnsCurrent.Fields.Split('|') : fields[ViscosityType.STD].Split('|');
+                columns = !string.IsNullOrEmpty(_viscosityColumnsCurrent.Fields) ? new List<string>(_viscosityColumnsCurrent.Fields.Split('|')) : fields[ViscosityType.STD];
             }
 
             foreach (string col in columns)

@@ -34,6 +34,12 @@ namespace LabBook.Forms.LabBook
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.plikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dodajToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aplikatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TspContrastStd = new System.Windows.Forms.ToolStripMenuItem();
+            this.TspContrastPRB = new System.Windows.Forms.ToolStripMenuItem();
+            this.TspContrastStdPRB = new System.Windows.Forms.ToolStripMenuItem();
+            this.TspContrastKF = new System.Windows.Forms.ToolStripMenuItem();
+            this.TspContrastAll = new System.Windows.Forms.ToolStripMenuItem();
             this.widokToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ViscosityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StandardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,6 +80,9 @@ namespace LabBook.Forms.LabBook
             this.TabPageViscosity = new System.Windows.Forms.TabPage();
             this.DgvViscosity = new System.Windows.Forms.DataGridView();
             this.TabPageContrast = new System.Windows.Forms.TabPage();
+            this.BtnContrastDown = new System.Windows.Forms.Button();
+            this.BtnContrastUp = new System.Windows.Forms.Button();
+            this.DgvContrast = new System.Windows.Forms.DataGridView();
             this.TabPageGloss = new System.Windows.Forms.TabPage();
             this.TabPageClass = new System.Windows.Forms.TabPage();
             this.TabPageResults = new System.Windows.Forms.TabPage();
@@ -88,7 +97,6 @@ namespace LabBook.Forms.LabBook
             this.BtnDelete = new System.Windows.Forms.Button();
             this.BtnAddNew = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.DgvContrast = new System.Windows.Forms.DataGridView();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigatorMain)).BeginInit();
             this.BindingNavigatorMain.SuspendLayout();
@@ -125,9 +133,61 @@ namespace LabBook.Forms.LabBook
             // 
             // dodajToolStripMenuItem
             // 
+            this.dodajToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aplikatorToolStripMenuItem});
             this.dodajToolStripMenuItem.Name = "dodajToolStripMenuItem";
             this.dodajToolStripMenuItem.Size = new System.Drawing.Size(72, 27);
             this.dodajToolStripMenuItem.Text = "Dodaj";
+            // 
+            // aplikatorToolStripMenuItem
+            // 
+            this.aplikatorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TspContrastStd,
+            this.TspContrastPRB,
+            this.TspContrastStdPRB,
+            this.TspContrastKF,
+            this.TspContrastAll});
+            this.aplikatorToolStripMenuItem.Name = "aplikatorToolStripMenuItem";
+            this.aplikatorToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.aplikatorToolStripMenuItem.Text = "Aplikator";
+            // 
+            // TspContrastStd
+            // 
+            this.TspContrastStd.Name = "TspContrastStd";
+            this.TspContrastStd.Size = new System.Drawing.Size(224, 28);
+            this.TspContrastStd.Tag = "STD";
+            this.TspContrastStd.Text = "Standard";
+            this.TspContrastStd.Click += new System.EventHandler(this.ContrastToolStripMenuItem_Click);
+            // 
+            // TspContrastPRB
+            // 
+            this.TspContrastPRB.Name = "TspContrastPRB";
+            this.TspContrastPRB.Size = new System.Drawing.Size(224, 28);
+            this.TspContrastPRB.Tag = "PRB";
+            this.TspContrastPRB.Text = "PRB";
+            this.TspContrastPRB.Click += new System.EventHandler(this.ContrastToolStripMenuItem_Click);
+            // 
+            // TspContrastStdPRB
+            // 
+            this.TspContrastStdPRB.Name = "TspContrastStdPRB";
+            this.TspContrastStdPRB.Size = new System.Drawing.Size(224, 28);
+            this.TspContrastStdPRB.Tag = "STD_PRB";
+            this.TspContrastStdPRB.Text = "Standard+PRB";
+            this.TspContrastStdPRB.Click += new System.EventHandler(this.ContrastToolStripMenuItem_Click);
+            // 
+            // TspContrastKF
+            // 
+            this.TspContrastKF.Name = "TspContrastKF";
+            this.TspContrastKF.Size = new System.Drawing.Size(224, 28);
+            this.TspContrastKF.Tag = "KF";
+            this.TspContrastKF.Text = "Standard+KF";
+            this.TspContrastKF.Click += new System.EventHandler(this.ContrastToolStripMenuItem_Click);
+            // 
+            // TspContrastAll
+            // 
+            this.TspContrastAll.Name = "TspContrastAll";
+            this.TspContrastAll.Size = new System.Drawing.Size(224, 28);
+            this.TspContrastAll.Text = "Wszystkie";
             // 
             // widokToolStripMenuItem
             // 
@@ -164,7 +224,7 @@ namespace LabBook.Forms.LabBook
             this.StandardToolStripMenuItem.Size = new System.Drawing.Size(230, 28);
             this.StandardToolStripMenuItem.Tag = "0";
             this.StandardToolStripMenuItem.Text = "Standard";
-            this.StandardToolStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
+            this.StandardToolStripMenuItem.Click += new System.EventHandler(this.ViscosityToolStripMenuItem_Click);
             // 
             // StandardXToolStripMenuItem
             // 
@@ -173,7 +233,7 @@ namespace LabBook.Forms.LabBook
             this.StandardXToolStripMenuItem.Size = new System.Drawing.Size(230, 28);
             this.StandardXToolStripMenuItem.Tag = "1";
             this.StandardXToolStripMenuItem.Text = "Standrad X";
-            this.StandardXToolStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
+            this.StandardXToolStripMenuItem.Click += new System.EventHandler(this.ViscosityToolStripMenuItem_Click);
             // 
             // PrbToolStripMenuItem
             // 
@@ -182,7 +242,7 @@ namespace LabBook.Forms.LabBook
             this.PrbToolStripMenuItem.Size = new System.Drawing.Size(230, 28);
             this.PrbToolStripMenuItem.Tag = "2";
             this.PrbToolStripMenuItem.Text = "PRB";
-            this.PrbToolStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
+            this.PrbToolStripMenuItem.Click += new System.EventHandler(this.ViscosityToolStripMenuItem_Click);
             // 
             // SolventToolStripMenuItem
             // 
@@ -191,7 +251,7 @@ namespace LabBook.Forms.LabBook
             this.SolventToolStripMenuItem.Size = new System.Drawing.Size(230, 28);
             this.SolventToolStripMenuItem.Tag = "3";
             this.SolventToolStripMenuItem.Text = "Rozpuszczalnik";
-            this.SolventToolStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
+            this.SolventToolStripMenuItem.Click += new System.EventHandler(this.ViscosityToolStripMenuItem_Click);
             // 
             // SolventXToolStripMenuItem
             // 
@@ -200,7 +260,7 @@ namespace LabBook.Forms.LabBook
             this.SolventXToolStripMenuItem.Size = new System.Drawing.Size(230, 28);
             this.SolventXToolStripMenuItem.Tag = "4";
             this.SolventXToolStripMenuItem.Text = "Rozpuszczalnik X";
-            this.SolventXToolStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
+            this.SolventXToolStripMenuItem.Click += new System.EventHandler(this.ViscosityToolStripMenuItem_Click);
             // 
             // KrebsStripMenuItem
             // 
@@ -209,7 +269,7 @@ namespace LabBook.Forms.LabBook
             this.KrebsStripMenuItem.Size = new System.Drawing.Size(230, 28);
             this.KrebsStripMenuItem.Tag = "5";
             this.KrebsStripMenuItem.Text = "Krebs";
-            this.KrebsStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
+            this.KrebsStripMenuItem.Click += new System.EventHandler(this.ViscosityToolStripMenuItem_Click);
             // 
             // IciToolStripMenuItem
             // 
@@ -218,7 +278,7 @@ namespace LabBook.Forms.LabBook
             this.IciToolStripMenuItem.Size = new System.Drawing.Size(230, 28);
             this.IciToolStripMenuItem.Tag = "6";
             this.IciToolStripMenuItem.Text = "ICI";
-            this.IciToolStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
+            this.IciToolStripMenuItem.Click += new System.EventHandler(this.ViscosityToolStripMenuItem_Click);
             // 
             // KrebsICIToolStripMenuItem
             // 
@@ -227,7 +287,7 @@ namespace LabBook.Forms.LabBook
             this.KrebsICIToolStripMenuItem.Size = new System.Drawing.Size(230, 28);
             this.KrebsICIToolStripMenuItem.Tag = "7";
             this.KrebsICIToolStripMenuItem.Text = "Krebs + ICI";
-            this.KrebsICIToolStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
+            this.KrebsICIToolStripMenuItem.Click += new System.EventHandler(this.ViscosityToolStripMenuItem_Click);
             // 
             // FullToolStripMenuItem
             // 
@@ -236,7 +296,7 @@ namespace LabBook.Forms.LabBook
             this.FullToolStripMenuItem.Size = new System.Drawing.Size(230, 28);
             this.FullToolStripMenuItem.Tag = "8";
             this.FullToolStripMenuItem.Text = "FULL";
-            this.FullToolStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
+            this.FullToolStripMenuItem.Click += new System.EventHandler(this.ViscosityToolStripMenuItem_Click);
             // 
             // SetToolStripMenuItem
             // 
@@ -244,7 +304,7 @@ namespace LabBook.Forms.LabBook
             this.SetToolStripMenuItem.Size = new System.Drawing.Size(230, 28);
             this.SetToolStripMenuItem.Tag = "9";
             this.SetToolStripMenuItem.Text = "Wybrane";
-            this.SetToolStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
+            this.SetToolStripMenuItem.Click += new System.EventHandler(this.ViscosityToolStripMenuItem_Click);
             // 
             // LblNrD
             // 
@@ -352,6 +412,7 @@ namespace LabBook.Forms.LabBook
             // 
             this.bindingNavigatorPositionItem.AccessibleName = "Pozycja";
             this.bindingNavigatorPositionItem.AutoSize = false;
+            this.bindingNavigatorPositionItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
             this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 27);
             this.bindingNavigatorPositionItem.Text = "0";
@@ -529,6 +590,7 @@ namespace LabBook.Forms.LabBook
             // 
             // DgvViscosity
             // 
+            this.DgvViscosity.AllowUserToDeleteRows = false;
             this.DgvViscosity.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -544,12 +606,52 @@ namespace LabBook.Forms.LabBook
             // TabPageContrast
             // 
             this.TabPageContrast.BackColor = System.Drawing.SystemColors.Control;
+            this.TabPageContrast.Controls.Add(this.BtnContrastDown);
+            this.TabPageContrast.Controls.Add(this.BtnContrastUp);
             this.TabPageContrast.Controls.Add(this.DgvContrast);
             this.TabPageContrast.Location = new System.Drawing.Point(4, 29);
             this.TabPageContrast.Name = "TabPageContrast";
             this.TabPageContrast.Size = new System.Drawing.Size(1219, 412);
             this.TabPageContrast.TabIndex = 4;
             this.TabPageContrast.Text = "Krycie";
+            // 
+            // BtnContrastDown
+            // 
+            this.BtnContrastDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnContrastDown.BackgroundImage = global::LabBook.Properties.Resources.arrow_down;
+            this.BtnContrastDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BtnContrastDown.Location = new System.Drawing.Point(1170, 289);
+            this.BtnContrastDown.Name = "BtnContrastDown";
+            this.BtnContrastDown.Size = new System.Drawing.Size(47, 55);
+            this.BtnContrastDown.TabIndex = 20;
+            this.BtnContrastDown.UseVisualStyleBackColor = true;
+            // 
+            // BtnContrastUp
+            // 
+            this.BtnContrastUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnContrastUp.BackgroundImage = global::LabBook.Properties.Resources.arrow_up;
+            this.BtnContrastUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BtnContrastUp.Location = new System.Drawing.Point(1169, 228);
+            this.BtnContrastUp.Name = "BtnContrastUp";
+            this.BtnContrastUp.Size = new System.Drawing.Size(47, 55);
+            this.BtnContrastUp.TabIndex = 1;
+            this.BtnContrastUp.UseVisualStyleBackColor = true;
+            // 
+            // DgvContrast
+            // 
+            this.DgvContrast.AllowUserToDeleteRows = false;
+            this.DgvContrast.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DgvContrast.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvContrast.Location = new System.Drawing.Point(3, 3);
+            this.DgvContrast.Name = "DgvContrast";
+            this.DgvContrast.RowHeadersWidth = 51;
+            this.DgvContrast.RowTemplate.Height = 24;
+            this.DgvContrast.Size = new System.Drawing.Size(1160, 406);
+            this.DgvContrast.TabIndex = 0;
+            this.DgvContrast.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvContrast_CellValueChanged);
+            this.DgvContrast.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.DgvContrast_DefaultValuesNeeded);
             // 
             // TabPageGloss
             // 
@@ -703,16 +805,6 @@ namespace LabBook.Forms.LabBook
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             // 
-            // DgvContrast
-            // 
-            this.DgvContrast.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvContrast.Location = new System.Drawing.Point(3, 3);
-            this.DgvContrast.Name = "DgvContrast";
-            this.DgvContrast.RowHeadersWidth = 51;
-            this.DgvContrast.RowTemplate.Height = 24;
-            this.DgvContrast.Size = new System.Drawing.Size(1213, 406);
-            this.DgvContrast.TabIndex = 0;
-            // 
             // LabBookForm
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.WhiteSpace;
@@ -821,5 +913,13 @@ namespace LabBook.Forms.LabBook
         private System.Windows.Forms.TabPage TabPageResults;
         private System.Windows.Forms.ToolStripMenuItem SetToolStripMenuItem;
         private System.Windows.Forms.DataGridView DgvContrast;
+        private System.Windows.Forms.Button BtnContrastUp;
+        private System.Windows.Forms.Button BtnContrastDown;
+        private System.Windows.Forms.ToolStripMenuItem aplikatorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TspContrastStd;
+        private System.Windows.Forms.ToolStripMenuItem TspContrastPRB;
+        private System.Windows.Forms.ToolStripMenuItem TspContrastStdPRB;
+        private System.Windows.Forms.ToolStripMenuItem TspContrastKF;
+        private System.Windows.Forms.ToolStripMenuItem TspContrastAll;
     }
 }

@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace LabBook.Commons
 {
+    public enum States
+    {
+        None,
+        Added,
+        Modified,
+        Deletec
+    }
+
     public static class CommonFunction
     {
         private static string CreatePath(string fileName)
@@ -127,12 +134,12 @@ namespace LabBook.Commons
             return text.Equals(DBNull.Value) ? null : text.ToString();
         }
 
-        public static object NullToDBNullConv(string text)
+        public static object NullStringToDBNullConv(string text)
         {
             return String.IsNullOrEmpty(text) ? DBNull.Value : (object)text;
         }
 
-        public static object NullToDBNullConv(double? input)
+        public static object NullDoubleToDBNullConv(double? input)
         {
             return input == null ? DBNull.Value : (object)input;
         }

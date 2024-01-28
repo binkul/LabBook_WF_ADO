@@ -23,6 +23,7 @@ namespace LabBook.Forms.LabBook
         public bool IsAdmin => _user.Permission.ToLower().Equals("admin");
         public DataGridView GetDgvLabBook => DgvLabBook;
         public DataGridView GetDgvViscosity => DgvViscosity;
+        public DataGridView GetDgvContrast => DgvContrast;
         public BindingNavigator GetBindingNavigator => BindingNavigatorMain;
         public TextBox GetTitle => TxtTitle;
         public TextBox GetNrDFilter => TxtNrDFilter;
@@ -92,6 +93,23 @@ namespace LabBook.Forms.LabBook
             _service.BrightForeColorInDeleted(e);
         }
 
+        private void DgvViscosity_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+        {
+            _service.DefaultValuesForViscosityDGV(e);
+        }
+
+        private void DgvContrast_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+        {
+            _service.DefaultValuesForContrastDGV(e);
+        }
+     
+        private void DgvContrast_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            string name = DgvContrast.Columns[e.ColumnIndex].Name;
+            if (name == "DateCreated" || name == "DateUpdated")
+                DgvContrast.Refresh();
+        }
+
         #endregion
 
 
@@ -136,15 +154,16 @@ namespace LabBook.Forms.LabBook
             _service.DeleteButton();
         }
 
-        private void DgvViscosity_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
-        {
-            _service.DefaultValuesForViscosityDGV(e);
-        }
-
-        private void StandardToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void ViscosityToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
             _service.SelectViscosityItemOnMenu(-1, item);
+        }
+
+        private void ContrastToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            _service.AddAplicatorsToDatagrid(item);
         }
 
         private void LabBookTabControl_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -173,5 +192,6 @@ namespace LabBook.Forms.LabBook
         }
 
         #endregion
+
     }
 }

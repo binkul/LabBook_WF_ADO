@@ -53,10 +53,12 @@
     <Compile Include="ADO\ExpCycle.cs" />
     <Compile Include="ADO\ProgramData.cs" />
     <Compile Include="ADO\User.cs" />
-    <Compile Include="ADO\ViscosityColumn.cs" />
+    <Compile Include="ADO\ExpViscosityColumn.cs" />
     <Compile Include="Commons\ColumnData.cs" />
     <Compile Include="Commons\CommonFunction.cs" />
+    <Compile Include="Commons\CustomBindingList.cs" />
     <Compile Include="Commons\SerializeClass.cs" />
+    <Compile Include="Commons\SortableList.cs" />
     <Compile Include="Forms\LabBook\LabBookForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,7 +89,7 @@
     <Compile Include="Repository\ExpCycleRepository.cs" />
     <Compile Include="Repository\LabBookRepository.cs" />
     <Compile Include="Repository\LoginRepository.cs" />
-    <Compile Include="Repository\ViscosityRepository.cs" />
+    <Compile Include="Repository\ExpViscosityRepository.cs" />
     <Compile Include="Security\Encrypt.cs" />
     <Compile Include="Service\LabBookService.cs" />
     <EmbeddedResource Include="Forms\LabBook\LabBookForm.resx">
@@ -145,6 +147,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Project-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moveUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moveDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_up.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

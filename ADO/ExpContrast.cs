@@ -1,55 +1,125 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LabBook.Commons;
+using System;
 
 namespace LabBook.ADO
 {
     public class ExpContrast
     {
-        public long Id { get; set; }
-        public long labBookId { get; set; }
-        public CmbApplicator CmbApplicator { get; set; }
-        public int Posiotion { get; set; }
-        public string Substrate { get; set; }
-        public double? Contrast { get; set; }
-        public double? Tw { get; set; }
-        public double? Sp { get; set; }
-        public string Comments { get; set; }
-        public DateTime DateCreated { get; set; }
-        public DateTime DateUpdated { get; set; }
-        public int Day { get; set; }
-        public string GetApplicatorName => CmbApplicator.Name;
+        private long _id = -1;
+        private long _labBookId;
+        private string _applicatorName;
+        private int _position;
+        private string _substarte;
+        private double? _contrast;
+        private double? _tw;
+        private double? _sp;
+        private string _comment;
+        private DateTime _created;
+        private DateTime _updatetd;
+        private States _state = States.None;
 
-        public ExpContrast(long id, long labBookId, CmbApplicator cmbApplicator, int posiotion, string substrate, double? contrast, 
-            double? tw, double? sp, string comments, DateTime dateCreated, DateTime dateUpdated)
+        public int Day { get => (int)(_updatetd - _created).TotalDays; }
+
+        public long Id 
         {
-            Id = id;
-            this.labBookId = labBookId;
-            CmbApplicator = cmbApplicator;
-            Posiotion = posiotion;
-            Substrate = substrate;
-            Contrast = contrast;
-            Tw = tw;
-            Sp = sp;
-            Comments = comments;
-            DateCreated = dateCreated;
-            DateUpdated = dateUpdated;
-            Day = (dateUpdated.Date - dateCreated.Date).Days;
+            get => _id;
+            set { _id = value; State = States.Modified; }
         }
 
-        public ExpContrast(long id, long labBookId, CmbApplicator cmbApplicator, int posiotion, string substrate, 
-            DateTime dateCreated, DateTime dateUpdated)
+        public long LabBookId
         {
-            Id = id;
-            this.labBookId = labBookId;
-            CmbApplicator = cmbApplicator;
-            Posiotion = posiotion;
-            Substrate = substrate;
-            DateCreated = dateCreated;
-            DateUpdated = dateUpdated;
-            Day = (dateUpdated.Date - dateCreated.Date).Days;
+            get => _labBookId;
+            set { _labBookId = value; State = States.Modified; }
+        }
+
+        public string ApplicatorName
+        {
+            get => _applicatorName;
+            set { _applicatorName = value; State = States.Modified; }
+        }
+
+        public int Position
+        {
+            get => _position;
+            set { _position = value; State = States.Modified; }
+        }
+
+        public string Substrate
+        {
+            get => _substarte;
+            set { _substarte = value; State = States.Modified; }
+        }
+
+        public double? Contrast
+        {
+            get => _contrast;
+            set { _contrast = value; State = States.Modified; }
+        }
+
+        public double? Tw
+        {
+            get => _tw;
+            set { _tw = value; State = States.Modified; }
+        }
+
+        public double? Sp
+        {
+            get => _sp;
+            set { _sp = value; State = States.Modified; }
+        }
+
+        public string Comments
+        {
+            get => _comment;
+            set { _comment = value; State = States.Modified; }
+        }
+
+        public DateTime DateCreated
+        {
+            get => _created;
+            set { _created = value; State = States.Modified; }
+        }
+
+        public DateTime DateUpdated
+        {
+            get => _updatetd;
+            set { _updatetd = value; State = States.Modified; }
+        }
+
+        public States State
+        {
+            get => _state;
+            set
+            {
+                if (_state == States.None)
+                    _state = value;
+            }
+        }
+
+        public ExpContrast() { _state = States.Added; }
+
+        public ExpContrast(long id, long labBookId, string applicatorName, int position, string substrate, 
+            double? contrast, double? tw, double? sp, string comments, DateTime dateCreated, DateTime dateUpdated)
+        {
+            _id = id;
+            _labBookId = labBookId;
+            _applicatorName = applicatorName;
+            _position = position;
+            _substarte = substrate;
+            _contrast = contrast;
+            _tw = tw;
+            _sp = sp;
+            _comment = comments;
+            _created = dateCreated;
+            _updatetd = dateUpdated;
+        }
+
+        public ExpContrast(long labBookId, int position, DateTime created, DateTime updatetd)
+        {
+            _labBookId = labBookId;
+            _position = position;
+            _created = created;
+            _updatetd = updatetd;
         }
     }
 }

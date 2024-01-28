@@ -4,6 +4,13 @@ namespace LabBook.Commons
 {
     public static class ColumnData
     {
+        private static readonly IDictionary<string, IList<string>> CONTRAST_APPLICATOR = new Dictionary<string, IList<string>>()
+        {
+            { "STD", new List<string>() { "Aplikator zwykły 75um", "Aplikator zwykły 100um", "Aplikator zwykły 150um", "Aplikator zwykły 240um" } },
+            { "PRB", new List<string>() { "Aplikator śrubowy 100um" } },
+            { "STD_PRB", new List<string>() { "Aplikator zwykły 75um", "Aplikator zwykły 100um", "Aplikator zwykły 150um", "Aplikator zwykły 240um", "Aplikator śrubowy 100um" } },
+            { "KF", new List<string>() { "Aplikator zwykły 75um", "Aplikator zwykły 100um", "Aplikator zwykły 150um", "Aplikator zwykły 240um", "Aplikator okrągły 100um" } }
+        };
 
         private static readonly IDictionary<ViscosityType, IList<string>> VISCOSITY_FIELDS = new Dictionary<ViscosityType, IList<string>>()
         {
@@ -51,6 +58,7 @@ namespace LabBook.Commons
             {"ici_comment", new List<string>(){ "ICI uwagi", "26", "150", "ICI uwagi", "ChbIci_comment" } }
         };
 
+        public static IDictionary<string, IList<string>> GetAplicatorMenuItems => CONTRAST_APPLICATOR;
         public static IDictionary<string, IList<string>> GetViscosityColumns => VISCOSITY_COLUMNS;
         public static IDictionary<ViscosityType, IList<string>> GetViscosityFields => VISCOSITY_FIELDS;
 

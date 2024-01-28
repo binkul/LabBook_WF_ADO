@@ -9,6 +9,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Linq;
+using System.ComponentModel;
 
 public enum ViscosityType
 {
@@ -46,7 +48,7 @@ namespace LabBook.Service
         private readonly LabBookForm _labBookForm;
         private readonly LabBookRepository _labBookRepository;
         private readonly ExpCycleRepository _expCycleRepository;
-        private readonly ViscosityRepository _viscosityRepository;
+        private readonly ExpViscosityRepository _viscosityRepository;
         private readonly ExpContrastRepository _contrastRepository;
 
         private DataTable _labBookTable;
@@ -56,7 +58,9 @@ namespace LabBook.Service
         private DataTable _viscosityTable;
         private DataView _viscosityView;
         private BindingSource _viscosityBindingSource;
-        private ViscosityColumn _viscosityColumnsCurrent = new ViscosityColumn("STD");
+        private ExpViscosityColumn _viscosityColumnsCurrent = new ExpViscosityColumn("STD");
+        private IList<ExpContrast> _contrastList;
+        private BindingSource _contrastBinding;
 
         private bool _modified = false;
         private bool _visModified = false;
@@ -74,9 +78,10 @@ namespace LabBook.Service
             _labBookForm = labBookForm;
             _labBookRepository = new LabBookRepository(_user, _connection);
             _expCycleRepository = new ExpCycleRepository(_connection);
-            _viscosityRepository = new ViscosityRepository(_connection);
+            _viscosityRepository = new ExpViscosityRepository(_connection);
             _contrastRepository = new ExpContrastRepository(_connection);
         }
+
 
         #region Save and Load data for LabBook form 
 
@@ -122,6 +127,7 @@ namespace LabBook.Service
             GetAllLabBook();
             PrepareDataGridViewLabBook();
             PrepareDataGridViewViscosity();
+            PrepareDataGridViewContrast();
             FillComboBoxes();
             PrepareOthersControls();
         }
@@ -190,8 +196,8 @@ namespace LabBook.Service
             DataGridView view = _labBookForm.GetDgvViscosity;
             view.DataSource = _viscosityBindingSource;
             view.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            view.RowsDefaultCellStyle.Font = new Font(view.DefaultCellStyle.Font.Name, 9, FontStyle.Regular);
-            view.ColumnHeadersDefaultCellStyle.Font = new Font(view.DefaultCellStyle.Font.Name, 9, FontStyle.Bold);
+            view.RowsDefaultCellStyle.Font = new Font(view.DefaultCellStyle.Font.Name, 10, FontStyle.Regular);
+            view.ColumnHeadersDefaultCellStyle.Font = new Font(view.DefaultCellStyle.Font.Name, 10, FontStyle.Bold);
             view.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
             view.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             view.DefaultCellStyle.ForeColor = Color.Black;
@@ -226,6 +232,75 @@ namespace LabBook.Service
             }
 
             view.Columns["days_distance"].Frozen = true;
+        }
+
+        private void PrepareDataGridViewContrast()
+        {
+            DataGridView view = _labBookForm.GetDgvContrast;
+            view.DataSource = _contrastBinding;
+            view.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            view.RowsDefaultCellStyle.Font = new Font(view.DefaultCellStyle.Font.Name, 10, FontStyle.Regular);
+            view.ColumnHeadersDefaultCellStyle.Font = new Font(view.DefaultCellStyle.Font.Name, 10, FontStyle.Bold);
+            view.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            view.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            view.DefaultCellStyle.ForeColor = Color.Black;
+            view.MultiSelect = false;
+            view.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            view.AutoGenerateColumns = false;
+            view.RowHeadersWidth = 35;
+            view.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            view.Columns["Id"].Visible = false;
+            view.Columns["LabBookId"].Visible = false;
+            view.Columns["Position"].Visible = false;
+            view.Columns.Remove("State");
+
+            view.Columns["DateCreated"].HeaderText = "Utworzony";
+            view.Columns["DateCreated"].DisplayIndex = 0;
+            view.Columns["DateCreated"].Width = 100;
+            view.Columns["DateCreated"].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            view.Columns["DateUpdated"].HeaderText = "Pomiar";
+            view.Columns["DateUpdated"].DisplayIndex = 1;
+            view.Columns["DateUpdated"].Width = 100;
+            view.Columns["DateUpdated"].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            view.Columns["Day"].HeaderText = "Doba";
+            view.Columns["Day"].DisplayIndex = 2;
+            view.Columns["Day"].ReadOnly = true;
+            view.Columns["Day"].Width = 80;
+            view.Columns["Day"].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            view.Columns["ApplicatorName"].HeaderText = "Aplikator";
+            view.Columns["ApplicatorName"].DisplayIndex = 3;
+            view.Columns["ApplicatorName"].Width = 250;
+            view.Columns["ApplicatorName"].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            view.Columns["Substrate"].HeaderText = "Podłoże";
+            view.Columns["Substrate"].DisplayIndex = 4;
+            view.Columns["Substrate"].Width = 150;
+            view.Columns["Substrate"].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            view.Columns["Contrast"].HeaderText = "Krycie";
+            view.Columns["Contrast"].DisplayIndex = 5;
+            view.Columns["Contrast"].Width = 100;
+            view.Columns["Contrast"].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            view.Columns["Tw"].HeaderText = "Tw";
+            view.Columns["Tw"].DisplayIndex = 6;
+            view.Columns["Tw"].Width = 100;
+            view.Columns["Tw"].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            view.Columns["Sp"].HeaderText = "Sp";
+            view.Columns["Sp"].DisplayIndex = 7;
+            view.Columns["Sp"].Width = 100;
+            view.Columns["Sp"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            
+            view.Columns["Comments"].HeaderText = "Uwagi";
+            view.Columns["Comments"].DisplayIndex = 8;
+            view.Columns["Comments"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            view.Columns["Comments"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
         }
 
         private void PrepareOthersControls()
@@ -296,6 +371,17 @@ namespace LabBook.Service
             _viscosityView.Sort = "date_created, date_update";
             _viscosityBindingSource = new BindingSource { DataSource = _viscosityView };
             #endregion
+
+            #region Contrast List
+
+            IList<ExpContrast> list = _contrastRepository.GetContrastListByLabBookId(-1);
+            _contrastList = list
+                .OrderBy(x => x.Position)
+                .ToList();
+            _contrastBinding = new BindingSource();
+            _contrastBinding.DataSource = _contrastList;
+
+            #endregion
         }
 
         #endregion
@@ -328,6 +414,18 @@ namespace LabBook.Service
             _viscosityTable.Clear();
             _viscosityRepository.LoadViscosityByLabBookId(_viscosityTable, id);
             ViscosityModify = false;
+        }
+
+        private void ReloadContrast(long id)
+        {
+            SaveContrast();
+            _contrastList.Clear();
+            _labBookForm.GetDgvContrast.Invalidate();
+            _contrastList = _contrastRepository.GetContrastListByLabBookId(id);
+            _contrastList.OrderBy(i => i.Position);
+            _contrastBinding = new BindingSource() { DataSource = _contrastList };
+            _labBookForm.GetDgvContrast.DataSource = _contrastBinding;
+            _labBookForm.GetDgvContrast.Invalidate();
         }
 
         private void Save()
@@ -383,6 +481,24 @@ namespace LabBook.Service
                 ReloadViscosity((long)_currentLabBook["id"]);
             }
             _labBookForm.EnableSaveButton();
+        }
+
+        private void SaveContrast()
+        {
+            _labBookForm.GetDgvContrast.EndEdit();
+            _labBookBindingSource.EndEdit();
+
+            IList<ExpContrast> saveList = _contrastList
+                .Where(i => i.State == States.Added)
+                .ToList();
+            foreach (ExpContrast contrast in saveList)
+                _contrastRepository.Save(contrast);
+
+            IList<ExpContrast> updateList = _contrastList
+                .Where(i => i.State == States.Modified)
+                .ToList();
+            foreach (ExpContrast contrast in updateList)
+                _contrastRepository.Update(contrast);
         }
 
         private void SaveViscosityColumns()
@@ -489,6 +605,15 @@ namespace LabBook.Service
 
             #endregion
 
+            #region Reload Contrast and Contrast class
+
+            if (_currentLabBook != null)
+            {
+                ReloadContrast(id);
+            }
+
+            #endregion
+
             #region Block Controls
 
             if (_currentLabBook != null)
@@ -567,6 +692,19 @@ namespace LabBook.Service
                 e.Row.Cells["date_created"].Value = Convert.ToDateTime(_currentLabBook["created"]);
                 e.Row.Cells["date_update"].Value = DateTime.Today;
                 e.Row.Cells["vis_type"].Value = _measureType.ToString();
+            }
+        }
+
+        public void DefaultValuesForContrastDGV(DataGridViewRowEventArgs e)
+        {
+            if (_contrastBinding != null && _currentLabBook != null)
+            {
+                long id = Convert.ToInt64(_currentLabBook["id"]);
+                e.Row.Cells["Id"].Value = -1;
+                e.Row.Cells["LabBookId"].Value = id;
+                e.Row.Cells["DateCreated"].Value = Convert.ToDateTime(_currentLabBook["created"]);
+                e.Row.Cells["DateUpdated"].Value = DateTime.Today;
+                e.Row.Cells["Position"].Value = _contrastList.Count == 0 ? 1 : _contrastList.Max(i => i.Position) + 1;
             }
         }
 
@@ -690,6 +828,24 @@ namespace LabBook.Service
             {
                 form.ShowDialog();
                 _viscosityColumnsCurrent.Fields = form.Result;
+            }
+        }
+
+        #endregion
+
+
+        #region Contrast Tab
+
+        public void AddAplicatorsToDatagrid(ToolStripMenuItem item)
+        {
+            if (item.Tag == null)
+                return;
+
+            string type = Convert.ToString(item.Tag);
+            if (ColumnData.GetAplicatorMenuItems.ContainsKey(type))
+            {
+                IList<string> items = ColumnData.GetAplicatorMenuItems[type];
+
             }
         }
 

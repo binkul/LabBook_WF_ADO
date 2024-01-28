@@ -1,13 +1,13 @@
 ﻿namespace LabBook.ADO
 {
-    public class ViscosityColumn
+    public class ExpViscosityColumn
     {
         public long Id { get; set;  }
         public long LabBookId { get; set; }
         public ViscosityType Type { get; set; }
         public string Fields { get; set; }
 
-        public ViscosityColumn(long id, long labBookId, ViscosityType type, string fields)
+        public ExpViscosityColumn(long id, long labBookId, ViscosityType type, string fields)
         {
             Id = id;
             LabBookId = labBookId;
@@ -15,7 +15,7 @@
             Fields = fields;
         }
 
-        public ViscosityColumn(string type)
+        public ExpViscosityColumn(string type)
         {
             Id = -1;
             LabBookId = -1;

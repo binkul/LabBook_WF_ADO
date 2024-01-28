@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace LabBook.Repository
 {
-    public class ViscosityRepository
+    public class ExpViscosityRepository
     {
         private const string GET_VISCOSITY_BY_ID = "Select id, labbook_id, date_created, date_update, DATEDIFF(day, date_created, date_update) " +
             "as days_distance, temp, pH, vis_type, brook_1, brook_5, brook_10, brook_20, brook_30, brook_40, brook_50, brook_60, brook_70, " +
@@ -30,7 +30,7 @@ namespace LabBook.Repository
 
         private readonly SqlConnection _connection;
 
-        public ViscosityRepository(SqlConnection connection)
+        public ExpViscosityRepository(SqlConnection connection)
         {
             _connection = connection;
         }
@@ -85,9 +85,9 @@ namespace LabBook.Repository
             }
         }
 
-        public ViscosityColumn GetViscosityColumnById(long id)
+        public ExpViscosityColumn GetViscosityColumnById(long id)
         {
-            ViscosityColumn columns = new ViscosityColumn(-1, id, ViscosityType.STD, "");
+            ExpViscosityColumn columns = new ExpViscosityColumn(-1, id, ViscosityType.STD, "");
 
                 try
                 {
@@ -261,7 +261,7 @@ namespace LabBook.Repository
             return result;
         }
 
-        public bool SaveViscosityColumn(ViscosityColumn viscosityColumn)
+        public bool SaveViscosityColumn(ExpViscosityColumn viscosityColumn)
         {
             bool result = true;
 
@@ -273,7 +273,7 @@ namespace LabBook.Repository
                 cmd.Connection = _connection;
                 cmd.Parameters.AddWithValue("@a", viscosityColumn.LabBookId);
                 cmd.Parameters.AddWithValue("@b", Enum.GetName(typeof(ViscosityType), viscosityColumn.Type));
-                cmd.Parameters.AddWithValue("@c", CommonFunction.NullToDBNullConv(viscosityColumn.Fields));
+                cmd.Parameters.AddWithValue("@c", CommonFunction.NullStringToDBNullConv(viscosityColumn.Fields));
                 _connection.Open();
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();

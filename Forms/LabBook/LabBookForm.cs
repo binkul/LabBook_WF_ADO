@@ -38,6 +38,7 @@ namespace LabBook.Forms.LabBook
         public ComboBox GetComboCycleFilter => CmbCycleFilter;
         public ComboBox GetComboExpCycle => CmbExpCycle;
         public ToolStripMenuItem GetViscosityMenuItem => ViscosityToolStripMenuItem;
+        public ToolStripMenuItem GetApplicatorMenuItem => AllApplicatorMenuItem;
 
         public void EnableSaveButton() => BtnSave.Enabled = _service.Modify | _service.ViscosityModify;
 

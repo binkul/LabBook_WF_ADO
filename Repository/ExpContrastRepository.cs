@@ -14,6 +14,7 @@ namespace LabBook.Repository
         private const string GET_CONTRASTBY_LABBOOK_ID = "Select c.id, c.labbook_id, c.applicator_name, c.position, c.substrate, " +
             "c.contrast, c.tw, c.sp, c.comments, c.date_created, c.date_updated from LabBook.dbo.ExpContrast c Where c.labbook_id=XXXX " +
             "Order by c.position";
+        private const string GET_APPLICATORS = "Select id, name, number from LabBook.dbo.CmbApplicator Order By number";
         private const string SAVE = "Insert Into LabBook.dbo.ExpContrast(labbook_id, applicator_name, position, substrate, " +
             "contrast, tw, sp, comments, date_created, date_updated) Values(@a, @b, @c, @d, @e, @f, @g, @h, @i, @j)";
         private const string UPDATE = "Update LabBook.dbo.ExpContrast Set applicator_name=@a, position=@b, substrate=@c, " +
@@ -26,9 +27,57 @@ namespace LabBook.Repository
             _connection = connection;
         }
 
+        public IList<CmbApplicator> GetApplicators()
+        {
+            IList<CmbApplicator> list = new List<CmbApplicator>();
+            SqlDataReader reader = null;
+
+            try
+            {
+                SqlCommand command = new SqlCommand(GET_APPLICATORS, _connection);
+                _connection.Open();
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        long id = reader.GetInt64(0);
+                        string name = CommonFunction.DBNullToStringConv(reader.GetValue(1));
+                        int number = reader.GetInt32(2);
+
+                        CmbApplicator cmbApplicator = new CmbApplicator(id, name, number);
+                        list.Add(cmbApplicator);
+
+                    }
+                    reader.Close();
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Problem z połączeniem z serwerem. Prawdopodobnie serwer jest wyłączony, błąd w nazwie serwera lub dostępie do bazy: '" + ex.Message + "'. Błąd z poziomu Load Applicator.",
+                    "Błąd połaczenia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Problem z połączeniem z serwerem. Prawdopodobnie serwer jest wyłączony: '" + ex.Message + "'. Błąd z poziomu Load Applicator.",
+                    "Błąd połączenia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (reader != null)
+                    ((IDisposable)reader).Dispose();
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+
+            return list;
+        }
+
         public IList<ExpContrast> GetContrastListByLabBookId(long labBookId)
         {
-            IList<ExpContrast> result = new List<ExpContrast>();
+            IList<ExpContrast> list = new List<ExpContrast>();
             SqlDataReader reader = null;
 
 
@@ -69,7 +118,7 @@ namespace LabBook.Repository
                             expContrast = new ExpContrast(id, labId, appName, position, substrate, contrast, tw, sp, comment, dateStart, dateMeasure);
                         }
 
-                        result.Add(expContrast);
+                        list.Add(expContrast);
                         i++;
                     }
                     reader.Close();
@@ -95,7 +144,7 @@ namespace LabBook.Repository
             }
 
 
-            return result;
+            return list;
         }
 
         public bool Save(ExpContrast expContrast)

@@ -130,6 +130,7 @@ namespace LabBook.Service
             PrepareDataGridViewContrast();
             FillComboBoxes();
             PrepareOthersControls();
+            PrepareMenuApplicator();
         }
 
         private void PrepareDataGridViewLabBook()
@@ -335,6 +336,24 @@ namespace LabBook.Service
             _labBookForm.GetComboCycleFilter.DisplayMember = "Name";
         }
 
+        private void PrepareMenuApplicator()
+        {
+            IList<CmbApplicator> list = GetApplicators();
+            ToolStripMenuItem[] items = new ToolStripMenuItem[list.Count];
+            ToolStripMenuItem menu = _labBookForm.GetApplicatorMenuItem;
+            int i = 0;
+            foreach(CmbApplicator applicator in list)
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem();
+                item.Name = "Item_" + i.ToString();
+                item.Text = applicator.Name;
+                item.Tag = i.ToString();
+                items[i] = item;
+                i++;
+            }
+            menu.DropDownItems.AddRange(items);
+        }
+
         #endregion
 
 
@@ -382,6 +401,11 @@ namespace LabBook.Service
             _contrastBinding.DataSource = _contrastList;
 
             #endregion
+        }
+
+        private IList<CmbApplicator> GetApplicators()
+        {
+            return _contrastRepository.GetApplicators();
         }
 
         #endregion

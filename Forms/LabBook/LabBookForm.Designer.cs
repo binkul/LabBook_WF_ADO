@@ -39,7 +39,7 @@ namespace LabBook.Forms.LabBook
             this.TspContrastPRB = new System.Windows.Forms.ToolStripMenuItem();
             this.TspContrastStdPRB = new System.Windows.Forms.ToolStripMenuItem();
             this.TspContrastKF = new System.Windows.Forms.ToolStripMenuItem();
-            this.TspContrastAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.AllApplicatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.widokToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ViscosityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StandardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -146,7 +146,7 @@ namespace LabBook.Forms.LabBook
             this.TspContrastPRB,
             this.TspContrastStdPRB,
             this.TspContrastKF,
-            this.TspContrastAll});
+            this.AllApplicatorMenuItem});
             this.aplikatorToolStripMenuItem.Name = "aplikatorToolStripMenuItem";
             this.aplikatorToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
             this.aplikatorToolStripMenuItem.Text = "Aplikator";
@@ -183,11 +183,11 @@ namespace LabBook.Forms.LabBook
             this.TspContrastKF.Text = "Standard+KF";
             this.TspContrastKF.Click += new System.EventHandler(this.ContrastToolStripMenuItem_Click);
             // 
-            // TspContrastAll
+            // AllApplicatorMenuItem
             // 
-            this.TspContrastAll.Name = "TspContrastAll";
-            this.TspContrastAll.Size = new System.Drawing.Size(224, 28);
-            this.TspContrastAll.Text = "Wszystkie";
+            this.AllApplicatorMenuItem.Name = "AllApplicatorMenuItem";
+            this.AllApplicatorMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.AllApplicatorMenuItem.Text = "Wszystkie";
             // 
             // widokToolStripMenuItem
             // 
@@ -920,6 +920,6 @@ namespace LabBook.Forms.LabBook
         private System.Windows.Forms.ToolStripMenuItem TspContrastPRB;
         private System.Windows.Forms.ToolStripMenuItem TspContrastStdPRB;
         private System.Windows.Forms.ToolStripMenuItem TspContrastKF;
-        private System.Windows.Forms.ToolStripMenuItem TspContrastAll;
+        private System.Windows.Forms.ToolStripMenuItem AllApplicatorMenuItem;
     }
 }

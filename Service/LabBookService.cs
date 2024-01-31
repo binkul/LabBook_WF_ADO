@@ -82,6 +82,7 @@ namespace LabBook.Service
             _contrastRepository = new ExpContrastRepository(_connection);
         }
 
+        private long GetCurrentLabBookId => Convert.ToInt64(_currentLabBook["id"]);
 
         #region Save and Load data for LabBook form 
 
@@ -348,6 +349,7 @@ namespace LabBook.Service
                 item.Name = "Item_" + i.ToString();
                 item.Text = applicator.Name;
                 item.Tag = i.ToString();
+                item.Click += AddOneApplicatorToDataGrid_Click;
                 items[i] = item;
                 i++;
             }
@@ -502,7 +504,7 @@ namespace LabBook.Service
             ViscosityModify = save & update;
             if (!ViscosityModify)
             {
-                ReloadViscosity((long)_currentLabBook["id"]);
+                ReloadViscosity(GetCurrentLabBookId);
             }
             _labBookForm.EnableSaveButton();
         }
@@ -527,7 +529,7 @@ namespace LabBook.Service
 
         private void SaveViscosityColumns()
         {
-            _viscosityRepository.DeleteViscosityColumn((long)_currentLabBook["id"]);
+            _viscosityRepository.DeleteViscosityColumn(GetCurrentLabBookId);
             if (_viscosityColumnsCurrent != null && _viscosityColumnsCurrent.Type != ViscosityType.STD)
             {
                 _ = _viscosityRepository.SaveViscosityColumn(_viscosityColumnsCurrent);
@@ -571,7 +573,7 @@ namespace LabBook.Service
             if (_labBookBindingSource.Count > 0)
             {
                 _currentLabBook = (DataRowView)_labBookBindingSource.Current;
-                id = Convert.ToInt64(_currentLabBook["id"]);
+                id = GetCurrentLabBookId;
             }
             else
             {
@@ -591,7 +593,7 @@ namespace LabBook.Service
                 show = date.ToString("dd-MM-yyyy");
                 _labBookForm.GetDateModified.Text = show;
 
-                string nr = "D" + _currentLabBook["id"].ToString();
+                string nr = "D" + GetCurrentLabBookId.ToString();
                 _labBookForm.GetLabelNrD.Text = nr;
             }
             else
@@ -710,9 +712,9 @@ namespace LabBook.Service
         {
             if (_currentLabBook != null)
             {
-                long id = Convert.ToInt64(_currentLabBook["id"]);
+                long id = GetCurrentLabBookId;
                 e.Row.Cells["id"].Value = -1;
-                e.Row.Cells["labbook_id"].Value = Convert.ToInt64(_currentLabBook["id"]);
+                e.Row.Cells["labbook_id"].Value = GetCurrentLabBookId;
                 e.Row.Cells["date_created"].Value = Convert.ToDateTime(_currentLabBook["created"]);
                 e.Row.Cells["date_update"].Value = DateTime.Today;
                 e.Row.Cells["vis_type"].Value = _measureType.ToString();
@@ -723,7 +725,7 @@ namespace LabBook.Service
         {
             if (_contrastBinding != null && _currentLabBook != null)
             {
-                long id = Convert.ToInt64(_currentLabBook["id"]);
+                long id = GetCurrentLabBookId;
                 e.Row.Cells["Id"].Value = -1;
                 e.Row.Cells["LabBookId"].Value = id;
                 e.Row.Cells["DateCreated"].Value = Convert.ToDateTime(_currentLabBook["created"]);
@@ -860,7 +862,7 @@ namespace LabBook.Service
 
         #region Contrast Tab
 
-        public void AddAplicatorsToDatagrid(ToolStripMenuItem item)
+        public void AddAplicatorsToDataGrid(ToolStripMenuItem item)
         {
             if (item.Tag == null)
                 return;
@@ -868,9 +870,41 @@ namespace LabBook.Service
             string type = Convert.ToString(item.Tag);
             if (ColumnData.GetAplicatorMenuItems.ContainsKey(type))
             {
-                IList<string> items = ColumnData.GetAplicatorMenuItems[type];
+                IList<string> applicators = ColumnData.GetAplicatorMenuItems[type];
 
+                int position = _contrastList.Count > 0 ? _contrastList.Max(i => i.Position) + 1 : 1;
+                foreach(string applicator in applicators)
+                {
+                    long id = GetCurrentLabBookId;
+                    string name = applicator;
+                    string substrate = "Leneta cz/b";
+                    DateTime start = Convert.ToDateTime(_currentLabBook["created"]);
+                    DateTime end = DateTime.Today;
+                    ExpContrast contrast = new ExpContrast(id, name, position, substrate, start, end, States.Added);
+                    _contrastList.Add(contrast);
+                    position++;
+                }
+                _contrastBinding = new BindingSource() { DataSource = _contrastList };
+                _labBookForm.GetDgvContrast.DataSource = _contrastBinding;
+                _labBookForm.GetDgvContrast.Invalidate();
             }
+        }
+
+        public void AddOneApplicatorToDataGrid_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            string name = item.Text;
+            int position = _contrastList.Count > 0 ? _contrastList.Max(i => i.Position) + 1 : 1;
+            long id = GetCurrentLabBookId;
+            string substrate = "Leneta cz/b";
+            DateTime start = Convert.ToDateTime(_currentLabBook["created"]);
+            DateTime end = DateTime.Today;
+            ExpContrast contrast = new ExpContrast(id, name, position, substrate, start, end, States.Added);
+            _contrastList.Add(contrast);
+
+            _contrastBinding = new BindingSource() { DataSource = _contrastList };
+            _labBookForm.GetDgvContrast.DataSource = _contrastBinding;
+            _labBookForm.GetDgvContrast.Invalidate();
         }
 
         #endregion

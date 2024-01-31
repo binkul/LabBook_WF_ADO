@@ -114,12 +114,15 @@ namespace LabBook.ADO
             _updatetd = dateUpdated;
         }
 
-        public ExpContrast(long labBookId, int position, DateTime created, DateTime updatetd)
+        public ExpContrast(long labBookId, string name, int position, string substrate, DateTime created, DateTime updatetd, States state)
         {
             _labBookId = labBookId;
+            _applicatorName = name;
             _position = position;
+            _substarte = substrate;
             _created = created;
             _updatetd = updatetd;
+            _state = state;
         }
     }
 }

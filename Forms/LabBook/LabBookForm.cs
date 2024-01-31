@@ -164,7 +164,7 @@ namespace LabBook.Forms.LabBook
         private void ContrastToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
-            _service.AddAplicatorsToDatagrid(item);
+            _service.AddAplicatorsToDataGrid(item);
         }
 
         private void LabBookTabControl_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -189,6 +189,14 @@ namespace LabBook.Forms.LabBook
                 BtnDelete.Enabled = false;
             }
 
+            if (tab.SelectedTab.Name == "TabPageContrast")
+            {
+                AplicatorToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                AplicatorToolStripMenuItem.Enabled = false;
+            }
 
         }
 

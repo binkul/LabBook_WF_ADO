@@ -34,7 +34,7 @@ namespace LabBook.Forms.LabBook
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.plikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dodajToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aplikatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AplicatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TspContrastStd = new System.Windows.Forms.ToolStripMenuItem();
             this.TspContrastPRB = new System.Windows.Forms.ToolStripMenuItem();
             this.TspContrastStdPRB = new System.Windows.Forms.ToolStripMenuItem();
@@ -134,22 +134,23 @@ namespace LabBook.Forms.LabBook
             // dodajToolStripMenuItem
             // 
             this.dodajToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aplikatorToolStripMenuItem});
+            this.AplicatorToolStripMenuItem});
             this.dodajToolStripMenuItem.Name = "dodajToolStripMenuItem";
             this.dodajToolStripMenuItem.Size = new System.Drawing.Size(72, 27);
             this.dodajToolStripMenuItem.Text = "Dodaj";
             // 
-            // aplikatorToolStripMenuItem
+            // AplicatorToolStripMenuItem
             // 
-            this.aplikatorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AplicatorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TspContrastStd,
             this.TspContrastPRB,
             this.TspContrastStdPRB,
             this.TspContrastKF,
             this.AllApplicatorMenuItem});
-            this.aplikatorToolStripMenuItem.Name = "aplikatorToolStripMenuItem";
-            this.aplikatorToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
-            this.aplikatorToolStripMenuItem.Text = "Aplikator";
+            this.AplicatorToolStripMenuItem.Enabled = false;
+            this.AplicatorToolStripMenuItem.Name = "AplicatorToolStripMenuItem";
+            this.AplicatorToolStripMenuItem.Size = new System.Drawing.Size(224, 28);
+            this.AplicatorToolStripMenuItem.Text = "Aplikator";
             // 
             // TspContrastStd
             // 
@@ -412,7 +413,6 @@ namespace LabBook.Forms.LabBook
             // 
             this.bindingNavigatorPositionItem.AccessibleName = "Pozycja";
             this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
             this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 27);
             this.bindingNavigatorPositionItem.Text = "0";
@@ -915,7 +915,7 @@ namespace LabBook.Forms.LabBook
         private System.Windows.Forms.DataGridView DgvContrast;
         private System.Windows.Forms.Button BtnContrastUp;
         private System.Windows.Forms.Button BtnContrastDown;
-        private System.Windows.Forms.ToolStripMenuItem aplikatorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AplicatorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem TspContrastStd;
         private System.Windows.Forms.ToolStripMenuItem TspContrastPRB;
         private System.Windows.Forms.ToolStripMenuItem TspContrastStdPRB;
